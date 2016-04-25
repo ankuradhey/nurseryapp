@@ -4,7 +4,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     db = require('./db'),
     fs = require('fs')
-    ;
+    async = require("async");
     
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({

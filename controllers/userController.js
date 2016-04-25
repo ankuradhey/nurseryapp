@@ -1,5 +1,5 @@
 var user = require('../models/user.js'),
-response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred'},
+response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []},
 validate = require('validate.js')
         ;
 
@@ -46,14 +46,21 @@ module.exports.controller = function(app) {
      */
     app.post('/adduser', function(req, res) {
         var userParams = req.body;
-        var res = validate(userParams, userSchema);
-        if (res && res.length) {
-            async.each(res, function())
-            response.errors = {}
+        res.setHeader('Content-Type', 'application/json');
+        var invalid = validate(userParams, userSchema);
+        console.log(invalid);
+        if (invalid && Object.keys(invalid).length) {
+            var i = 0;
+            async.each(invalid, function(result, callback){
+               response.errors[i] = result;
+               i++;
+            }, function(err){
+                response.message = err;
+            });
             return response;
         } else {
             user.create(userParams, function(err, userId) {
-                res.setHeader('Content-Type', 'application/json');
+                
                 if (err) {
                     response.message = err;
                 }
