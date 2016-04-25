@@ -1,5 +1,5 @@
 var user = require('../models/user.js'),
-response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []},
+        response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []},
 validate = require('validate.js')
         ;
 
@@ -51,20 +51,24 @@ module.exports.controller = function(app) {
         console.log(invalid);
         if (invalid && Object.keys(invalid).length) {
             var i = 0;
-            async.each(invalid, function(result, callback){
-               response.errors[i] = result;
-               i++;
-            }, function(err){
-                response.message = err;
-            });
-            return response;
+            async.series([
+                //series - first
+                async.each(invalid, function(result, callback) {
+                    response.errors[i] = result;
+                    i++;
+                }, function(err) {
+                    response.message = err;
+                }),
+                res.send(JSON.stringify({'success': true}))
+            ]);
+            
         } else {
             user.create(userParams, function(err, userId) {
-                
+
                 if (err) {
                     response.message = err;
                 }
-                res.send(JSON.stringify({'success': true}));
+                
             })
 
         }
