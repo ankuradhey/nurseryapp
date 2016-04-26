@@ -55,11 +55,10 @@ module.exports.controller = function(app) {
      */
     app.post('/adduser', function(req, res) {
         var userParams = req.body;
-        
+        console.log(userParams);
 //        var invalid = validate(userParams, userSchema);
         res.setHeader('Content-Type', 'application/json');
         validate.async(userParams, userSchema).then(function(attributes){// success
-            
             console.log('validating..');
             
             user.validateUser(userParams.user_email, userParams.user_phone, function(err, rows){
@@ -74,7 +73,9 @@ module.exports.controller = function(app) {
                         response.message = "User with "+userParams.user_email+" email id already exists";
                     else
                         console.log('Error: user with number and phone does not exist. Still user not allowed to register. Resolve this');
-                        
+                    
+                    res.send(JSON.stringify(response));
+                    
                 }else{
                     user.create(userParams, function(err, userId) {
                         if (err) {
