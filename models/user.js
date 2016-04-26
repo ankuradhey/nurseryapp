@@ -1,6 +1,5 @@
 var db = require('../db.js')
     ;
-
 /*
  * Eg user json format
  */
@@ -18,8 +17,10 @@ var user = {
 
 
 exports.create = function(userParams, done) {
+    var sortArr = ['user_type','user_email','user_password','user_first_name','user_last_name','user_phone','user_last_login'];
 //  var values = [userId, text, new Date().toISOString()]
-  db.get().query('INSERT INTO user (user_type, user_email, user_password, user_first_name, user_last_name, user_phone, user_last_login) VALUES(?, ?, ?, ?, ?, ?, ?)', userParams, function(err, result) {
+  db.get().query('INSERT INTO user (user_type, user_email, user_password, user_first_name, user_last_name, user_phone, user_last_login) VALUES(?, ?, ?, ?, ?, ?, ?)', 
+  [userParams.user_type, userParams.user_email, userParams.user_password, userParams.user_first_name, userParams.user_last_name, userParams.user_phone, moment().format('YYYY-MM-DD HH:mm:ss')], function(err, result) {
     if (err) 
         return done(err);
     done(null, result.insertId)
