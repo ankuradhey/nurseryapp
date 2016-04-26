@@ -11,14 +11,14 @@ TEST_CONFIG = {
    host:'localhost',
    user:'root',
    password:'',
-   database: 'nursery_app'
+   database: 'nurseryapp'
 }
 
 PRODUCTION_CONFIG = {
    host:'localhost',
    user:'root',
    password:'',
-   database: 'nursery_app'
+   database: 'nurseryapp'
 }
 
 var state = {

@@ -37,7 +37,7 @@ db.connect(db.MODE_TEST, function(err) {
 var responseArr = {error:true,success:false, message:'Some error occurred'};
 
 
-var server = app.listen(8081, function(){
+var server = app.listen(7071, function(){
   var host = server.address().address
   var port = server.address().port
 
