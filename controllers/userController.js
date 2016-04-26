@@ -47,30 +47,39 @@ module.exports.controller = function(app) {
     app.post('/adduser', function(req, res) {
         var userParams = req.body;
         res.setHeader('Content-Type', 'application/json');
-        var invalid = validate(userParams, userSchema);
-        console.log(invalid);
-        if (invalid && Object.keys(invalid).length) {
-            var i = 0;
-            async.series([
-                //series - first
-                async.each(invalid, function(result, callback) {
-                    response.errors[i] = result;
-                    i++;
-                }, function(err) {
-                    response.message = err;
-                }),
-                res.send(JSON.stringify({'success': true}))
-            ]);
-            
-        } else {
-            user.create(userParams, function(err, userId) {
-
-                if (err) {
-                    response.message = err;
-                }
-                
-            })
-
-        }
+//        var invalid = validate(userParams, userSchema);
+        
+        validate.async(userParams, userSchema).then(function(attributes){// success
+            console.log(attributes)
+        } , function(error){ //error
+            response.errors = error;
+        });
+        
+//        if (invalid && Object.keys(invalid).length) {
+//            var i = 0;
+//            //series - first
+//            async.each(invalid, function(result, callback) {
+//                response.errors[i] = result;
+//                i++;
+//            }, function(err) {
+//                if(err){
+//                    response.message = err;
+//                }
+//            });
+//            res.send(JSON.stringify(response));
+//        } else {
+//            user.create(userParams, function(err, userId) {
+//                if (err) {
+//                    response.message = err;
+//                }else{
+//                    response.success = true;
+//                    response.error = false;
+//                    response.message = 'User successfully registered';
+//                    response.userId = userId;
+//                }
+//                res.send(JSON.stringify(response));
+//            })
+//
+//        }
     });
 }
