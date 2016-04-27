@@ -44,6 +44,15 @@ exports.validateUser = function(userEmail, phone, done){
     })
 }
 
+exports.loginCheck = function(userEmail, userPassword, done){
+    db.get().query('SELECT * FROM user where user_email = ? and user_password = ? ',[userEmail, userPassword], function(err, rows){
+        if(err)
+            return done(err);
+        
+        done(null, rows);
+    });
+}
+
 exports.getAllByEmail = function(userEmail, done){
     db.get().query('SELECT * FROM user WHERE user_email = ?', userEmail, function (err, rows) {
         console.log(err);
