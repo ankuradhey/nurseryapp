@@ -40,20 +40,22 @@ app.all('/*', function(req, res, next) {
 // are sure that authentication is not needed
 app.all('/api/v1/*', [require('./middlewares/validateRequest')]);
 
+app.use('/',require('./routes'));
+
 app.use(function(req, res, next){
-    //var err = 
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
  
 
 //dynamically include routes (Controllers)
-fs.readdirSync('./controllers').forEach(function(file){
-    if(file.substr(-3) == '.js'){
-        route = require('./controllers/'+file);
-        route.controller(app);
-    }
-});
-
-
+//fs.readdirSync('./controllers').forEach(function(file){
+//    if(file.substr(-3) == '.js'){
+//        route = require('./controllers/'+file);
+//        route.controller(app);
+//    }
+//});
 
 // Connect to MySQL on start
 db.connect(db.MODE_TEST, function(err) {

@@ -68,16 +68,15 @@ var user = require('../models/user.js'),
         }
     }
 
-module.exports.controller = function (app) {
-
-
+module.exports = {
     /*
      * Registration
      * ------------
      * Method: POST
      * 
      */
-    app.post('/api/v1/adduser', function (req, res) {
+    register: function(req, res){
+        
         var userParams = req.body;
         console.log(userParams);
 //        var invalid = validate(userParams, userSchema);
@@ -122,16 +121,16 @@ module.exports.controller = function (app) {
             res.send(JSON.stringify(response));
         });
 
-    });
-
-
+    
+    },
     /*
-     * Registration
+     * Login
      * ------------
      * Method: POST
      * 
      */
-    app.post('/api/v1/authenticate', function (req, res) {
+    login: function(req, res){
+        
         var userParams = req.body;
         res.setHeader('Content-Type', 'application/json');
         validate.async(userParams, userLoginSchema).then(function (attributes) {// success
@@ -164,6 +163,6 @@ module.exports.controller = function (app) {
             response.errors = error;
             res.send(JSON.stringify(response));
         });
-    });
-
+    
+    }
 }
