@@ -3,8 +3,8 @@ var express = require('express');
 var router = express.Router();
  
 var auth = require('./auth.js');
-var userController = require('./controller/userController.js');
-var schoolController = require('./controller/schoolController.js');
+var userController = require('../controllers/userController.js');
+var schoolController = require('../controllers/schoolController.js');
 //var user = require('./users.js');
  
 /*
@@ -18,3 +18,4 @@ router.post('/register', userController.register);
  */
 router.get('/api/v1/schools', schoolController.getAll);
  
+ module.exports = router;
