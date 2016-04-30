@@ -1,4 +1,5 @@
-var db = require('../db.js')
+var db = require('../db.js'),
+        md5 = require('md5')
     ;
 /*
  * Eg user json format
@@ -20,7 +21,7 @@ exports.create = function(userParams, done) {
     var sortArr = ['user_type','user_email','user_password','user_first_name','user_last_name','user_phone','user_last_login'];
 //  var values = [userId, text, new Date().toISOString()]
   db.get().query('INSERT INTO user (user_type, user_email, user_password, user_first_name, user_last_name, user_phone, user_last_login) VALUES(?, ?, ?, ?, ?, ?, ?)', 
-  [userParams.user_type, userParams.user_email, userParams.user_password, userParams.user_first_name, userParams.user_last_name, userParams.user_phone, moment().format('YYYY-MM-DD HH:mm:ss')], function(err, result) {
+  [userParams.user_type, userParams.user_email, md5(userParams.user_password), userParams.user_first_name, userParams.user_last_name, userParams.user_phone, moment().format('YYYY-MM-DD HH:mm:ss')], function(err, result) {
     if (err) 
         return done(err);
     done(null, result.insertId)
@@ -45,7 +46,7 @@ exports.validateUser = function(userEmail, phone, done){
 }
 
 exports.loginCheck = function(userEmail, userPassword, done){
-    db.get().query('SELECT * FROM user where user_email = ? and user_password = ? ',[userEmail, userPassword], function(err, rows){
+    db.get().query('SELECT * FROM user where user_email = ? and user_password = ? ',[userEmail, md5(userPassword)], function(err, rows){
         if(err)
             return done(err);
         
