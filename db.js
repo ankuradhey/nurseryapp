@@ -15,11 +15,21 @@ TEST_CONFIG = {
 }
 
 PRODUCTION_CONFIG = {
-   host:'localhost',
-   user:'root',
-   password:'',
-   database: 'nurseryapp'
+   host:'166.62.8.8',
+   user:'laundryUser',
+   password:'Laundry@123',
+   database: 'laundryUser'
 }
+
+/*
+ * AWS 
+ *  
+ *  DB instance - kulfidb
+ *  master username - kufliadmin
+ *  master password - kulfibaba
+ *  db - nurseryapp
+ */
+
 
 var state = {
   pool: null,
