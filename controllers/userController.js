@@ -162,5 +162,37 @@ module.exports = {
             res.send(JSON.stringify(response));
         });
 
+    },
+    
+    getOne: function(req, res){
+        var $valid = validate.isNumber(parseInt(req.params.userId));
+        console.log($valid,req.params.userId);
+        if(!$valid){
+            res.status(400);
+            response.code = 400;
+            response.message = 'Invalid user id passed';
+            res.json(JSON.stringify(response));
+        }else{
+        user.getAllByUser(req.params.userId, function(err, rows){
+            if(err){
+                res.status(500);
+                response.code = 500;
+                response.message = 'SQL error';
+                res.json(JSON.stringify(response));
+            }else{
+                if(rows && rows.length){
+                    response.user = rows[0];
+                    response.success = true;
+                    response.error = false;
+                    response.message = 'Success';
+                    res.json(JSON.stringify(response));
+                }else{
+                    res.status(400);
+                    res.json(JSON.stringify(response));
+                }
+            }
+            
+        });
+        }
     }
-}
+};

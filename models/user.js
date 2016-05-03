@@ -37,8 +37,8 @@ exports.getAll = function(done) {
 
 exports.validateUser = function(userEmail, phone, done){
     db.get().query('SELECT * FROM user WHERE user_email = ? or user_phone = ? ', [userEmail,phone], function (err, rows) {
-        console.log('errror: '+err);
-        if (err) 
+        console.log('errror: '+err, rows);
+        if (err)
             return done(err);
         
         done(null, rows)
@@ -70,7 +70,7 @@ exports.getAllByPhone = function(userPhone, done){
 }
 
 exports.getAllByUser = function(userId, done) {
-  db.get().query('SELECT * FROM comments WHERE user_id = ?', userId, function (err, rows) {
+  db.get().query('SELECT * FROM user WHERE user_id = ?', userId, function (err, rows) {
     if (err) return done(err)
     done(null, rows)
   })

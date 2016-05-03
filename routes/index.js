@@ -17,5 +17,6 @@ router.post('/register', userController.register);
  * Routes that can be accessed only by authenticated users
  */
 router.get('/api/v1/schools', schoolController.getAll);
+router.get('/api/v1/user/:userId', userController.getOne);
  
  module.exports = router;

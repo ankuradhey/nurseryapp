@@ -28,6 +28,8 @@ var auth = {
                 response.code = 500;
                 response.errors = err;
                 console.log(err);
+                response.developer = {message:'Db error occurred'};
+                console.log(response);
                 res.json(JSON.stringify(response));
                 return;
             }else{
@@ -42,7 +44,7 @@ var auth = {
                     return;
                 }else{
                     res.status(500);
-                    response.message = 'Oops! Some error occurred';
+                    response.message = 'Invalid Username or password';
                     response.code = 500;
                     response.errors = err;
                     console.log(err);
@@ -58,7 +60,7 @@ var auth = {
         if(!invalid){
             userModel.loginCheck(username, password, function(err, rows){
                 if(err){
-                    done(err, null);
+                    done(err, []);
                 }else{
                     done(null,rows);
                 }
@@ -71,28 +73,21 @@ var auth = {
             return;
         }
     },
-    validateUser: function(username){
+    validateUser: function(username, done){
         var invalid = validate.single(username, {presence:true, email:true});
+        console.log(invalid);
         if(!invalid){
             userModel.validateUser(username, username, function(err, rows){
                 if(err){
-                    res.status(500);
-                    response.message = 'Oops! Some error occurred';
-                    response.code = 500;
-                    response.errors = err;
-                    console.log(err);
-                    res.json(JSON.stringify(response));
+                    done(err, []);
                 }else{
-                    if(rows.length){
-                        return true;
-                    }else{
-                        return false;
-                    }
+                    done(null,rows);
                 }
                     
             });
         }else{
-            return false;
+            done(null, []);
+//            return false;
         }
     }
 };

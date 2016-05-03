@@ -16,10 +16,16 @@ module.exports = {
         school.getAll(function(err, rows){
             if(err)
                 response.errors = err;
-            else
+            else{
                 response.schools = rows;
-            
+                response.success = true;
+                response.error = false;
+                response.message = 'success';
+            }
             res.send(JSON.stringify(response));
         });
+    },
+    getOne: function(req, res){
+    
     }
 };

@@ -11,7 +11,7 @@ TEST_CONFIG = {
    host:'localhost',
    user:'root',
    password:'',
-   database: 'nurseryapp'
+   database: 'nursery_app'
 }
 
 PRODUCTION_CONFIG = {
@@ -38,7 +38,7 @@ var state = {
 
 exports.connect = function(mode, done) {
     state.pool = mysql.createPool(
-                    exports.MODE_PRODUCTION?PRODUCTION_CONFIG:TEST_CONFIG
+                    mode==exports.MODE_PRODUCTION?PRODUCTION_CONFIG:TEST_CONFIG
                  )
     state.mode = mode
     done()
