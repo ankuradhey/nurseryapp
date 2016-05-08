@@ -15,7 +15,10 @@ var school =    {
 var schools = {
     
     getAll: function(done){
-        db.get().query('SELECT * FROM school', function (err, rows) {
+        var query = 'SELECT s.school_name, board.board_name, s.school_medium, s.school_affiliation_code FROM school s \n\
+                     join board_master board on board.board_id = s.school_board and board.board_status = "1" \n\
+                     where school_status = "1" ';
+        db.get().query(query, function (err, rows) {
             console.log('select query');
             if (err) 
                 return done(err)
