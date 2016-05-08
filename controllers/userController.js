@@ -6,7 +6,9 @@
 
 var user = require('../models/user.js'),
         response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []},
-validate = require('validate.js')
+validate = require('validate.js'),
+config = require('../config'),
+jwt = require("jsonwebtoken")
         ;
 
 //defining schema for user
@@ -109,6 +111,10 @@ module.exports = {
                             console.log(err);
                             response.message = 'Oops! Some error occurred';
                         } else {
+                            var token = jwt.sign(userParams, config.secret,{
+                                expiresIn: config.loginExpirySeconds // expires in 24 hours
+                            });
+                            reponse.token = token;
                             response.success = true;
                             response.error = false;
                             response.message = 'User successfully registered';
