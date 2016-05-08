@@ -6,6 +6,7 @@ var auth = require('./auth.js');
 var userController = require('../controllers/userController.js');
 var schoolController = require('../controllers/schoolController.js');
 var dashboardController = require('../controllers/dashboardController.js');
+var locationController = require('../controllers/locationController.js');
 //var user = require('./users.js');
  
 /*
@@ -28,5 +29,6 @@ router.get('/api/v1/user/:userId', userController.getOne);
 router.get('/adminapi/v1/schools',schoolController.getAll);
 router.get('/adminapi/v1/dashboard',dashboardController.getCount);
 router.get('/adminapi/v1/boards',schoolController.getBoards);
+router.get('/adminapi/v1/country',locationController.getCountries);
 
 module.exports = router;
