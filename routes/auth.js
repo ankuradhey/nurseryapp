@@ -30,7 +30,7 @@ var auth = {
                 console.log(err);
                 response.developer = {message:'Db error occurred'};
                 console.log(response);
-                res.json(JSON.stringify(response));
+                res.json(response);
                 return;
             }else{
                 if(result.length){
@@ -50,7 +50,7 @@ var auth = {
                     response.code = 500;
                     response.errors = err;
                     console.log(err);
-                    res.json(JSON.stringify(response));
+                    res.json(response);
                 }
             }
         });
