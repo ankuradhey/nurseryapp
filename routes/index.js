@@ -25,5 +25,6 @@ router.get('/api/v1/user/:userId', userController.getOne);
  */
 
 router.get('/adminapi/v1/schools',schoolController.getAll);
+router.get('/adminapi/v1/dashboard',dashboardController.getCount);
 
 module.exports = router;
