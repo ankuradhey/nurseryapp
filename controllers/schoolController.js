@@ -6,6 +6,7 @@
 
 
 var school = require('../models/school.js'),
+    board = require('../models/board.js'),
     response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []},
     validate = require('validate.js')
     ;
@@ -22,10 +23,23 @@ module.exports = {
                 response.error = false;
                 response.message = 'success';
             }
-            res.send(JSON.stringify(response));
+            res.send(response);
         });
     },
     getOne: function(req, res){
-    
+        //TO DO
+    },
+    getBoards:function(req, res){
+        board.getAll(function(err, rows){
+            if(err)
+                response.errors = err;
+            else{
+                response.boards = rows;
+                response.success = true;
+                response.error = false;
+                response.message = 'success';
+            }
+            res.send(response);
+        })
     }
 };
