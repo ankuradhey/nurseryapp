@@ -24,17 +24,38 @@ module.exports = {
             res.send(response);
         });
     },
-    getBoards:function(req, res){
-        board.getAll(function(err, rows){
-            if(err)
-                response.errors = err;
-            else{
-                response.boards = rows;
-                response.success = true;
-                response.error = false;
-                response.message = 'success';
-            }
-            res.send(response);
-        })
-    }
+    getStates:function(req, res){
+        var countryId = 0;
+        
+        if(req.params.hasOwnProperty('countryId'))
+            countryId = req.params.countryId;
+        
+        console.log(countryId)
+        
+        if(countryId){
+            location.getStatesByCountry(countryId, function(err, rows){
+                if(err)
+                    response.errors = err;
+                else{
+                    response.states = rows;
+                    response.success = true;
+                    response.error = false;
+                    response.message = 'success';
+                }
+                res.send(response);
+            })
+        }else{
+            location.getStates(function(err, rows){
+                if(err)
+                    response.errors = err;
+                else{
+                    response.states = rows;
+                    response.success = true;
+                    response.error = false;
+                    response.message = 'success';
+                }
+                res.send(response);
+            })
+        }
+    },
 };

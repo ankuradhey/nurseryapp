@@ -17,6 +17,22 @@ var locations = {
             if (err) return done(err)
             done(null, rows)
         })
+    },
+            
+    getStatesByCountry: function(countryId, done){
+        db.get().query('SELECT * FROM state where state_country_id = ? and state_status = "1"  ',countryId, function (err, rows) {
+            if (err) 
+                return done(err);
+            return done(null, rows)
+        })
+    },
+            
+    getStates: function(done){
+        db.get().query('SELECT * FROM state where state_status = "1"  ', function (err, rows) {
+            if (err) 
+                return done(err)
+            return done(null, rows)
+        })
     }
     
 } ;               

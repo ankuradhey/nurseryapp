@@ -30,5 +30,7 @@ router.get('/adminapi/v1/schools',schoolController.getAll);
 router.get('/adminapi/v1/dashboard',dashboardController.getCount);
 router.get('/adminapi/v1/boards',schoolController.getBoards);
 router.get('/adminapi/v1/country',locationController.getCountries);
+router.get('/adminapi/v1/state/:countryId',locationController.getStates);
+router.get('/adminapi/v1/state',locationController.getStates);
 
 module.exports = router;
