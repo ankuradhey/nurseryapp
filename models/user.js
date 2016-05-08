@@ -28,6 +28,61 @@ exports.create = function(userParams, done) {
   })
 }
 
+exports.socialSignUp = function(socialId, socialType,userParams, done){
+    var query = 'insert into user set'
+    var arr = [];
+    var _count = 0;
+    for(var i in userParams){
+        if(_count+1 == userParams.length)
+            query += '  '+i+' = '+'"'+userParams[i]+'"';
+        else
+            query += ' '+i+' = '+'"'+userParams[i]+'",';
+        _count++;
+    }
+    
+    if(socialType == 'facebook')
+        query += ' user_facebook_id =  '+'"'+socialId+'"';
+    else
+        query += ' user_google_id =  '+'"'+socialId+'"';
+    
+    console.log(query);
+    
+    db.get().query(query, function (err, rows) {
+        if (err) 
+            return done(err)
+        return done(null, rows);
+    });
+      
+}
+
+exports.updateSocial = function(userParams, user, done){
+  var query = 'update user set ';
+  var _count = 0;
+  for(var i in userParams){
+      if(_count+1 == Object.keys(userParams).length)
+          query += ' '+i+' = '+'"'+userParams[i]+'"';
+      else
+          query += ' '+i+' = '+'"'+userParams[i]+'",';
+      _count++;
+  }
+  
+  if(_count){
+      query += ' where user_id =  '+user.user_id;
+    
+    console.log(query);
+        
+      db.get().query(query, function (err, rows) {
+        if (err) 
+            return done(err)
+        return done(null, rows);
+      })
+  }
+  else
+      return done('no query found');
+}
+
+
+
 exports.getAll = function(done) {
   db.get().query('SELECT * FROM comments', function (err, rows) {
     if (err) return done(err)
@@ -42,7 +97,25 @@ exports.validateUser = function(userEmail, phone, done){
             return done(err);
         
         done(null, rows)
-    })
+    });
+}
+
+exports.socialLoginCheck = function(socialId, socialType, done){
+    if(socialType == 'facebook'){
+        db.get().query('SELECT * FROM user where user_facebook_id = ? ',socialId, function(err, rows){
+            if(err)
+                return done(err);
+            
+            done(null,rows);
+        });
+    }else{
+        db.get().query('SELECT * FROM user where user_google_id = ? ',socialId, function(err, rows){
+            if(err)
+                return done(err);
+            
+            done(null,rows);
+        });
+    }
 }
 
 exports.loginCheck = function(userEmail, userPassword, done){
