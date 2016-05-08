@@ -16,7 +16,7 @@ var auth = {
             res.status(200);
             response.code = 401;
             response.message = 'Invalid Credentials';
-            res.json(JSON.stringify(response));
+            res.json(response);
             return;
         }
         
@@ -65,7 +65,7 @@ var auth = {
             res.status(401);
             response.code = 401;
             response.message = 'Invalid Credentials';
-            res.json(JSON.stringify(response));
+            res.json(response);
             return;
         }
         
@@ -79,7 +79,7 @@ var auth = {
                 console.log(err);
                 response.developer = {message:'Db error occurred'};
                 console.log(response);
-                res.json(JSON.stringify(response));
+                res.json(response);
                 return;
             }else{
                 if(result.length){
@@ -105,7 +105,7 @@ var auth = {
                             console.log(err);
                             response.developer = {message:'Db error occurred'};
                             console.log(response);
-                            res.json(JSON.stringify(response));
+                            res.json(response);
                             return;
                         }else{
                             if(rows.length){
