@@ -21,6 +21,27 @@ angular.module('sbAdminApp')
             })
             
             return promise;
+        },
+        
+        getBoards:function(){
+            var promise = $http({
+               method:'GET',
+               url:baseUrl+'/adminapi/v1/boards'
+            }).success(function(data,status, headers, conf){
+                return data;
+            });
+            
+            return promise;
+        },
+        getCountries:function(){
+            var promise = $http({
+               method:'GET',
+               url:baseUrl+'/adminapi/v1/country'
+            }).success(function(data,status, headers, conf){
+                return data;
+            });
+            
+            return promise;
         }
     }
 }])
