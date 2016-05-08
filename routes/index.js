@@ -12,6 +12,7 @@ var dashboardController = require('../controllers/dashboardController.js');
  * Routes that can be accessed by any one
  */
 router.post('/login', auth.login);
+router.post('/sociallogin', auth.socialLogin);
 router.post('/register', userController.register);
 //router.post('/sociallogin',auth.);
 /*
