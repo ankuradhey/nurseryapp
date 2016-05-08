@@ -13,7 +13,7 @@ var auth = {
         console.log('username and password are - ',username, password);
         if(!username || !password){
             console.log('inside');
-            res.status(401);
+            res.status(200);
             response.code = 401;
             response.message = 'Invalid Credentials';
             res.json(JSON.stringify(response));
@@ -23,7 +23,7 @@ var auth = {
         //use query to validate
         auth.validate(username, password, function(err, result){
             if(err){
-                res.status(500);
+                res.status(200);
                 response.message = 'Oops! Some error occurred';
                 response.code = 500;
                 response.errors = err;
@@ -45,7 +45,7 @@ var auth = {
                     });
                     
                 }else{
-                    res.status(500);
+                    res.status(200);
                     response.message = 'Invalid Username or password';
                     response.code = 500;
                     response.errors = err;
@@ -72,7 +72,7 @@ var auth = {
         //check if user already exists
         auth.socialValidate(socialId, socialType, function(err, result){
             if(err){
-                res.status(500);
+                res.status(200);
                 response.message = 'Oops! Some error occurred';
                 response.code = 500;
                 response.errors = err;
@@ -98,7 +98,7 @@ var auth = {
                     userModel.validateUser(req.body.user_email, req.body.user_phone, function(err, rows){
 //                        console.log('checked user exists - ',rows);
                         if(err){
-                            res.status(500);
+                            res.status(200);
                             response.message = 'Oops! Some error occurred';
                             response.code = 500;
                             response.errors = err;
@@ -230,11 +230,7 @@ var auth = {
                 }
             });
         }else{
-            res.status(402);
-            response.code = 402;
-            response.message = 'Invalid Email address';
-            res.json(JSON.stringify(response));
-            return;
+            done('Invalid Email address');
         }
     },
     validateUser: function(username, done){
