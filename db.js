@@ -15,10 +15,10 @@ TEST_CONFIG = {
 }
 
 PRODUCTION_CONFIG = {
-   host:'166.62.8.8',
-   user:'laundryUser',
-   password:'Laundry@123',
-   database: 'laundryUser'
+   host:'ec2-54-201-182-195.us-west-2.compute.amazonaws.com',
+   user:'root',
+   password:'',
+   database: 'nurseryapp'
 }
 
 /*
