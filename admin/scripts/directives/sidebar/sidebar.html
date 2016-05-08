@@ -14,7 +14,7 @@
                         <a ui-sref="dashboard.schools">Schools List</a>
                     </li>
                     <li ui-sref-active="active">
-                        <a ui-sref="dashboard.buttons">Add School</a>
+                        <a ui-sref="dashboard.addschool">Add School</a>
                     </li>
                 </ul>
             </li>
@@ -29,10 +29,10 @@
             <li ui-sref-active="active">
                 <a ui-sref="dashboard.form"><i class="fa fa-edit fa-fw"></i> Forms</a>
             </li>
-            <li ng-class="{active: collapseVar==1}">{{dropDown}}
-                <a href="" ng-click="check(1)"><i class="fa fa-wrench fa-fw"></i> UI Elements<span
+            <li ng-class="{active: collapseVar==2}">{{dropDown}}
+                <a href="" ng-click="check(2)"><i class="fa fa-wrench fa-fw"></i> UI Elements<span
                         class="fa arrow"></span></a>
-                <ul class="nav nav-second-level" collapse="collapseVar!=1">
+                <ul class="nav nav-second-level" collapse="collapseVar!=2">
                     <li ui-sref-active="active">
                         <a ui-sref="dashboard.panels-wells">Panels and Wells</a>
                     </li>
