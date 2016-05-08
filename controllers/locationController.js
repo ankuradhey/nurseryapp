@@ -16,7 +16,7 @@ module.exports = {
             if(err)
                 response.errors = err;
             else{
-                response.schools = rows;
+                response.countries = rows;
                 response.success = true;
                 response.error = false;
                 response.message = 'success';
