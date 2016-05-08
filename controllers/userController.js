@@ -127,6 +127,7 @@ module.exports = {
      * Method: POST
      * 
      */
+    // NOT USED ANYMORE
     login: function(req, res) {
 
         var userParams = req.body;
