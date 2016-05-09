@@ -32,5 +32,11 @@ router.get('/adminapi/v1/boards',schoolController.getBoards);
 router.get('/adminapi/v1/country',locationController.getCountries);
 router.get('/adminapi/v1/state/:countryId',locationController.getStates);
 router.get('/adminapi/v1/state',locationController.getStates);
+router.get('/adminapi/v1/city/:stateId',locationController.getCities);
+router.get('/adminapi/v1/city',locationController.getCities);
+router.get('/adminapi/v1/area/:cityId',locationController.getAreas);
+router.get('/adminapi/v1/area',locationController.getAreas);
+router.get('/adminapi/v1/zone/:areaId',locationController.getZones);
+router.get('/adminapi/v1/zone',locationController.getZones);
 
 module.exports = router;
