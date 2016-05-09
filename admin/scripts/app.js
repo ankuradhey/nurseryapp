@@ -174,4 +174,27 @@ var app = angular
           }
         }
       })
+      .state('dashboard.addschool',{
+        url:'/addschool',
+        controller: 'SchoolAddCtrl',
+        templateUrl:'views/schools/addschool.html',
+        resolve: {
+          loadMyFiles:function($ocLazyLoad) {
+              return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+              'scripts/controllers/schoolController.js',
+              'scripts/directives/datepicker/datepicker.js'
+//              'scripts/services/schoolService.js',
+              ]
+            })
+          },
+          boards:function(schoolService){
+            return  schoolService.getBoards()
+          },
+          countries:function(schoolService){
+            return schoolService.getCountries();
+          }
+        }
+      })
   }]);

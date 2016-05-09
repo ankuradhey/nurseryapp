@@ -1,0 +1,90 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Add school</h1>
+    </div>  
+    <!-- /.col-lg-12 -->
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Fill school details
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form role="form">
+                            <div class="form-group" ng-class="{'has-error':school.name.$invalid}">
+                                <label>School Name</label>
+                                <input class="form-control" name="school_name" ng-model="school.name" required>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error':school.affiliation.$invalid}">
+                                <label>Affilication Code</label>
+                                <input type="text" class="form-control" name="school_affiliation_code" ng-model='school.affiliation' required>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="tel" class="form-control" name="school_phone" ng-model='school.phone' required>
+                            </div>
+                            <div class="form-group">
+                                <label>Address</label>
+                                <textarea class="form-control" name="school_address"></textarea>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error':school.board.$invalid}">
+                                <label>Choose Board</label>
+                                <select name="school_board" class="form-control" ng-model='school.board' required>
+                                    <option value="">-- Select --</option>
+                                    <option ng-repeat="board in boards" ng-value="board.board_id">{{board.board_name}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Choose Medium</label>
+                                <select name="school_medium" class="form-control">
+                                    <option value="">-- Select --</option>
+                                    <option value="english">English</option>
+                                    <option value="hindi">Hindi</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Established Year</label>
+                                <!--<input type="text" class="form-control" datepicker='{format:"yyyy", viewMode:"years", minViewMode:"years"}' name="school_year">-->
+                                <custom-datepicker ng-model="school.year" date-options="dateOptions" opened="opened"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Choose Country</label>
+                                <select name="school_country" class="form-control" ng-model = "location.countryId" ng-change="getStates()">
+                                    <option ng-repeat="country in countries" ng-value="country.country_id" >{{country.country_name}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Choose State</label>
+                                <select name="school_state" class="form-control" ng-model="location.stateId" ng-change="getCities()">
+                                    <option ng-repeat="state in states" ng-value="state.state_id" >{{state.state_name}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Choose City</label>
+                                <select name="school_city" class="form-control" ng-model="location.cityId" ng-change="getAreas()">
+                                    <option ng-repeat="city in cities" ng-value="city.city_id" >{{city.city_name}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Choose Area</label>
+                                <select name="school_area" class="form-control" ng-model="location.areaId" ng-change="getZones()">
+                                    <option ng-repeat="area in areas" ng-value="area.area_id" >{{area.area_name}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Choose Zone</label>
+                                <select name="school_zone" ng-model="location.zoneId" class="form-control">
+                                    <option ng-repeat="zone in zones" ng-value="zone.zone_id" >{{zone.zone_name}}</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-default">Submit Button</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
