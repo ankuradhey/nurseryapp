@@ -26,15 +26,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="odd gradeX" ng-class-even="even gradeC" ng-class-odd="odd gradeX" ng-repeat="school in schools">
-                                <td>{{$key+1}}</td>
+                            <tr class="odd gradeX"  ng-class-even="'even gradeC'" ng-class-odd="'odd gradeX'" ng-repeat="school in schools">
+                                <td>{{$index+1}}</td>
                                 <td>{{school.school_name}}</td>
                                 <td>{{school.board_name}}</td>
                                 <td>{{school.school_medium}}</td>
                                 <td class="center">{{school.school_affiliation_code}}</td>
                                 <td class="center">
-                                    <button type='button' class='btn-primary btn-xs'>Edit</button>
-                                    <button type='button' class='btn-warning btn-xs'>Delete</button>
+                                    <button type='button' class='btn-primary btn-xs' ui-sref="dashboard.editschool({schoolId:school.school_id})">Edit</button>
+                                    <button type='button' class='btn-warning btn-xs' ng-click="deleteSchool(school.school_id)">Delete</button>
                                 </td>
                             </tr>
                             
