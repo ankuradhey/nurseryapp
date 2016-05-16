@@ -51,5 +51,9 @@ router.get('/adminapi/v1/zone',locationController.getZones);
 
 
 router.get('/adminapi/v1/parents',userController.getParents);
+router.get('/adminapi/v1/parent/:userId',userController.getOne);
+router.post('/adminapi/v1/parent',userController.addParent);
+router.put('/adminapi/v1/parent/:parentId',userController.updateParent);
+router.delete('/adminapi/v1/parent/:parentId',userController.deleteParent);
 
 module.exports = router;
