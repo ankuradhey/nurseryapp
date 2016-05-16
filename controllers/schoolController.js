@@ -18,7 +18,8 @@ var school = require('../models/school.js'),
         }
         
     }
-    validate = require('validate.js')
+    validate = require('validate.js'),
+    config = require('../config') //get our config file
     ;
     
 
@@ -142,6 +143,15 @@ module.exports = {
         });
     },
     addSchool: function(req, res){
+        
+        //update school_img path
+        if(req.body.school_logo){
+            req.body.school_logo = config.baseUrl+'/uploads/'+req.body.school_logo;
+        }
+        
+        if(req.body.school_img)
+            req.body.school_img = config.baseUrl+'/uploads/'+req.body.school_img;
+        
         school.create(req.body, function(err, rows){
             if(err)
                 response.errors = err;
@@ -154,6 +164,15 @@ module.exports = {
         });
     },
     updateSchool: function(req, res){
+        
+        //update school_img path
+        if(req.body.school_logo){
+            req.body.school_logo = config.baseUrl+'/uploads/'+req.body.school_logo;
+        }
+        
+        if(req.body.school_img)
+            req.body.school_img = config.baseUrl+'/uploads/'+req.body.school_img;
+        
         var schoolId = req.params.schoolId
         school.update(schoolId, req.body, function(err, rows){
             if(err)
