@@ -382,4 +382,20 @@ var app = angular
                 }
             }
         })
+                .state('dashboard.editparent', {
+            url: '/editparent/:parentId',
+            data: {collapseVar: 'parent'},
+            controller: 'parentAddController',
+            templateUrl: 'views/parents/addparent.html',
+            resolve: {
+                loadMyFiles: function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'sbAdminApp',
+                        files: [
+                            'scripts/controllers/parentController.js',
+                        ]
+                    })
+                }
+            }
+        })
     }]);

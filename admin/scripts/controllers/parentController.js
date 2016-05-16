@@ -10,83 +10,126 @@
  */
 
 angular.module('sbAdminApp')
-        .controller('parentController', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
-        $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
-        $scope.parents = {};
+        .controller('parentController', ['$scope', '$http', '$timeout', '$state', function ($scope, $http, $timeout, $state) {
+                $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
+                $scope.parents = {};
 
-        $http.get(baseUrl + '/adminapi/v1/parents', {'Content-Type': 'application/json'})
-                .then(function(data, status, headers, conf) {
-            $scope.parents = data.data.parents;
-        }, function(data, status, headers, conf) {
-            $scope.alert.show = true;
-        });
+                $http.get(baseUrl + '/adminapi/v1/parents', {'Content-Type': 'application/json'})
+                        .then(function (data, status, headers, conf) {
+                            $scope.parents = data.data.parents;
+                        }, function (data, status, headers, conf) {
+                            $scope.alert.show = true;
+                        });
 
-    }])
-        .controller('parentAddController', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
-        $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
-        $scope.parents = {};
+                $scope.deleteParent = function (userId) {
+                    $http({
+                        url: baseUrl + '/adminapi/v1/parent/' + userId,
+                        method: 'DELETE',
+                        headers: {'Content-Type': 'application/json'}
+                    }).success(function (data, status, headers, conf) {
+                        if (data.success) {
+                            $scope.alert.message = data.message;
+                            $scope.alert.show = true;
+                            $scope.alert.type = 'success';
+                            $state.reload();
+                        } else {
+                            $scope.alert.show = true;
+                        }
+                    }).error(function (data, status, headers, conf) {
+                        $scope.alert.message = data.message;
+                        $scope.alert.show = true;
+                        $scope.alert.type = 'danger';
+                        $state.reload();
+                    });
 
-
-        $scope.saveParent = function() {
-
-            $scope.$broadcast('show-errors-check-validity');
-            if ($scope.schoolForm.$invalid) {
-                return;
-            }
-
-
-            var data = {
-                school_name: $scope.school.name,
-                school_affiliation_code: $scope.school.affiliation,
-                school_phone: $scope.school.phone,
-                school_address: $scope.school.address,
-                school_board: $scope.school.board.board_id,
-                school_medium: $scope.school.medium,
-                school_establish_year: $scope.school.year,
-                school_country: $scope.location.country.country_id,
-                school_state: $scope.location.state.state_id,
-                school_city: $scope.location.city.city_id,
-                school_area: $scope.location.area.area_id,
-                school_zone: $scope.location.zone.zone_id,
-            }
-
-            if ($scope.schoolId) {
-                var url = baseUrl + '/adminapi/v1/school/' + $scope.schoolId;
-                var method = 'PUT';
-            } else {
-                var url = baseUrl + '/adminapi/v1/school';
-                var method = 'POST';
-            }
-
-            $http({
-                method: method,
-                url: url,
-                headers: {'Content-Type': 'application/json'},
-                data: data
-            }).success(function(data, status, headers, conf) {
-                if (data.success) {
-                    $scope.alert.message = data.message;
-                    $scope.alert.show = true;
-                    $scope.alert.type = 'success';
-                    $scope.$broadcast('show-errors-reset');
-                } else {
-                    $scope.alert.message = data.message;
-                    $scope.alert.show = true;
-                    $scope.alert.type = 'danger';
                 }
-            }).error(function(data, status, headers, conf) {
-                $scope.alert.show = true;
-                $scope.alert.type = 'danger';
-            })
 
-        }
+            }])
+        .controller('parentAddController', ['$scope', '$http', '$timeout', '$state', '$stateParams', function ($scope, $http, $timeout, $state, $stateParams) {
+                $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
+                $scope.parents = {};
+                $scope.user = {user_password: '123456'};
+                $scope.parentId = $stateParams.parentId;
 
-        $http.get(baseUrl + '/adminapi/v1/parents', {'Content-Type': 'application/json'})
-                .then(function(data, status, headers, conf) {
-            $scope.parents = data.data.parents;
-        }, function(data, status, headers, conf) {
-            $scope.alert.show = true;
-        });
+                if ($scope.parentId) {
+                    $http({
+                        method: 'GET',
+                        url: baseUrl + '/adminapi/v1/parent/' + $scope.parentId
+                    }).success(function (data, status, headers, conf) {
+                        if (data.user && Object.keys(data.user).length) {
+                            var parent = data.user;
+                            $scope.user.user_email = parent.user_email;
+//                            $scope.user.user_password = parent.user_password;
+                            $scope.user.user_password = '';
+                            $scope.user.user_first_name = parent.user_first_name;
+                            $scope.user.user_last_name = parent.user_last_name;
+                            $scope.user.user_phone = parent.user_phone;
+                            $scope.user.user_address = parent.user_address;
+                        } else {
+                            $scope.alert.show = true;
+                            $scope.alert.type = 'danger';
+                        }
+                    }).error(function (data, status, headers, conf) {
+                        $scope.alert.show = true;
+                        $scope.alert.type = 'danger';
+                    });
+                }
 
-    }])
+                $scope.saveParent = function () {
+                    $scope.$broadcast('show-errors-check-validity');
+                    if ($scope.parentForm.$invalid) {
+                        return;
+                    }
+
+                    var data = {
+                        user_type: 'parent',
+                        user_email: $scope.user.user_email,
+                        user_password: $scope.user.user_password,
+                        user_first_name: $scope.user.user_first_name,
+                        user_last_name: $scope.user.user_last_name,
+                        user_phone: $scope.user.user_phone,
+                        user_address: $scope.user.user_address,
+                        user_status: '1',
+                    }
+
+                    if ($scope.parentId) {
+                        if(!$scope.user.user_password)
+                            delete data.user_password;
+                        
+                        var url = baseUrl + '/adminapi/v1/parent/' + $scope.parentId;
+                        var method = 'PUT';
+                    } else {
+                        
+                        if(!$scope.user.user_password)
+                            $scope.user.user_password = '123456';
+                        
+                        var url = baseUrl + '/adminapi/v1/parent';
+                        var method = 'POST';
+                    }
+
+                    $http({
+                        method: method,
+                        url: url,
+                        headers: {'Content-Type': 'application/json'},
+                        data: data
+                    }).success(function (data, status, headers, conf) {
+                        if (data.success) {
+                            $scope.alert.message = data.message;
+                            $scope.alert.show = true;
+                            $scope.alert.type = 'success';
+                            $scope.$broadcast('show-errors-reset');
+                            $state.reload();
+                        } else {
+                            $scope.alert.message = data.message;
+                            $scope.alert.show = true;
+                            $scope.alert.type = 'danger';
+                        }
+                    }).error(function (data, status, headers, conf) {
+                        $scope.alert.show = true;
+                        $scope.alert.type = 'danger';
+                    })
+
+                }
+
+            }])
         ;
