@@ -7,7 +7,7 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-  .controller('MainCtrl', function($scope,$position, $http) {
+  .controller('MainCtrl', function($scope, $http) {
       
       $scope.dashboardData = {
           count:{

@@ -1,15 +1,16 @@
 <div class="navbar-default sidebar" role="navigation">
     <div class="sidebar-nav navbar-collapse">
+        collapseVar - {{collapseVar}}
         <ul class="nav in" id="side-menu">
             <sidebar-search></sidebar-search>
             <li ui-sref-active="active">
                 <a ui-sref="dashboard.home"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
-            <li ng-class="{active:collapseVar==1}">{{dropDown}}
-                <a href="" ng-click="check(1)">
+            <li ng-class="{active:collapseVar=='school'}">{{dropDown}}
+                <a href="" ng-click="check('school')">
                     <i class="fa fa-wrench fa-fw"></i> Manage Schools<span class="fa arrow"></span>
                 </a>
-                <ul class="nav nav-second-level" collapse="collapseVar!=1">
+                <ul class="nav nav-second-level" uib-collapse="collapseVar!='school'">
                     <li ui-sref-active="active">
                         <a ui-sref="dashboard.schools">Schools List</a>
                     </li>
@@ -18,93 +19,114 @@
                     </li>
                 </ul>
             </li>
-            <li ui-sref-active="active">
-
-                <a ui-sref="dashboard.chart"><i class="fa fa-bar-chart-o fa-fw"></i> Boards<span></span></a>
-                <!--<a ui-sref="dashboard.chart"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span></span></a>-->
-
+            <li ng-class="{active:collapseVar=='board'}">{{dropDown}}
+                    <a href="" ng-click="check('board')">
+                        <i class="fa fa-bar-chart-o fa-fw"></i> Manage Boards<span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level" uib-collapse="collapseVar!='board'">
+                        <li ui-sref-active="active">
+                            <a ui-sref="dashboard.boards">Board List</a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="dashboard.addboard">Add Board</a>
+                        </li>
+                    </ul>
+                    <!--<a ui-sref="dashboard.chart"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span></span></a>-->
             </li>
-<!--            <li ui-sref-active="active">
-                <a ui-sref="dashboard.table"><i class="fa fa-table fa-fw"></i> Tables</a>
-            </li>-->
-<!--            <li ui-sref-active="active">
-                <a ui-sref="dashboard.form"><i class="fa fa-edit fa-fw"></i> Forms</a>
-            </li>-->
-            <li ng-class="{active: collapseVar==2}">{{dropDown}}
-                <a href="" ng-click="check(2)"><i class="fa fa-wrench fa-fw"></i> Manage Locations<span
+            <!--            <li ui-sref-active="active">
+                            <a ui-sref="dashboard.table"><i class="fa fa-table fa-fw"></i> Tables</a>
+                        </li>-->
+            <!--            <li ui-sref-active="active">
+                            <a ui-sref="dashboard.form"><i class="fa fa-edit fa-fw"></i> Forms</a>
+                        </li>-->
+            <li ng-class="{active: collapseVar=='location'}">{{dropDown}}
+                <a href="" ng-click="check('location')"><i class="fa fa-wrench fa-fw"></i> Manage Locations<span
                         class="fa arrow"></span></a>
-                <ul class="nav nav-second-level" collapse="collapseVar!=2">
+                <ul class="nav nav-second-level" uib-collapse="collapseVar!='location'">
                     <li ui-sref-active="active">
                         <!--<a ui-sref="dashboard.panels-wells">Country</a>-->
-                        <a ui-sref="dashboard.home">Country</a>
+                        <a ui-sref="dashboard.countries">Country</a>
                     </li>
                     <li ui-sref-active="active">
                         <!--<a ui-sref="dashboard.buttons">State</a>-->
-                        <a ui-sref="dashboard.home">State</a>
+                        <a ui-sref="dashboard.states">State</a>
                     </li>
                     <li ui-sref-active="active">
                         <!--<a ui-sref="dashboard.notifications">City</a>-->
-                        <a ui-sref="dashboard.home">City</a>
+                        <a ui-sref="dashboard.cities">City</a>
                     </li>
                     <li ui-sref-active="active">
                         <!--<a ui-sref="dashboard.typography">Typography</a>-->
-                        <a ui-sref="dashboard.home">Area</a>
+                        <a ui-sref="dashboard.areas">Area</a>
                     </li>
                     <li ui-sref-active="active">
                         <!--<a ui-sref="dashboard.icons"> Icons</a>-->
-                        <a ui-sref="dashboard.home"> Zone</a>
+                        <a ui-sref="dashboard.zones"> Zone</a>
                     </li>
-<!--                    <li ui-sref-active="active">
-                        <a ui-sref="dashboard.grid">Grid</a>
-                    </li>-->
+                    <!--                    <li ui-sref-active="active">
+                                            <a ui-sref="dashboard.grid">Grid</a>
+                                        </li>-->
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
-<!--            <li ng-class="{active: collapseVar==2}">
-                <a href="" ng-click="check(2)"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span
+            <li ng-class="{active: collapseVar=='parent'}">{{dropDown}}
+                <a href="" ng-click="check('parent')"><i class="fa fa-wrench fa-fw"></i> Manage Parents<span
                         class="fa arrow"></span></a>
-                <ul class="nav nav-second-level" collapse="collapseVar!=2">
-                    <li>
-                        <a href="">Second Level Item</a>
+                <ul class="nav nav-second-level" uib-collapse="collapseVar!='parent'">
+                    <li ui-sref-active="active">
+                        <a ui-sref="dashboard.parents">Parents</a>
                     </li>
-                    <li>
-                        <a href="">Second Level Item</a>
-                    </li>
-                    <li ng-init="third=!third" ng-class="{active: multiCollapseVar==3}">
-                        <a href="" ng-click="multiCheck(3)">Third Level <span class="fa arrow"></span></a>
-                        <ul class="nav nav-third-level" collapse="multiCollapseVar!=3">
-                            <li>
-                                <a href="">Third Level Item</a>
-                            </li>
-                            <li>
-                                <a href="">Third Level Item</a>
-                            </li>
-                            <li>
-                                <a href="">Third Level Item</a>
-                            </li>
-                            <li>
-                                <a href="">Third Level Item</a>
-                            </li>
-
-                        </ul>
-                         /.nav-third-level 
+                    <li ui-sref-active="active">
+                        <a ui-sref="dashboard.addparent"> Add Parent</a>
                     </li>
                 </ul>
-                 /.nav-second-level 
-            </li>-->
-<!--            <li ng-class="{active:collapseVar==4}">
-                <a href="" ng-click="check(4)"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span
-                        class="fa arrow"></span></a>
-                <ul class="nav nav-second-level" collapse="collapseVar!=4">
-                    <li ng-class="{active: selectedMenu=='blank'}">
-                        <a ui-sref="dashboard.blank" ng-click="selectedMenu='blank'">Blank Page</a>
-                    </li>
-                    <li>
-                        <a ui-sref="login">Login Page</a>
-                    </li>
-                </ul>
-                 /.nav-second-level 
-            </li>-->
+                <!-- /.nav-second-level -->
+            </li>
+            <!--            <li ng-class="{active: collapseVar==2}">
+                            <a href="" ng-click="check(2)"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span
+                                    class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level" collapse="collapseVar!=2">
+                                <li>
+                                    <a href="">Second Level Item</a>
+                                </li>
+                                <li>
+                                    <a href="">Second Level Item</a>
+                                </li>
+                                <li ng-init="third=!third" ng-class="{active: multiCollapseVar==3}">
+                                    <a href="" ng-click="multiCheck(3)">Third Level <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level" collapse="multiCollapseVar!=3">
+                                        <li>
+                                            <a href="">Third Level Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="">Third Level Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="">Third Level Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="">Third Level Item</a>
+                                        </li>
+            
+                                    </ul>
+                                     /.nav-third-level 
+                                </li>
+                            </ul>
+                             /.nav-second-level 
+                        </li>-->
+            <!--            <li ng-class="{active:collapseVar==4}">
+                            <a href="" ng-click="check(4)"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span
+                                    class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level" collapse="collapseVar!=4">
+                                <li ng-class="{active: selectedMenu=='blank'}">
+                                    <a ui-sref="dashboard.blank" ng-click="selectedMenu='blank'">Blank Page</a>
+                                </li>
+                                <li>
+                                    <a ui-sref="login">Login Page</a>
+                                </li>
+                            </ul>
+                             /.nav-second-level 
+                        </li>-->
             <!--<li><a href="http://www.strapui.com/">Premium Angular Themes</a></li>-->
         </ul>
     </div>

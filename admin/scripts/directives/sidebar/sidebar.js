@@ -8,7 +8,7 @@
  */
 
 angular.module('sbAdminApp')
-  .directive('sidebar',['$location',function() {
+  .directive('sidebar',['$location','$rootScope',function($location, $rootScope) {
     return {
       templateUrl:'scripts/directives/sidebar/sidebar.html',
       restrict: 'E',
@@ -35,6 +35,13 @@ angular.module('sbAdminApp')
           else
             $scope.multiCollapseVar = y;
         };
+        
+        $scope.$on('$viewContentLoaded', function(event, toState){
+            console.log('state change called - ',toState);
+            if(toState.data && toState.data.collapseVar){
+                $scope.collapseVar = toState.data.collapseVar;
+            }
+        })
       }
     }
   }]);

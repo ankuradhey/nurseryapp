@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Add Parent</h1>
+    </div>  
+    <!-- /.col-lg-12 -->
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <uib-alert ng-if="alert.show" type="{{alert.type}}" close="alert.show = false">{{alert.message}}</uib-alert>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Fill parent details
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form role="form" novalidate name="parentForm">
+                            <div class="form-group" show-errors ng-class="{'has-error':parentForm.user_email.$invalid && parentForm.user_email.$dirty}">
+                                <label>Parent email</label>
+                                <input class="form-control" name="user_email" ng-model="user.user_email" required>
+                                <p class="help-block" ng-if="parentForm.user_email.$error.required && parentForm.user_email.$dirty">Parent email is required</p>
+                            </div>
+                            <div class="form-group" show-errors ng-class="{'has-error':parentForm.user_first_name.$invalid && parentForm.user_first_name.$dirty}">
+                                <label>First Name</label>
+                                <input class="form-control" name="user_first_name" ng-model="user.user_first_name" required>
+                                <p class="help-block" ng-if="parentForm.user_first_name.$error.required && parentForm.user_first_name.$dirty">Name is required</p>
+                            </div>
+                            <div class="form-group" show-errors ng-class="{'has-error':parentForm.user_last_name.$invalid && parentForm.user_last_name.$dirty}">
+                                <label>Last Name</label>
+                                <input class="form-control" name="user_last_name" ng-model="user.user_last_name" required>
+                                <p class="help-block" ng-if="parentForm.user_last_name.$error.required && parentForm.user_last_name.$dirty">Name is required</p>
+                            </div>
+                            <div class="form-group" show-errors ng-class="{'has-error':parentForm.user_phone.$invalid && parentForm.user_phone.$dirty}">
+                                <label>Phone</label>
+                                <input class="form-control" name="user_phone" ng-model="user.user_phone" required>
+                                <p class="help-block" ng-if="parentForm.user_phone.$error.required && parentForm.user_phone.$dirty">Phone is required</p>
+                            </div>
+                            <div class="form-group" show-errors ng-class="{'has-error':parentForm.user_address.$invalid && parentForm.user_address.$dirty}">
+                                <label>Address</label>
+                                <input class="form-control" name="user_phone" ng-model="user.user_address" required>
+                                <p class="help-block" ng-if="parentForm.user_address.$error.required && parentForm.user_address.$dirty">Address is required</p>
+                            </div>
+                            <button type="submit" class="btn btn-default" ng-click="saveParent()" ng-disabled="parentForm.$invalid">Submit Button</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
