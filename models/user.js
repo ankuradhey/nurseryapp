@@ -18,7 +18,6 @@ var user = {
 
 
 exports.create = function(userParams, done) {
-    var sortArr = ['user_type','user_email','user_password','user_first_name','user_last_name','user_phone','user_last_login'];
 //  var values = [userId, text, new Date().toISOString()]
   db.get().query('INSERT INTO user (user_type, user_email, user_password, user_first_name, user_last_name, user_phone, user_last_login) VALUES(?, ?, ?, ?, ?, ?, ?)', 
   [userParams.user_type, userParams.user_email, md5(userParams.user_password), userParams.user_first_name, userParams.user_last_name, userParams.user_phone, moment().format('YYYY-MM-DD HH:mm:ss')], function(err, result) {
@@ -33,7 +32,7 @@ exports.socialSignUp = function(socialId, socialType,userParams, done){
     var arr = [];
     var _count = 0;
     for(var i in userParams){
-        if(_count+1 == userParams.length)
+        if(_count+1 == Object.keys(userParams).length)
             query += '  '+i+' = '+'"'+userParams[i]+'"';
         else
             query += ' '+i+' = '+'"'+userParams[i]+'",';
@@ -146,5 +145,13 @@ exports.getAllByUser = function(userId, done) {
   db.get().query('SELECT * FROM user WHERE user_id = ?', userId, function (err, rows) {
     if (err) return done(err)
     done(null, rows)
+  })
+}
+
+exports.getAllParents = function(done){
+  db.get().query('select user_email, user_first_name, user_last_name, user_phone, user_address from user where user_type= "parent" and user_status != "2" ', function(err, rows){
+      if(err)
+          return done(err);
+      done(null, rows);
   })
 }

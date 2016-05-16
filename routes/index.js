@@ -19,7 +19,7 @@ router.post('/register', userController.register);
 /*
  * Routes that can be accessed only by authenticated users
  */
-router.get('/api/v1/schools', schoolController.getAll);
+router.get('/api/v1/schools', schoolController.getAllActive);
 router.get('/api/v1/user/:userId', userController.getOne);
 
 /*
@@ -27,8 +27,18 @@ router.get('/api/v1/user/:userId', userController.getOne);
  */
 
 router.get('/adminapi/v1/schools',schoolController.getAll);
+router.get('/adminapi/v1/school/:schoolId',schoolController.getOne);
+router.post('/adminapi/v1/school',schoolController.addSchool);
+router.put('/adminapi/v1/school/:schoolId',schoolController.updateSchool);
+router.delete('/adminapi/v1/school/:schoolId',schoolController.deleteSchool);
 router.get('/adminapi/v1/dashboard',dashboardController.getCount);
+
 router.get('/adminapi/v1/boards',schoolController.getBoards);
+router.post('/adminapi/v1/board',schoolController.addBoard);
+router.get('/adminapi/v1/board/:boardId',schoolController.getBoard);
+router.delete('/adminapi/v1/board/:boardId',schoolController.deleteBoard);
+router.put('/adminapi/v1/board/:boardId',schoolController.updateBoard);
+
 router.get('/adminapi/v1/country',locationController.getCountries);
 router.get('/adminapi/v1/state/:countryId',locationController.getStates);
 router.get('/adminapi/v1/state',locationController.getStates);
@@ -38,5 +48,8 @@ router.get('/adminapi/v1/area/:cityId',locationController.getAreas);
 router.get('/adminapi/v1/area',locationController.getAreas);
 router.get('/adminapi/v1/zone/:areaId',locationController.getZones);
 router.get('/adminapi/v1/zone',locationController.getZones);
+
+
+router.get('/adminapi/v1/parents',userController.getParents);
 
 module.exports = router;

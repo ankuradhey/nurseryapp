@@ -6,6 +6,15 @@
 
 var user = require('../models/user.js'),
         response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []},
+        responseClass = function(){
+            return {
+                error:true,
+                success:false,
+                code:501,
+                message:'Oops! Some error occurred',
+                errors:[]
+            }
+        }
 validate = require('validate.js'),
 config = require('../config'),
 jwt = require("jsonwebtoken")
@@ -201,5 +210,22 @@ module.exports = {
             
         });
         }
+    },
+    getParents: function(req, res){
+        user.getAllParents(function(err, rows){
+            if(err){
+                response = new responseClass();
+                response.message = 'SQL error';
+                res.json(response);
+            }else{
+                response = new responseClass();
+                response.parents = rows;
+                response.success = true;
+                response.error = false;
+                response.message = 'Success';
+                res.json(response);
+            }
+            
+        });
     }
 };
