@@ -7,13 +7,33 @@ var express = require('express'),
     fs = require('fs')
     async = require("async")
     moment = require("moment"),
+    multer = require("multer"),
     jwt = require("jsonwebtoken") // used to create, sign, and verify tokens
     ;
-    
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended:true
 }));
+
+
+ var storage = multer.diskStorage({ //multers disk storage settings
+        destination: function (req, file, cb) {
+            cb(null, './uploads/')
+        },
+        filename: function (req, file, cb) {
+            var datetimestamp = Date.now();
+            var updatedFileName = file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1];
+            req.updatedFileName = updatedFileName;
+            console.log('filename uploaded - ',file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1]);
+            cb(null, updatedFileName);
+        }
+    });
+    
+
+var upload = multer({ //multer settings
+                    storage: storage
+                }).single('file');
 
 
 app.set('superSecret', config.secret);
@@ -33,6 +53,18 @@ app.all('/*', function(req, res, next) {
   }
 });
 
+/*
+ * File upload
+ */
+app.post('/upload',function(req, res){
+    upload(req, res, function(err){
+        if(err){
+            res.json({error:true,success:false,message:'Some error occurred',errors:err,code:500});
+            return;
+        }
+            res.json({error:false,success:true,message:'Success',filename:req.updatedFileName})
+    })
+})
 
 // Auth Middleware - This will check if the token is valid
 // Only the requests that start with /api/v1/* will be checked for the token.
