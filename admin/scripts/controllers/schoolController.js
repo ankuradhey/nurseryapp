@@ -46,7 +46,7 @@ angular.module('sbAdminApp')
                 $scope.boards = boards.data.boards;
                 $scope.countries = countries.data.countries;
                 $scope.schoolId = $stateParams.schoolId;
-                $scope.school = {name: '', affiliation: '', phone: '', address: '', board: '', medium: '', year: '', };
+                $scope.school = {name: '', affiliation: '', phone: '', address: '', board: '', medium: '', year: '', password:123456};
                 $scope.location = {country: {country_id: '', country_name: '-- Select --'}, state: '', city: '', area: '', zone: ''};
                 //check if its an edit case
 
