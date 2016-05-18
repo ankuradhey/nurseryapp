@@ -6,21 +6,22 @@
                     <h3 class="panel-title">Please Sign In</h3>
                 </div>
                 <div class="panel-body">
-                    <form role="form">
+                    <form role="form" name="loginForm" novalidate>
                         <fieldset>
-                            <div class="form-group">
-                                <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                            <div class="form-group" show-errors ng-class="{'has-error':loginForm.user_email.$invalid && loginForm.user_email.$dirty}">
+                                <input class="form-control" placeholder="E-mail" name="user_email" ng-model="user.email" type="email" autofocus required>
                             </div>
-                            <div class="form-group">
-                                <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                            <div class="form-group" show-errors ng-class="{'has-error':loginForm.user_password.$invalid && loginForm.user_password.$dirty}">
+                                <input class="form-control" placeholder="Password" name="user_password" ng-model="user.password" type="password" value="" required>
                             </div>
-                            <div class="checkbox">
+<!--                            <div class="checkbox">
                                 <label>
                                     <input name="remember" type="checkbox" value="Remember Me">Remember Me
                                 </label>
-                            </div>
+                            </div>-->
                             <!-- Change this to a button or input when using this as a form -->
-                            <a ui-sref="dashboard.home" class="btn btn-lg btn-success btn-block">Login</a>
+                            <!--<a ui-sref="dashboard.home" class="btn btn-lg btn-success btn-block">Login</a>-->
+                            <a ng-click="login()" ng-disabled="loginForm.$invalid" class="btn btn-lg btn-success btn-block">Login</a>
                         </fieldset>
                     </form>
                 </div>
