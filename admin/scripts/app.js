@@ -433,18 +433,19 @@ var app = angular
                     console.log(userInfo);
                 });
 
-                $rootScope.$on("$stateChangeError", function (event, current, previous, eventObj) {
-                    $window.location.hash = "/dashboard/home";
+                $rootScope.$on("$stateChangeError", function (event, toState, toParams, fromState, fromParams, error) {
+//                    $window.location.hash = "/dashboard/home";
 //                    $rootScope.$apply(function() {
 //                        $location.path("/login");
 //                        console.log($location.path());
 //                    });
 
-                    if (eventObj.authenticated === false) {
+                    if (error.authenticated === false) {
                         window.location.hash = "/login";
                     }
                     
-                    if(eventObj.authenticated === true && current.name == 'login'){
+                    
+                    if(error.authenticated === true && toState.name == 'login'){
                         window.location.hash = '/dashboard/home'
 //                        $window.location.assign("/dashboard/home");
 //                        $window.location.hash = "/dashboard/home";
