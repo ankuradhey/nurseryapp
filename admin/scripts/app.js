@@ -24,14 +24,17 @@ var app = angular
 
                 $urlRouterProvider.otherwise('/dashboard/home');
 
+                var access = routingConfig.accessLevels;
+
                 $stateProvider
                         .state('dashboard', {
                             url: '/dashboard',
+                            access: access.school,
                             templateUrl: 'views/dashboard/main.html',
                             resolve: {
                                 auth: function ($q, authService) {
                                     var userInfo = authService.getUserInfo();
-                                    if (userInfo) {
+                                    if (userInfo && authService.authorize(access.school)) {
                                         return $q.when(userInfo);
                                     } else {
                                         return $q.reject({authenticated: false});
@@ -85,9 +88,18 @@ var app = angular
                         })
                         .state('dashboard.home', {
                             url: '/home',
+                            access: access.user,
                             controller: 'MainCtrl',
                             templateUrl: 'views/dashboard/home.html',
                             resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.school)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
                                 loadMyFiles: function ($ocLazyLoad) {
                                     return $ocLazyLoad.load({
                                         name: 'sbAdminApp',
@@ -160,9 +172,19 @@ var app = angular
                         })
                         .state('dashboard.schools', {
                             url: '/schools',
+                            access: access.admin,
                             controller: 'SchoolCtrl',
                             templateUrl: 'views/schools/list.html',
                             resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    console.log(authService, userInfo);
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
                                 schools: function (schoolService) {
                                     console.log('inside schools');
                                     return schoolService.getSchools();
@@ -181,9 +203,18 @@ var app = angular
                         })
                         .state('dashboard.addschool', {
                             url: '/addschool',
+                            access: access.admin,
                             controller: 'SchoolAddCtrl',
                             templateUrl: 'views/schools/addschool.html',
                             resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
                                 loadMyFiles: function ($ocLazyLoad) {
                                     return $ocLazyLoad.load({
                                         name: 'sbAdminApp',
@@ -204,9 +235,18 @@ var app = angular
                         })
                         .state('dashboard.editschool', {
                             url: '/editschool/:schoolId',
+                            access: access.admin,
                             controller: 'SchoolAddCtrl',
                             templateUrl: 'views/schools/addschool.html',
                             resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
                                 loadMyFiles: function ($ocLazyLoad) {
                                     return $ocLazyLoad.load({
                                         name: 'sbAdminApp',
@@ -226,9 +266,18 @@ var app = angular
                         })
                         .state('dashboard.boards', {
                             url: '/boards',
+                            access: access.admin,
                             controller: 'boardController',
                             templateUrl: 'views/boards/list.html',
                             resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
                                 boards: function (schoolService) {
                                     return schoolService.getBoards();
                                 },
@@ -245,9 +294,18 @@ var app = angular
                             }
                         }).state('dashboard.addboard', {
                     url: '/addboard',
+                    access: access.admin,
                     controller: 'boardAddController',
                     templateUrl: 'views/boards/addboard.html',
                     resolve: {
+                        auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
                         loadMyFiles: function ($ocLazyLoad) {
                             return $ocLazyLoad.load({
                                 name: 'sbAdminApp',
@@ -259,9 +317,18 @@ var app = angular
                     }
                 }).state('dashboard.editboard', {
                     url: '/editboard/:boardId',
+                    access: access.admin,
                     controller: 'boardAddController',
                     templateUrl: 'views/boards/addboard.html',
                     resolve: {
+                        auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
                         loadMyFiles: function ($ocLazyLoad) {
                             return $ocLazyLoad.load({
                                 name: 'sbAdminApp',
@@ -273,9 +340,18 @@ var app = angular
                     }
                 }).state('dashboard.countries', {
                     url: '/countries',
+                    access: access.admin,
                     controller: 'countryController',
                     templateUrl: 'views/location/countrylist.html',
                     resolve: {
+                        auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
                         loadMyFiles: function ($ocLazyLoad) {
                             return $ocLazyLoad.load({
                                 name: 'sbAdminApp',
@@ -291,9 +367,18 @@ var app = angular
                 })
                         .state('dashboard.states', {
                             url: '/states',
+                            access: access.admin,
                             controller: 'stateController',
                             templateUrl: 'views/location/statelist.html',
                             resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
                                 loadMyFiles: function ($ocLazyLoad) {
                                     return $ocLazyLoad.load({
                                         name: 'sbAdminApp',
@@ -309,10 +394,19 @@ var app = angular
                         })
                         .state('dashboard.cities', {
                             url: '/cities',
+                            access: access.admin,
                             controller: 'cityController',
                             data: {collapseVar: 'location'},
                             templateUrl: 'views/location/citylist.html',
                             resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
                                 loadMyFiles: function ($ocLazyLoad) {
                                     return $ocLazyLoad.load({
                                         name: 'sbAdminApp',
@@ -325,10 +419,19 @@ var app = angular
                         })
                         .state('dashboard.areas', {
                             url: '/areas',
+                            access: access.admin,
                             controller: 'areaController',
                             data: {collapseVar: 'location'},
                             templateUrl: 'views/location/arealist.html',
                             resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
                                 loadMyFiles: function ($ocLazyLoad) {
                                     return $ocLazyLoad.load({
                                         name: 'sbAdminApp',
@@ -341,10 +444,19 @@ var app = angular
                         })
                         .state('dashboard.zones', {
                             url: '/zones',
+                            access: access.admin,
                             data: {collapseVar: 'location'},
                             controller: 'zoneController',
                             templateUrl: 'views/location/zonelist.html',
                             resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
                                 loadMyFiles: function ($ocLazyLoad) {
                                     return $ocLazyLoad.load({
                                         name: 'sbAdminApp',
@@ -357,10 +469,19 @@ var app = angular
                         })
                         .state('dashboard.parents', {
                             url: '/parents',
+                            access: access.admin,
                             data: {collapseVar: 'parent'},
                             controller: 'parentController',
                             templateUrl: 'views/parents/list.html',
                             resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
                                 loadMyFiles: function ($ocLazyLoad) {
                                     return $ocLazyLoad.load({
                                         name: 'sbAdminApp',
@@ -373,10 +494,19 @@ var app = angular
                         })
                         .state('dashboard.addparent', {
                             url: '/addparent',
+                            access: access.admin,
                             data: {collapseVar: 'parent'},
                             controller: 'parentAddController',
                             templateUrl: 'views/parents/addparent.html',
                             resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
                                 loadMyFiles: function ($ocLazyLoad) {
                                     return $ocLazyLoad.load({
                                         name: 'sbAdminApp',
@@ -389,10 +519,19 @@ var app = angular
                         })
                         .state('dashboard.editparent', {
                             url: '/editparent/:parentId',
+                            access: access.admin,
                             data: {collapseVar: 'parent'},
                             controller: 'parentAddController',
                             templateUrl: 'views/parents/addparent.html',
                             resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
                                 loadMyFiles: function ($ocLazyLoad) {
                                     return $ocLazyLoad.load({
                                         name: 'sbAdminApp',
@@ -406,12 +545,13 @@ var app = angular
                         .state('login', {
                             url: '/login',
                             controller: 'loginController',
+                            access: access.anon,
                             templateUrl: 'views/pages/login.html',
                             resolve: {
                                 auth: function ($q, authService) {
                                     var userInfo = authService.getUserInfo();
                                     if (userInfo) {
-                                        return $q.reject({authenticated:true});
+                                        return $q.reject({authenticated: true});
                                     } else {
                                         return $q.when();
                                     }
@@ -425,7 +565,27 @@ var app = angular
                                     })
                                 }
                             }
-                        })
+                        });
+
+                //when api denies requested resources then redirect to login - reason may be unauthorized access or session timeout
+//                $provide.factory('sessionInterceptor', function($q, $location){
+//                    return {
+//                        'response':function(response){
+//                            return response;
+//                        },
+//                        'responseError': function(rejection){
+//                            console.log('interceptor result - ',rejection);
+//                            if(rejection.status == 401){
+//                                $location.path('/login');
+//                                return $q.reject(rejection);
+//                            }else{
+//                                return $q.reject(rejection);
+//                            }
+//                        }
+//                    }
+//                });
+//                $httpProvider.interceptors.push('sessionInterceptor');
+                    //$httpProvider.responseInterceptors.push(interceptor);
             }])
         .run(["$rootScope", "$window", "$location", function ($rootScope, $window, $location) {
 
@@ -434,24 +594,18 @@ var app = angular
                 });
 
                 $rootScope.$on("$stateChangeError", function (event, toState, toParams, fromState, fromParams, error) {
-//                    $window.location.hash = "/dashboard/home";
-//                    $rootScope.$apply(function() {
-//                        $location.path("/login");
-//                        console.log($location.path());
-//                    });
 
                     if (error.authenticated === false) {
                         window.location.hash = "/login";
                     }
-                    
-                    
-                    if(error.authenticated === true && toState.name == 'login'){
+
+                    if (error.authenticated === true && toState.name == 'login') {
                         window.location.hash = '/dashboard/home'
 //                        $window.location.assign("/dashboard/home");
 //                        $window.location.hash = "/dashboard/home";
 //                        $window.location.hash = "/dashboard/home";
                     }
-                    
+
                 });
             }])
         ;

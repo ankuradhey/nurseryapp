@@ -6,7 +6,7 @@
                     <h3 class="panel-title">Please Sign In</h3>
                 </div>
                 <div class="panel-body">
-                    <form role="form" name="loginForm" novalidate>
+                    <form role="form" name="loginForm" novalidate ng-submit="login()">
                         <fieldset>
                             <div class="form-group" show-errors ng-class="{'has-error':loginForm.user_email.$invalid && loginForm.user_email.$dirty}">
                                 <input class="form-control" placeholder="E-mail" name="user_email" ng-model="user.email" type="email" autofocus required>

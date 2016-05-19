@@ -58,6 +58,8 @@ angular.module('sbAdminApp')
                         if (data.school && Object.keys(data.school).length) {
                             var school = data.school;
                             $scope.school.name = school.school_name;
+                            $scope.school.email = school.school_email;
+                            $scope.school.password = '';
                             $scope.school.affiliation = school.school_affiliation_code;
                             $scope.school.phone = school.school_phone;
                             $scope.school.address = school.school_address;
@@ -162,6 +164,7 @@ angular.module('sbAdminApp')
 
                     var data = {
                         school_name: $scope.school.name,
+                        school_email: $scope.school.email,
                         school_affiliation_code: $scope.school.affiliation,
                         school_phone: $scope.school.phone,
                         school_address: $scope.school.address,
@@ -174,7 +177,7 @@ angular.module('sbAdminApp')
                         school_area: $scope.location.area.area_id,
                         school_zone: $scope.location.zone.zone_id,
                     }
-
+                    
                     if ($scope.schoolId) {
                         var url = baseUrl + '/adminapi/v1/school/' + $scope.schoolId;
                         var method = 'PUT';
@@ -183,6 +186,9 @@ angular.module('sbAdminApp')
                         var method = 'POST';
                     }
 
+                    if($scope.school.password)
+                        data.school_password = $scope.school.password;
+                    
                     if($scope.school.logo)
                        data.school_logo = $scope.school.logo
                    
@@ -199,7 +205,7 @@ angular.module('sbAdminApp')
                             $scope.alert.message = data.message;
                             $scope.alert.show = true;
                             $scope.alert.type = 'success';
-                            //$state.reload();
+                            $state.go('dashboard.schools');
                             $scope.$broadcast('show-errors-reset');
                         } else {
                             $scope.alert.message = data.message;
