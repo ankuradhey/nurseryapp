@@ -13,6 +13,7 @@ var locationController = require('../controllers/locationController.js');
  * Routes that can be accessed by any one
  */
 router.post('/login', auth.login);
+router.post('/admin/login', auth.adminLogin);
 router.post('/sociallogin', auth.socialLogin);
 router.post('/register', userController.register);
 //router.post('/sociallogin',auth.);
