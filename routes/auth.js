@@ -37,7 +37,8 @@ var auth = {
                     response.message = 'Success';
                     response.success = true;
                     response.error = false;
-                    generateToken(req.body, function(_token){
+                    var userDetails = {user_email:result[0].user_email,user_type:result[0].user_type};
+                    generateToken(userDetails, function(_token){
                         response.token = _token.token;
                         response.user = _token.user;
                         res.json(response);
