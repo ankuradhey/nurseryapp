@@ -38,11 +38,11 @@ var schools = {
         db.get().query('SELECT s.*, board.board_id, board.board_name, c.country_id, c.country_name, st.state_id, st.state_name, city.city_id, city.city_name, \n\
                         area.area_id, area.area_name, zone.zone_id, zone.zone_name FROM school s\n\
                         join board_master board on board.board_id = s.school_board and board.board_status = "1"\n\
-                        join country c on c.country_id = s.school_country and c.country_status = "1"\n\
-                        join state st on st.state_id = s.school_state and st.state_status = "1"\n\
-                        join city on city.city_id = s.school_city and city.city_status = "1"\n\
-                        join location_area area on area.area_id = s.school_area and area.area_status = "1"\n\
-                        join location_zone zone on zone.zone_id = s.school_zone and zone.zone_status = "1"\n\
+                        left join country c on c.country_id = s.school_country and c.country_status = "1"\n\
+                        left join state st on st.state_id = s.school_state and st.state_status = "1"\n\
+                        left join city on city.city_id = s.school_city and city.city_status = "1"\n\
+                        left join location_area area on area.area_id = s.school_area and area.area_status = "1"\n\
+                        left join location_zone zone on zone.zone_id = s.school_zone and zone.zone_status = "1"\n\
                         where school_id = ?', id, function(err, rows) {
             if (err)
                 return done(err)
