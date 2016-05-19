@@ -10,7 +10,7 @@
  */
 
 angular.module('sbAdminApp')
-        .controller("loginController", ["$scope", "$location", "$window", "authService", function ($scope, $location, $window, authService) {
+        .controller("loginController", ["$scope", "$location", "$window", "authService", "$state", function ($scope, $location, $window, authService, $state) {
                 $scope.userInfo = null;
                 $scope.login = function () {
                     $scope.$broadcast('show-errors-check-validity');
@@ -21,7 +21,8 @@ angular.module('sbAdminApp')
                     authService.login($scope.user.email, $scope.user.password)
                             .then(function (result) {
                                 $scope.userInfo = result;
-                                $location.path("/");
+                                $state.go('dashboard.home');
+//                                $location.path("/dashboard/");
                             }, function (error) {
                                 $window.alert("Invalid credentials");
                                 console.log(error);
