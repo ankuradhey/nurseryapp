@@ -19,7 +19,7 @@ angular.module('sbAdminApp')
                 function login(userName, password) {
                     var deferred = $q.defer();
 
-                    $http.post(baseUrl+"/login", {user_email: userName, user_password: password})
+                    $http.post(baseUrl+"/admin/login", {user_email: userName, user_password: password})
                             .then(function (result) {
                                 console.log(result)
                                 if(result.data.success){
@@ -57,13 +57,13 @@ angular.module('sbAdminApp')
                 function authorize(accessLevel, role){
                     if(role === undefined)
                         role = $rootScope.user.role;
-                    return accessLevel & role;
-                    
+                    return accessLevel & userRoles.role;
                 }
                 
                 function init() {
                     if ($window.sessionStorage["userInfo"]) {
                         userInfo = JSON.parse($window.sessionStorage["userInfo"]);
+                        $rootScope.user = userInfo;
                     }
                 }
                 init();
