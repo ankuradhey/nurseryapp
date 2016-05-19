@@ -57,6 +57,57 @@ var auth = {
         });
         
     },
+    adminLogin: function(req, res){
+        var username = req.body.user_email || '';
+        var password = req.body.user_password || '';
+        
+        console.log('username and password are - ',username, password);
+        
+        //use query to validate
+        auth.validate(username, password, function(err, result){
+            if(err){
+                res.status(200);
+                response.message = 'Oops! Some error occurred';
+                response.code = 500;
+                response.errors = err;
+                console.log(err);
+                response.developer = {message:'Db error occurred'};
+                console.log(response);
+                res.json(response);
+                return;
+            }else{
+                if(result.length){
+                    if(result[0].user_type == 'school' || result[0].user_type == 'admin'){
+                        response.message = 'Success';
+                        response.success = true;
+                        response.error = false;
+                        var userDetails = {user_email: result[0].user_email, user_type: result[0].user_type};
+                        generateToken(userDetails, function(_token) {
+                            response.token = _token.token;
+                            response.user = _token.user;
+                            res.json(response);
+                            return;
+                        });
+                    }else{
+                        response.message = 'Usernot authorized to access';
+                        response.code = 501;
+                        response.error = true;
+                        response.success = false;
+                        res.json(response);
+                        return;
+                    }
+                }else{
+                    res.status(200);
+                    response.message = 'Invalid Username or password';
+                    response.code = 500;
+                    response.errors = err;
+                    console.log(err);
+                    res.json(response);
+                }
+            }
+        });
+        
+    },
     socialLogin:function(req, res){
         var socialId = req.body.socialId || '';
         var socialType = req.body.socialType || 'facebook';
