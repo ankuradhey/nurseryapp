@@ -34,6 +34,7 @@ var app = angular
                             resolve: {
                                 auth: function ($q, authService) {
                                     var userInfo = authService.getUserInfo();
+                                    console.log('access.school - value - '+access.school, authService.authorize(access.school))
                                     if (userInfo && authService.authorize(access.school)) {
                                         return $q.when(userInfo);
                                     } else {
@@ -45,6 +46,7 @@ var app = angular
                                             {
                                                 name: 'sbAdminApp',
                                                 files: [
+                                                    'scripts/directives/accessLevel.js',
                                                     'scripts/directives/header/header.js',
                                                     'scripts/directives/header/header-notification/header-notification.js',
                                                     'scripts/directives/sidebar/sidebar.js',
@@ -94,6 +96,7 @@ var app = angular
                             resolve: {
                                 auth: function ($q, authService) {
                                     var userInfo = authService.getUserInfo();
+                                    console.log('access.school - value - '+access.school, authService.authorize(access.school))
                                     if (userInfo && authService.authorize(access.school)) {
                                         return $q.when(userInfo);
                                     } else {
