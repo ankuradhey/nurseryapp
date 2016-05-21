@@ -26,7 +26,8 @@ angular.module('sbAdminApp')
                                     userInfo = {
                                         accessToken: result.data.token,
                                         userName: result.data.user.user_email,
-                                        role:result.data.user.user_type
+//                                        role:result.data.user.user_type
+                                        role:userRoles[result.data.user.user_type]
                                     };
                                     $rootScope.user = userInfo;
                                     $window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
@@ -57,7 +58,8 @@ angular.module('sbAdminApp')
                 function authorize(accessLevel, role){
                     if(role === undefined)
                         role = $rootScope.user.role;
-                    return accessLevel & userRoles.role;
+                    
+                    return accessLevel & role;
                 }
                 
                 function init() {
