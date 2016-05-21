@@ -33,7 +33,7 @@ var auth = {
                 res.json(response);
                 return;
             }else{
-                if(result.length){
+                if(result.length && result[0].user_type == 'parent'){
                     response.message = 'Success';
                     response.success = true;
                     response.error = false;
