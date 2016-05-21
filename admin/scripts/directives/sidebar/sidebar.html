@@ -2,10 +2,10 @@
     <div class="sidebar-nav navbar-collapse">
         <ul class="nav in" id="side-menu">
             <sidebar-search></sidebar-search>
-            <li ui-sref-active="active">
+            <li ui-sref-active="active" access-level="public">
                 <a ui-sref="dashboard.home"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
-            <li ng-class="{active:collapseVar=='school'}">{{dropDown}}
+            <li ng-class="{active:collapseVar=='school'}" access-level="admin">{{dropDown}}
                 <a href="" ng-click="check('school')">
                     <i class="fa fa-wrench fa-fw"></i> Manage Schools<span class="fa arrow"></span>
                 </a>
@@ -18,7 +18,7 @@
                     </li>
                 </ul>
             </li>
-            <li ng-class="{active:collapseVar=='board'}">{{dropDown}}
+            <li ng-class="{active:collapseVar=='board'}" access-level="admin">{{dropDown}}
                     <a href="" ng-click="check('board')">
                         <i class="fa fa-bar-chart-o fa-fw"></i> Manage Boards<span class="fa arrow"></span>
                     </a>
@@ -38,7 +38,7 @@
             <!--            <li ui-sref-active="active">
                             <a ui-sref="dashboard.form"><i class="fa fa-edit fa-fw"></i> Forms</a>
                         </li>-->
-            <li ng-class="{active: collapseVar=='location'}">{{dropDown}}
+            <li ng-class="{active: collapseVar=='location'}" access-level="admin">{{dropDown}}
                 <a href="" ng-click="check('location')"><i class="fa fa-wrench fa-fw"></i> Manage Locations<span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level" uib-collapse="collapseVar!='location'">
@@ -68,7 +68,7 @@
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
-            <li ng-class="{active: collapseVar=='parent'}">{{dropDown}}
+            <li ng-class="{active: collapseVar=='parent'}" access-level="admin">{{dropDown}}
                 <a href="" ng-click="check('parent')"><i class="fa fa-wrench fa-fw"></i> Manage Parents<span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level" uib-collapse="collapseVar!='parent'">
