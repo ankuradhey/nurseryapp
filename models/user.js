@@ -118,7 +118,12 @@ exports.socialLoginCheck = function(socialId, socialType, done){
 }
 
 exports.loginCheck = function(userEmail, userPassword, done){
-    db.get().query('SELECT * FROM user where user_email = ? and user_password = ? ',[userEmail, md5(userPassword)], function(err, rows){
+    db.get().query('SELECT user_email, concat(user_first_name, " ", user_last_name) as user_full_name, user_type, user_phone \n\
+                    FROM user where user_email = ? and user_password = ? and user_status = "1" \n\
+                     union \n\
+                    SELECT school_email as user_email, school_name as user_full_name, "school" as user_type, school_phone as user_phone \n\
+                    FROM school where school_email = ? and school_password = ? and school_status = "1" \n\
+',[userEmail, md5(userPassword), userEmail, md5(userPassword)], function(err, rows){
         if(err)
             return done(err);
         
