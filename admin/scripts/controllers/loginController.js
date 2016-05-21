@@ -21,8 +21,8 @@ angular.module('sbAdminApp')
                     authService.login($scope.user.email, $scope.user.password)
                             .then(function (result) {
                                 $scope.userInfo = result;
-                                $state.go('dashboard.home');
-//                                $location.path("/dashboard/");
+//                                $state.go('dashboard.home');
+                                $location.path("/dashboard/home");
                             }, function (error) {
                                 $window.alert("Invalid credentials");
                                 console.log(error);
