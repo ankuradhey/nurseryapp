@@ -57,4 +57,6 @@ router.post('/adminapi/v1/parent',userController.addParent);
 router.put('/adminapi/v1/parent/:parentId',userController.updateParent);
 router.delete('/adminapi/v1/parent/:parentId',userController.deleteParent);
 
+router.get('/adminapi/v1/schooltypes',schoolController.getSchoolTypes);
+
 module.exports = router;
