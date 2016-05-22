@@ -16,7 +16,12 @@ angular.module('sbAdminApp')
                 console.log('schools list - ', schools);
                 $scope.schools = schools.data.schools;
                 $state;
+                
                 $scope.deleteSchool = function (schoolId) {
+                    var s = confirm("Are you sure you want to delete this school?");
+                    if(!s)
+                        return;
+                    
                     $http({
                         method: 'DELETE',
                         url: baseUrl + '/adminapi/v1/school/' + schoolId,
@@ -37,6 +42,35 @@ angular.module('sbAdminApp')
                         $scope.alert.show = true;
                         $scope.alert.type = 'danger';
                     })
+                }
+                
+                $scope.updateStatus = function(status, schoolId){
+                    var s = confirm("Are you sure you want to update this school?");
+                    if(!s)
+                        return;
+                    
+                    
+                    $http({
+                        method: 'PUT',
+                        url: baseUrl + '/adminapi/v1/school/' + schoolId,
+                        headers: {'Content-Type': 'application/json'},
+                        data:{school_status:status}
+                    }).success(function (data, status, headers, conf) {
+                        if (data.success) {
+                            $scope.alert.message = 'School status changed successfully';
+                            $scope.alert.show = true;
+                            $scope.alert.type = 'success';
+                            $state.reload();
+                        } else {
+                            $scope.alert.message = data.message;
+                            $scope.alert.show = true;
+                            $scope.alert.type = 'danger';
+                        }
+                    }).error(function (data, status, headers, conf) {
+                        $scope.alert.show = true;
+                        $scope.alert.type = 'danger';
+                    })
+                    
                 }
 
             }])
