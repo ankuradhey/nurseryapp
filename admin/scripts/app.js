@@ -574,6 +574,31 @@ var app = angular
                                     })
                                 }
                             }
+                        })
+                        .state('dashboard.reviews', {
+                            url: '/reviews',
+                            access: access.admin,
+                            data: {collapseVar: 'parent'},
+                            controller: 'reviewController',
+                            templateUrl: 'views/reviews/list.html',
+                            resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/reviewController.js',
+                                        ]
+                                    })
+                                }
+                            }
                         });
 
                 //when api denies requested resources then redirect to login - reason may be unauthorized access or session timeout
