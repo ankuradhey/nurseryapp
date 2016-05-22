@@ -33,6 +33,20 @@
                                 <td>{{school.school_medium}}</td>
                                 <td class="center">{{school.school_affiliation_code}}</td>
                                 <td class="center">
+                                    <button type='button' 
+                                            ng-if='school.school_status!="1"'
+                                            class='btn-default btn-xs' 
+                                            ng-click="updateStatus('1', school.school_id)"
+                                            >
+                                        Inactive
+                                    </button>
+                                    <button type='button' 
+                                            ng-if='school.school_status=="1"'
+                                            class='btn-info btn-xs' 
+                                            ng-click="updateStatus('0', school.school_id)"
+                                            >
+                                        Active
+                                    </button>
                                     <button type='button' class='btn-primary btn-xs' ui-sref="dashboard.editschool({schoolId:school.school_id})">Edit</button>
                                     <button type='button' class='btn-warning btn-xs' ng-click="deleteSchool(school.school_id)">Delete</button>
                                 </td>
