@@ -35,9 +35,10 @@ var schools = {
         })
     },
     getOne: function(id, done) {
-        db.get().query('SELECT s.*, board.board_id, board.board_name, c.country_id, c.country_name, st.state_id, st.state_name, city.city_id, city.city_name, \n\
-                        area.area_id, area.area_name, zone.zone_id, zone.zone_name FROM school s\n\
+        db.get().query('SELECT s.*, board.board_id, board.board_name, c.country_id, c.country_name, st.state_id, st.state_name, city.city_id, city.city_name,  \n\
+                        stype.school_type_id, stype.school_type_name, area.area_id, area.area_name, zone.zone_id, zone.zone_name FROM school s\n\
                         join board_master board on board.board_id = s.school_board and board.board_status = "1"\n\
+                        left join school_type stype on stype.school_type_id = s.school_type and stype.school_type_status = "1"\n\
                         left join country c on c.country_id = s.school_country and c.country_status = "1"\n\
                         left join state st on st.state_id = s.school_state and st.state_status = "1"\n\
                         left join city on city.city_id = s.school_city and city.city_status = "1"\n\
@@ -96,6 +97,13 @@ var schools = {
                 return done(err)
             return done(null, rows);
         });
+    },
+    getSchoolTypes: function(status, done){
+        db.get().query('select * from school_type where school_type_status = "'+status+'"  ', function(err, rows){
+            if(err)
+                return done(err);
+            return done(null, rows);
+        })
     }
 
 };
