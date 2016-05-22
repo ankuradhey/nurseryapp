@@ -15,6 +15,7 @@ angular.module('sbAdminApp')
                     
                 $rootScope.accessLevels = accessLevels;
                 $rootScope.userRoles = userRoles;
+                $rootScope.user = {role:1};
                 
                 function login(userName, password) {
                     var deferred = $q.defer();
