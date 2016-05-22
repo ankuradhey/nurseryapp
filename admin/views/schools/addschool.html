@@ -35,16 +35,26 @@
                                 <textarea class="form-control" name="school_address" ng-model="school.address" required></textarea>
                                 <p class="help-block" ng-if="schoolForm.school_address.$error.required && schoolForm.school_address.$dirty">Address is required</p>
                             </div>
-                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_address.$invalid && schoolForm.school_address.$dirty}">
+                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_email.$invalid && schoolForm.school_email.$dirty}">
                                 <label>Email/Username</label>
                                 <input type="email" class="form-control" name="school_email" ng-model='school.email' required>
                                 <p class="help-block" ng-if="schoolForm.school_email.$error.required && schoolForm.school_email.$dirty">School Email is required</p>
+                                <p class="help-block" ng-if="schoolForm.school_email.$error.email && schoolForm.school_email.$dirty">School Email is not valid</p>
                             </div>
-                            <div class="form-group" ng-class="{'has-error':schoolForm.school_password.$invalid && schoolForm.school_password.$dirty}">
+                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_password.$invalid && schoolForm.school_password.$dirty}">
                                 <label>Password</label>
                                 <input type="password" class="form-control" name="school_password" ng-model='school.password'>
                                 <p class="help-block" ng-if="schoolForm.school_password.$error.required && schoolForm.school_password.$dirty">School Password is required</p>
                                 <p class="help-block">If you do not enter password, old password is used in edit case and for new user default password is chosen as - 123456</p>
+                            </div>
+                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_website.$invalid && schoolForm.school_website.$dirty}">
+                                <label>Website</label>
+                                <input type="url" class="form-control" name="school_website" ng-model='school.website'>
+                                <p class="help-block" ng-if="schoolForm.school_website.$invalid && schoolForm.school_website.$dirty">School Url not valid</p>
+                            </div>
+                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_desc.$invalid && schoolForm.school_desc.$dirty}">
+                                <label>School Description</label>
+                                <textarea rows="10" class="form-control" name="school_desc" ng-model="school.description"></textarea>
                             </div>
                             <div class="form-group" ng-class="{'has-error':school.board.$invalid}">
                                 <label>Choose Board</label>
@@ -60,6 +70,15 @@
                                     <option value="english">English</option>
                                     <option value="hindi">Hindi</option>
                                 </select>
+                            </div>
+                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_type.$invalid && schoolForm.school_type.$dirty}">
+                                <label>School Type</label>
+                                <select name="school_type" class="form-control" ng-model="school.type"
+                                        ng-options="typeVal as typeVal.school_type_name for typeVal in types track by typeVal.school_type_id"
+                                        required>
+                                    <option value="">-- Select --</option>
+                                </select>
+                                <p class="help-block" ng-if="schoolForm.school_type.$invalid && schoolForm.school_type.$dirty">School Type is required</p>
                             </div>
                             <div class="form-group">
                                 <label>Established Year</label>

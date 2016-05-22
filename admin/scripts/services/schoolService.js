@@ -42,6 +42,15 @@ angular.module('sbAdminApp')
             });
             
             return promise;
+        },
+        getSchoolTypes: function(){
+            var promise = $http({
+               method:'GET',
+               url:baseUrl+'/adminapi/v1/schooltypes'
+            }).success(function(data,status, headers, conf){
+                return data;
+            });
+            return promise;
         }
     }
 }])

@@ -233,6 +233,9 @@ var app = angular
                                 },
                                 countries: function (schoolService) {
                                     return schoolService.getCountries();
+                                },
+                                schoolType: function(schoolService){
+                                    return schoolService.getSchoolTypes();
                                 }
                             }
                         })
@@ -264,6 +267,9 @@ var app = angular
                                 },
                                 countries: function (schoolService) {
                                     return schoolService.getCountries();
+                                },
+                                schoolType: function(schoolService){
+                                    return schoolService.getSchoolTypes();
                                 }
                             }
                         })

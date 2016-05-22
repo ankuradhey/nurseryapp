@@ -40,14 +40,15 @@ angular.module('sbAdminApp')
                 }
 
             }])
-        .controller('SchoolAddCtrl', ['$rootScope', '$scope', '$http', '$stateParams', 'boards', 'countries', 'Upload', '$state',
-            function ($rootScope, $scope, $http, $stateParams, boards, countries, Upload, $state) {
+        .controller('SchoolAddCtrl', ['$rootScope', '$scope', '$http', '$stateParams', 'boards', 'countries', 'schoolType', 'Upload', '$state',
+            function ($rootScope, $scope, $http, $stateParams, boards, countries, schoolType, Upload, $state) {
                 $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
                 $scope.boards = boards.data.boards;
                 $scope.countries = countries.data.countries;
                 $scope.schoolId = $stateParams.schoolId;
                 $scope.school = {name: '', affiliation: '', phone: '', address: '', board: '', medium: '', year: '', password:123456};
                 $scope.location = {country: {country_id: '', country_name: '-- Select --'}, state: '', city: '', area: '', zone: ''};
+                $scope.types = schoolType.data.types;
                 //check if its an edit case
 
                 if ($scope.schoolId) {
@@ -66,6 +67,9 @@ angular.module('sbAdminApp')
                             $scope.school.board = {board_id: school.board_id, board_name: school.board_name};
                             $scope.school.medium = school.school_medium;
                             $scope.school.year = school.school_establish_year;
+                            $scope.school.website = school.school_website;
+                            $scope.school.description = school.school_desc;
+                            $scope.school.type = {school_type_id:school.school_type_id,school_type_name:school.school_type_name};
                             $scope.location.country = {country_id: school.country_id, country_name: school.country_name};
                             $scope.location.state = {state_id: school.state_id, state_name: school.state_name};
                             $scope.location.city = {city_id: school.city_id, city_name: school.city_id};
@@ -148,13 +152,12 @@ angular.module('sbAdminApp')
 
                 $scope.getYears = function () {
                     var arr = {};
-
                     for (var i = 1980; i <= 2016; i++)
                         arr[i] = i;
 
                     return arr;
                 }
-
+                
                 $scope.saveSchool = function () {
                     $scope.$broadcast('show-errors-check-validity');
                     if ($scope.schoolForm.$invalid) {
@@ -171,6 +174,9 @@ angular.module('sbAdminApp')
                         school_board: $scope.school.board.board_id,
                         school_medium: $scope.school.medium,
                         school_establish_year: $scope.school.year,
+                        school_website: $scope.school.website,
+                        school_type: $scope.school.type.school_type_id,
+                        school_desc: $scope.school.description,
                         school_country: $scope.location.country.country_id,
                         school_state: $scope.location.state.state_id,
                         school_city: $scope.location.city.city_id,
