@@ -373,6 +373,29 @@ var app = angular
                             return schoolService.getCountries();
                         }
                     }
+                }).state('dashboard.editcountry', {
+                    url: '/editcountry/:countryId',
+                    access: access.admin,
+                    controller: 'countryAddController',
+                    templateUrl: 'views/location/addcountry.html',
+                    resolve: {
+                        auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
+                        loadMyFiles: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'sbAdminApp',
+                                files: [
+                                    'scripts/controllers/locationController.js',
+                                ]
+                            })
+                        }
+                    }
                 })
                         .state('dashboard.states', {
                             url: '/states',

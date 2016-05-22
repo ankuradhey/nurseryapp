@@ -25,6 +25,59 @@ module.exports = {
             res.send(response);
         });
     },
+    getCountry: function(req, res){
+        location.getCountry(req.params.countryId, function(err, rows){
+            response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
+            if(err)
+                response.errors = err;
+            else{
+                response.country = rows[0];
+                response.success = true;
+                response.error = false;
+                response.message = 'success';
+            }
+            res.send(response);
+        });
+    },
+    addCountry: function(req, res){
+        location.addCountry(req.body, function(err, rows){
+            response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
+            if(err)
+                response.errors = err;
+            else{
+                response.success = true;
+                response.error = false;
+                response.message = 'success';
+            }
+            res.send(response);
+        });
+    },
+    updateCountry: function(req, res){
+        location.updateCountry(req.body, req.params.countryId ,function(err, rows){
+            response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
+            if(err)
+                response.errors = err;
+            else{
+                response.success = true;
+                response.error = false;
+                response.message = 'success';
+            }
+            res.send(response);
+        });
+    },
+    addCountry: function(req, res){
+        location.addCountry(req.params, function(err, rows){
+            response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
+            if(err)
+                response.errors = err;
+            else{
+                response.success = true;
+                response.error = false;
+                response.message = 'success';
+            }
+            res.send(response);
+        });
+    },
     getStates:function(req, res){
         var countryId = 0;
         

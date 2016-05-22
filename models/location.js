@@ -18,7 +18,18 @@ var locations = {
             done(null, rows)
         })
     },
-            
+    addCountry: function(reqParams, done){
+        db.get().query('INSERT into country set country_name = ? , country_status = ? ',[reqParams.country_name, reqParams.country_id], function (err, rows) {
+            if (err) return done(err)
+            done(null, rows);
+        });
+    },
+    updateCountry: function(reqParams,countryId, done){
+        db.get().query('update country set country_name = ? where country_id = ? ',[reqParams.country_name, countryId], function (err, rows) {
+            if (err) return done(err)
+            done(null, rows);
+        });
+    },
     getStatesByCountry: function(countryId, done){
         db.get().query('SELECT * FROM state where state_country_id = ? and state_status = "1"  ',countryId, function (err, rows) {
             if (err) 

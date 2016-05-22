@@ -91,4 +91,9 @@ angular.module('sbAdminApp')
 
         }
 
-    }]);
+    }])
+    .controller('SchoolAddCtrl', ['$rootScope', '$scope', '$http', '$stateParams', 'boards', 'countries', 'schoolType', 'Upload', '$state',
+            function ($rootScope, $scope, $http, $stateParams, boards, countries, schoolType, Upload, $state) {
+                
+            }])
+;

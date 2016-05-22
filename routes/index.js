@@ -42,6 +42,8 @@ router.delete('/adminapi/v1/board/:boardId',schoolController.deleteBoard);
 router.put('/adminapi/v1/board/:boardId',schoolController.updateBoard);
 
 router.get('/adminapi/v1/country',locationController.getCountries);
+router.get('/adminapi/v1/country/:countryId',locationController.getCountry);
+router.put('/adminapi/v1/country/:countryId',locationController.updateCountry);
 router.get('/adminapi/v1/state/:countryId',locationController.getStates);
 router.get('/adminapi/v1/state',locationController.getStates);
 router.get('/adminapi/v1/city/:stateId',locationController.getCities);
