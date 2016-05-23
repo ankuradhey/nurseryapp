@@ -239,6 +239,71 @@ angular.module('sbAdminApp')
             $scope.alert.show = true;
         })
     }])
+.controller('areaAddController', ['$scope', '$http', '$stateParams','cities', '$state', function($scope, $http, $stateParams, cities, $state) {
+        $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
+        $scope.location = {city:{}};
+        $scope.cities = states.data.cities;
+        $scope.areaId = $stateParams.areaId;
+
+        if ($scope.areaId) {
+            $http({
+                method: 'GET',
+                url: baseUrl + '/adminapi/v1/city/cityid/' + $scope.areaId
+            }).success(function(data, status, headers, conf) {
+                if (data.area && Object.keys(data.area).length) {
+                    var area = data.area;
+                    $scope.location.city = {city_id:area.city_id, city_name:area.city_name}
+                    $scope.location.area_name = area.area_name;
+                } else {
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'danger';
+                }
+            }).error(function(data, status, headers, conf) {
+                $scope.alert.show = true;
+                $scope.alert.type = 'danger';
+            });
+        }
+
+        $scope.saveArea = function() {
+            $scope.$broadcast('show-errors-check-validity');
+            if ($scope.locationForm.$invalid) {
+                return;
+            }
+            var data = {area_city_id: $scope.location.state.state_id, area_name: $scope.location.area_name};
+
+            if ($scope.stateId) {
+                var url = baseUrl + '/adminapi/v1/city/' + $scope.stateId;
+                var method = 'PUT';
+            } else {
+                var url = baseUrl + '/adminapi/v1/city';
+                var method = 'POST';
+            }
+            
+            $http({
+                        method: method,
+                        url: url,
+                        headers: {'Content-Type': 'application/json'},
+                        data: data
+                    }).success(function (data, status, headers, conf) {
+                        if (data.success) {
+                            $scope.alert.message = data.message;
+                            $scope.alert.show = true;
+                            $scope.alert.type = 'success';
+                            $state.go('dashboard.cities');
+                            $scope.$broadcast('show-errors-reset');0
+                        } else {
+                            $scope.alert.message = data.message;
+                            $scope.alert.show = true;
+                            $scope.alert.type = 'danger';
+                        }
+                    }).error(function (data, status, headers, conf) {
+                        $scope.alert.show = true;
+                        $scope.alert.type = 'danger';
+                    })
+
+        }
+
+    }])
         .controller('zoneController', ['$rootScope', '$scope', '$http', '$timeout', function($rootScope, $scope, $http, $timeout) {
         $rootScope.collapseVar = 'location';
         $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
