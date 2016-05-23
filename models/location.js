@@ -11,7 +11,12 @@ var locations = {
             return done(null, rows);
         })
     },
-    
+    getCountryByName: function(name, done){
+        db.get().query('SELECT * FROM country where country_name = ? and country_status != "2" ',name, function (err, rows) {
+            if (err) return done(err)
+            done(null, rows)
+        })
+    },
     getCountry: function(id, done){
         db.get().query('SELECT * FROM country where country_id = ? and country_status = "1" ',id, function (err, rows) {
             if (err) return done(err)
@@ -19,7 +24,7 @@ var locations = {
         })
     },
     addCountry: function(reqParams, done){
-        db.get().query('INSERT into country set country_name = ? , country_status = ? ',[reqParams.country_name, reqParams.country_id], function (err, rows) {
+        db.get().query('INSERT into country set country_name = ? , country_status = "1" ',[reqParams.country_name], function (err, rows) {
             if (err) return done(err)
             done(null, rows);
         });
@@ -40,6 +45,40 @@ var locations = {
             
     getStates: function(done){
         db.get().query('SELECT * FROM state where state_status = "1"  ', function (err, rows) {
+            if (err) 
+                return done(err)
+            return done(null, rows)
+        })
+    },
+    updateState: function(reqParams, stateId, done){
+        db.get().query('update state set state_name = ?, state_country_id = ? where state_id = ?  ',[reqParams.state_name, reqParams.state_country_id, stateId] , function (err, rows) {
+            if (err) 
+                return done(err)
+            return done(null, rows)
+        })
+    },
+    addState: function(reqParams, done){
+    console.log('insert query');
+        db.get().query('insert into state set state_name = ?, state_country_id = ?, state_status = "1"  ',[reqParams.state_name, reqParams.state_country_id] , function (err, rows) {
+            if (err) 
+                return done(err)
+            return done(null, rows)
+        })
+    },
+    getState: function(stateId, done){
+        console.log('get state query run');
+        db.get().query('SELECT * FROM state s \n\
+                        join country c on c.country_id = s.state_country_id and c.country_status = "1" \n\
+                        where state_id = ? and state_status = "1"  ', stateId ,function (err, rows) {
+            if (err) 
+                return done(err)
+            return done(null, rows)
+        })
+    },
+    getStateByName: function(reqParams, done){
+        console.log('get state query run');
+        db.get().query('SELECT * FROM state s \n\
+                        where state_name = ? and state_status != "2"  ', reqParams.state_name ,function (err, rows) {
             if (err) 
                 return done(err)
             return done(null, rows)

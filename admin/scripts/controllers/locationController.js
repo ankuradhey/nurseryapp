@@ -88,6 +88,71 @@ angular.module('sbAdminApp')
         });
 
     }])
+    .controller('stateAddController', ['$scope', '$http', '$stateParams','countries', '$state', function($scope, $http, $stateParams, countries, $state) {
+        $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
+        $scope.location = {country:{}};
+        $scope.countries = countries.data.countries;
+        $scope.stateId = $stateParams.stateId;
+
+        if ($scope.stateId) {
+            $http({
+                method: 'GET',
+                url: baseUrl + '/adminapi/v1/state/stateid/' + $scope.stateId
+            }).success(function(data, status, headers, conf) {
+                if (data.state && Object.keys(data.state).length) {
+                    var state = data.state;
+                    $scope.location.country = {country_id:state.state_country_id, country_name:state.country_name}
+                    $scope.location.state_name = state.state_name;
+                } else {
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'danger';
+                }
+            }).error(function(data, status, headers, conf) {
+                $scope.alert.show = true;
+                $scope.alert.type = 'danger';
+            });
+        }
+
+        $scope.saveState = function() {
+            $scope.$broadcast('show-errors-check-validity');
+            if ($scope.locationForm.$invalid) {
+                return;
+            }
+            var data = {state_country_id: $scope.location.country.country_id, state_name: $scope.location.state_name};
+
+            if ($scope.stateId) {
+                var url = baseUrl + '/adminapi/v1/state/' + $scope.stateId;
+                var method = 'PUT';
+            } else {
+                var url = baseUrl + '/adminapi/v1/state';
+                var method = 'POST';
+            }
+            
+            $http({
+                        method: method,
+                        url: url,
+                        headers: {'Content-Type': 'application/json'},
+                        data: data
+                    }).success(function (data, status, headers, conf) {
+                        if (data.success) {
+                            $scope.alert.message = data.message;
+                            $scope.alert.show = true;
+                            $scope.alert.type = 'success';
+                            $state.go('dashboard.states');
+                            $scope.$broadcast('show-errors-reset');0
+                        } else {
+                            $scope.alert.message = data.message;
+                            $scope.alert.show = true;
+                            $scope.alert.type = 'danger';
+                        }
+                    }).error(function (data, status, headers, conf) {
+                        $scope.alert.show = true;
+                        $scope.alert.type = 'danger';
+                    })
+
+        }
+
+    }])
         .controller('cityController', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
         $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
         $scope.states = {};

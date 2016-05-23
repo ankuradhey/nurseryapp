@@ -396,6 +396,81 @@ var app = angular
                             })
                         }
                     }
+                }).state('dashboard.editstate', {
+                    url: '/editstate/:stateId',
+                    access: access.admin,
+                    controller: 'stateAddController',
+                    templateUrl: 'views/location/addstate.html',
+                    resolve: {
+                        auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
+                        countries: function (schoolService) {
+                            return schoolService.getCountries();
+                        },
+                        loadMyFiles: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'sbAdminApp',
+                                files: [
+                                    'scripts/controllers/locationController.js',
+                                ]
+                            })
+                        }
+                    }
+                }).state('dashboard.addstate', {
+                    url: '/addstate',
+                    access: access.admin,
+                    controller: 'stateAddController',
+                    templateUrl: 'views/location/addstate.html',
+                    resolve: {
+                        auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
+                        countries: function (schoolService) {
+                            return schoolService.getCountries();
+                        },
+                        loadMyFiles: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'sbAdminApp',
+                                files: [
+                                    'scripts/controllers/locationController.js',
+                                ]
+                            })
+                        }
+                    }
+                }).state('dashboard.addcountry', {
+                    url: '/addcountry',
+                    access: access.admin,
+                    controller: 'countryAddController',
+                    templateUrl: 'views/location/addcountry.html',
+                    resolve: {
+                        auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
+                        loadMyFiles: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'sbAdminApp',
+                                files: [
+                                    'scripts/controllers/locationController.js',
+                                ]
+                            })
+                        }
+                    }
                 })
                         .state('dashboard.states', {
                             url: '/states',
