@@ -616,7 +616,37 @@ var app = angular
                                         return $q.reject({authenticated: false});
                                     }
                                 },
-                                
+                                cities:function(schoolService){
+                                    return schoolService.getCities();
+                                },
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/locationController.js',
+                                        ]
+                                    })
+                                }
+                            }
+                        })
+                        .state('dashboard.editarea', {
+                            url: '/editarea',
+                            access: access.admin,
+                            controller: 'areaAddController',
+                            data: {collapseVar: 'location'},
+                            templateUrl: 'views/location/addarea.html',
+                            resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
+                                cities:function(schoolService){
+                                    return schoolService.getCities();
+                                },
                                 loadMyFiles: function ($ocLazyLoad) {
                                     return $ocLazyLoad.load({
                                         name: 'sbAdminApp',
