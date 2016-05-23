@@ -43,6 +43,16 @@ angular.module('sbAdminApp')
             
             return promise;
         },
+        getStates:function(){
+            var promise = $http({
+               method:'GET',
+               url:baseUrl+'/adminapi/v1/state'
+            }).success(function(data,status, headers, conf){
+                return data;
+            });
+            
+            return promise;
+        },
         getSchoolTypes: function(){
             var promise = $http({
                method:'GET',

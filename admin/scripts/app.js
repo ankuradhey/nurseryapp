@@ -34,7 +34,7 @@ var app = angular
                             resolve: {
                                 auth: function ($q, authService) {
                                     var userInfo = authService.getUserInfo();
-                                    console.log('access.school - value - '+access.school, authService.authorize(access.school))
+                                    console.log('access.school - value - ' + access.school, authService.authorize(access.school))
                                     if (userInfo && authService.authorize(access.school)) {
                                         return $q.when(userInfo);
                                     } else {
@@ -96,7 +96,7 @@ var app = angular
                             resolve: {
                                 auth: function ($q, authService) {
                                     var userInfo = authService.getUserInfo();
-                                    console.log('access.school - value - '+access.school, authService.authorize(access.school))
+                                    console.log('access.school - value - ' + access.school, authService.authorize(access.school))
                                     if (userInfo && authService.authorize(access.school)) {
                                         return $q.when(userInfo);
                                     } else {
@@ -234,7 +234,7 @@ var app = angular
                                 countries: function (schoolService) {
                                     return schoolService.getCountries();
                                 },
-                                schoolType: function(schoolService){
+                                schoolType: function (schoolService) {
                                     return schoolService.getSchoolTypes();
                                 }
                             }
@@ -268,7 +268,7 @@ var app = angular
                                 countries: function (schoolService) {
                                     return schoolService.getCountries();
                                 },
-                                schoolType: function(schoolService){
+                                schoolType: function (schoolService) {
                                     return schoolService.getSchoolTypes();
                                 }
                             }
@@ -308,13 +308,13 @@ var app = angular
                     templateUrl: 'views/boards/addboard.html',
                     resolve: {
                         auth: function ($q, authService) {
-                                    var userInfo = authService.getUserInfo();
-                                    if (userInfo && authService.authorize(access.admin)) {
-                                        return $q.when(userInfo);
-                                    } else {
-                                        return $q.reject({authenticated: false});
-                                    }
-                                },
+                            var userInfo = authService.getUserInfo();
+                            if (userInfo && authService.authorize(access.admin)) {
+                                return $q.when(userInfo);
+                            } else {
+                                return $q.reject({authenticated: false});
+                            }
+                        },
                         loadMyFiles: function ($ocLazyLoad) {
                             return $ocLazyLoad.load({
                                 name: 'sbAdminApp',
@@ -331,13 +331,13 @@ var app = angular
                     templateUrl: 'views/boards/addboard.html',
                     resolve: {
                         auth: function ($q, authService) {
-                                    var userInfo = authService.getUserInfo();
-                                    if (userInfo && authService.authorize(access.admin)) {
-                                        return $q.when(userInfo);
-                                    } else {
-                                        return $q.reject({authenticated: false});
-                                    }
-                                },
+                            var userInfo = authService.getUserInfo();
+                            if (userInfo && authService.authorize(access.admin)) {
+                                return $q.when(userInfo);
+                            } else {
+                                return $q.reject({authenticated: false});
+                            }
+                        },
                         loadMyFiles: function ($ocLazyLoad) {
                             return $ocLazyLoad.load({
                                 name: 'sbAdminApp',
@@ -354,13 +354,13 @@ var app = angular
                     templateUrl: 'views/location/countrylist.html',
                     resolve: {
                         auth: function ($q, authService) {
-                                    var userInfo = authService.getUserInfo();
-                                    if (userInfo && authService.authorize(access.admin)) {
-                                        return $q.when(userInfo);
-                                    } else {
-                                        return $q.reject({authenticated: false});
-                                    }
-                                },
+                            var userInfo = authService.getUserInfo();
+                            if (userInfo && authService.authorize(access.admin)) {
+                                return $q.when(userInfo);
+                            } else {
+                                return $q.reject({authenticated: false});
+                            }
+                        },
                         loadMyFiles: function ($ocLazyLoad) {
                             return $ocLazyLoad.load({
                                 name: 'sbAdminApp',
@@ -380,13 +380,13 @@ var app = angular
                     templateUrl: 'views/location/addcountry.html',
                     resolve: {
                         auth: function ($q, authService) {
-                                    var userInfo = authService.getUserInfo();
-                                    if (userInfo && authService.authorize(access.admin)) {
-                                        return $q.when(userInfo);
-                                    } else {
-                                        return $q.reject({authenticated: false});
-                                    }
-                                },
+                            var userInfo = authService.getUserInfo();
+                            if (userInfo && authService.authorize(access.admin)) {
+                                return $q.when(userInfo);
+                            } else {
+                                return $q.reject({authenticated: false});
+                            }
+                        },
                         loadMyFiles: function ($ocLazyLoad) {
                             return $ocLazyLoad.load({
                                 name: 'sbAdminApp',
@@ -403,13 +403,13 @@ var app = angular
                     templateUrl: 'views/location/addstate.html',
                     resolve: {
                         auth: function ($q, authService) {
-                                    var userInfo = authService.getUserInfo();
-                                    if (userInfo && authService.authorize(access.admin)) {
-                                        return $q.when(userInfo);
-                                    } else {
-                                        return $q.reject({authenticated: false});
-                                    }
-                                },
+                            var userInfo = authService.getUserInfo();
+                            if (userInfo && authService.authorize(access.admin)) {
+                                return $q.when(userInfo);
+                            } else {
+                                return $q.reject({authenticated: false});
+                            }
+                        },
                         countries: function (schoolService) {
                             return schoolService.getCountries();
                         },
@@ -429,13 +429,13 @@ var app = angular
                     templateUrl: 'views/location/addstate.html',
                     resolve: {
                         auth: function ($q, authService) {
-                                    var userInfo = authService.getUserInfo();
-                                    if (userInfo && authService.authorize(access.admin)) {
-                                        return $q.when(userInfo);
-                                    } else {
-                                        return $q.reject({authenticated: false});
-                                    }
-                                },
+                            var userInfo = authService.getUserInfo();
+                            if (userInfo && authService.authorize(access.admin)) {
+                                return $q.when(userInfo);
+                            } else {
+                                return $q.reject({authenticated: false});
+                            }
+                        },
                         countries: function (schoolService) {
                             return schoolService.getCountries();
                         },
@@ -455,13 +455,13 @@ var app = angular
                     templateUrl: 'views/location/addcountry.html',
                     resolve: {
                         auth: function ($q, authService) {
-                                    var userInfo = authService.getUserInfo();
-                                    if (userInfo && authService.authorize(access.admin)) {
-                                        return $q.when(userInfo);
-                                    } else {
-                                        return $q.reject({authenticated: false});
-                                    }
-                                },
+                            var userInfo = authService.getUserInfo();
+                            if (userInfo && authService.authorize(access.admin)) {
+                                return $q.when(userInfo);
+                            } else {
+                                return $q.reject({authenticated: false});
+                            }
+                        },
                         loadMyFiles: function ($ocLazyLoad) {
                             return $ocLazyLoad.load({
                                 name: 'sbAdminApp',
@@ -523,7 +523,59 @@ var app = angular
                                     })
                                 }
                             }
-                        })
+                        }).state('dashboard.addcity', {
+                    url: '/addcity',
+                    access: access.admin,
+                    controller: 'cityAddController',
+                    templateUrl: 'views/location/addcity.html',
+                    resolve: {
+                        auth: function ($q, authService) {
+                            var userInfo = authService.getUserInfo();
+                            if (userInfo && authService.authorize(access.admin)) {
+                                return $q.when(userInfo);
+                            } else {
+                                return $q.reject({authenticated: false});
+                            }
+                        },
+                        states: function (schoolService) {
+                            return schoolService.getStates();
+                        },
+                        loadMyFiles: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'sbAdminApp',
+                                files: [
+                                    'scripts/controllers/locationController.js',
+                                ]
+                            })
+                        }
+                    }
+                        }).state('dashboard.editcity', {
+                    url: '/editcity/:cityId',
+                    access: access.admin,
+                    controller: 'cityAddController',
+                    templateUrl: 'views/location/addcity.html',
+                    resolve: {
+                        auth: function ($q, authService) {
+                            var userInfo = authService.getUserInfo();
+                            if (userInfo && authService.authorize(access.admin)) {
+                                return $q.when(userInfo);
+                            } else {
+                                return $q.reject({authenticated: false});
+                            }
+                        },
+                        states: function (schoolService) {
+                            return schoolService.getStates();
+                        },
+                        loadMyFiles: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'sbAdminApp',
+                                files: [
+                                    'scripts/controllers/locationController.js',
+                                ]
+                            })
+                        }
+                    }
+                })
                         .state('dashboard.areas', {
                             url: '/areas',
                             access: access.admin,
@@ -539,6 +591,32 @@ var app = angular
                                         return $q.reject({authenticated: false});
                                     }
                                 },
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/locationController.js',
+                                        ]
+                                    })
+                                }
+                            }
+                        })
+                        .state('dashboard.addarea', {
+                            url: '/addarea',
+                            access: access.admin,
+                            controller: 'areaAddController',
+                            data: {collapseVar: 'location'},
+                            templateUrl: 'views/location/addarea.html',
+                            resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
+                                
                                 loadMyFiles: function ($ocLazyLoad) {
                                     return $ocLazyLoad.load({
                                         name: 'sbAdminApp',
@@ -717,7 +795,7 @@ var app = angular
 //                    }
 //                });
 //                $httpProvider.interceptors.push('sessionInterceptor');
-                    //$httpProvider.responseInterceptors.push(interceptor);
+                //$httpProvider.responseInterceptors.push(interceptor);
             }])
         .run(["$rootScope", "$window", "$location", function ($rootScope, $window, $location) {
 
