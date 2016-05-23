@@ -54,7 +54,12 @@ router.post('/adminapi/v1/state',locationController.addState);
 
 
 router.get('/adminapi/v1/city/:stateId',locationController.getCities);
+router.get('/adminapi/v1/city/cityid/:cityId',locationController.getCity);
 router.get('/adminapi/v1/city',locationController.getCities);
+router.put('/adminapi/v1/city/:cityId',locationController.updateCity);
+router.post('/adminapi/v1/city',locationController.addCity);
+
+
 router.get('/adminapi/v1/area/:cityId',locationController.getAreas);
 router.get('/adminapi/v1/area',locationController.getAreas);
 router.get('/adminapi/v1/zone/:areaId',locationController.getZones);
