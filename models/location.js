@@ -57,9 +57,23 @@ var locations = {
             return done(null, rows)
         })
     },
+    updateCity: function(reqParams, cityId, done){
+        db.get().query('update city set city_name = ?, city_state_id = ? where city_id = ?  ',[reqParams.state_name, reqParams.state_country_id, cityId] , function (err, rows) {
+            if (err) 
+                return done(err)
+            return done(null, rows)
+        })
+    },
     addState: function(reqParams, done){
     console.log('insert query');
         db.get().query('insert into state set state_name = ?, state_country_id = ?, state_status = "1"  ',[reqParams.state_name, reqParams.state_country_id] , function (err, rows) {
+            if (err) 
+                return done(err)
+            return done(null, rows)
+        })
+    },
+    addCity: function(reqParams, done){
+        db.get().query('insert into city set city_name = ?, city_state_id = ?, city_status = "1"  ',[reqParams.city_name, reqParams.city_state_id] , function (err, rows) {
             if (err) 
                 return done(err)
             return done(null, rows)
@@ -84,6 +98,15 @@ var locations = {
             return done(null, rows)
         })
     },
+    getCityByName: function(reqParams, done, cityId){
+        cityId = typeof cityId !== 'undefined'? cityId:0;
+        db.get().query('SELECT * FROM city c \n\
+                        where city_name = ? and city_status != "2" and city_id != ? ', [reqParams.city_name, cityId] ,function (err, rows) {
+            if (err) 
+                return done(err)
+            return done(null, rows)
+        })
+    },
     
     getCitiesByState: function(stateId, done){
         db.get().query('SELECT city_id, city_name FROM city where city_state_id = ? and city_status = "1"  ',stateId, function (err, rows) {
@@ -95,6 +118,14 @@ var locations = {
             
     getCities: function(done){
         db.get().query('SELECT * FROM city where city_status = "1"  ', function (err, rows) {
+            if (err) 
+                return done(err)
+            return done(null, rows)
+        })
+    },
+    
+    getCity: function(cityId, done){
+        db.get().query('SELECT * FROM city c join state s on s.state_id = c.city_state_id where city_id = ?  ', cityId,function (err, rows) {
             if (err) 
                 return done(err)
             return done(null, rows)
