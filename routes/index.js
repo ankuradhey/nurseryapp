@@ -42,10 +42,17 @@ router.delete('/adminapi/v1/board/:boardId',schoolController.deleteBoard);
 router.put('/adminapi/v1/board/:boardId',schoolController.updateBoard);
 
 router.get('/adminapi/v1/country',locationController.getCountries);
+router.post('/adminapi/v1/country',locationController.addCountry);
 router.get('/adminapi/v1/country/:countryId',locationController.getCountry);
 router.put('/adminapi/v1/country/:countryId',locationController.updateCountry);
+
 router.get('/adminapi/v1/state/:countryId',locationController.getStates);
 router.get('/adminapi/v1/state',locationController.getStates);
+router.get('/adminapi/v1/state/stateid/:stateId',locationController.getState);
+router.put('/adminapi/v1/state/:stateId',locationController.updateState);
+router.post('/adminapi/v1/state',locationController.addState);
+
+
 router.get('/adminapi/v1/city/:stateId',locationController.getCities);
 router.get('/adminapi/v1/city',locationController.getCities);
 router.get('/adminapi/v1/area/:cityId',locationController.getAreas);
