@@ -11,8 +11,9 @@ var locations = {
             return done(null, rows);
         })
     },
-    getCountryByName: function(name, done){
-        db.get().query('SELECT * FROM country where country_name = ? and country_status != "2" ',name, function (err, rows) {
+    getCountryByName: function(name, countryId, done){
+        countryId = typeof countryId != 'undefined'?countryId:0;
+        db.get().query('SELECT * FROM country where country_name = ? and country_id != ? and country_status != "2" ',[name, countryId], function (err, rows) {
             if (err) return done(err)
             done(null, rows)
         })
@@ -58,14 +59,27 @@ var locations = {
         })
     },
     updateCity: function(reqParams, cityId, done){
-        db.get().query('update city set city_name = ?, city_state_id = ? where city_id = ?  ',[reqParams.state_name, reqParams.state_country_id, cityId] , function (err, rows) {
+        db.get().query('update city set city_name = ?, city_state_id = ? where city_id = ?  ',[reqParams.city_name, reqParams.city_state_id, cityId] , function (err, rows) {
+            if (err) 
+                return done(err)
+            return done(null, rows)
+        })
+    },
+    updateArea: function(reqParams, areaId, done){
+        db.get().query('update location_area set area_name = ?, city_id = ? where area_id = ?  ',[reqParams.area_name, reqParams.area_city_id, areaId] , function (err, rows) {
+            if (err) 
+                return done(err)
+            return done(null, rows)
+        })
+    },
+    updateZone: function(reqParams, zoneId, done){
+        db.get().query('update location_zone set zone_name = ?, zone_area_id = ? where zone_id = ?  ',[reqParams.zone_name, reqParams.zone_area_id, zoneId] , function (err, rows) {
             if (err) 
                 return done(err)
             return done(null, rows)
         })
     },
     addState: function(reqParams, done){
-    console.log('insert query');
         db.get().query('insert into state set state_name = ?, state_country_id = ?, state_status = "1"  ',[reqParams.state_name, reqParams.state_country_id] , function (err, rows) {
             if (err) 
                 return done(err)
@@ -80,8 +94,15 @@ var locations = {
         })
     },
     addArea: function(reqParams, done){
-        console.log('add area query - ','insert into location_area set area_name = ?, city_id = ?, area_status = "1" ')
         db.get().query('insert into location_area set area_name = ?, city_id = ?, area_status = "1"  ',[reqParams.area_name, reqParams.area_city_id] , function (err, rows) {
+            if (err) 
+                return done(err)
+            return done(null, rows)
+        })
+    },
+    addZone: function(reqParams, done){
+        console.log('add zone by name queried');
+        db.get().query('insert into location_zone set zone_name = ?, zone_area_id = ?, zone_status = "1"  ',[reqParams.zone_name, reqParams.zone_area_id] , function (err, rows) {
             if (err) 
                 return done(err)
             return done(null, rows)
@@ -97,10 +118,11 @@ var locations = {
             return done(null, rows)
         })
     },
-    getStateByName: function(reqParams, done){
+    getStateByName: function(reqParams, done, stateId){
+        stateId = typeof stateId !== 'undefined'?stateId:0;
         console.log('get state query run');
         db.get().query('SELECT * FROM state s \n\
-                        where state_name = ? and state_status != "2"  ', reqParams.state_name ,function (err, rows) {
+                        where state_name = ? and state_country_id = ? and state_status != "2" and state_id != ? ', [reqParams.state_name, reqParams.state_country_id, stateId ],function (err, rows) {
             if (err) 
                 return done(err)
             return done(null, rows)
@@ -109,7 +131,7 @@ var locations = {
     getCityByName: function(reqParams, done, cityId){
         cityId = typeof cityId !== 'undefined'? cityId:0;
         db.get().query('SELECT * FROM city c \n\
-                        where city_name = ? and city_status != "2" and city_id != ? ', [reqParams.city_name, cityId] ,function (err, rows) {
+                        where city_name = ? and city_state_id = ? and city_status != "2" and city_id != ? ', [reqParams.city_name, reqParams.city_state_id, cityId] ,function (err, rows) {
             if (err) 
                 return done(err)
             return done(null, rows)
@@ -119,7 +141,17 @@ var locations = {
     getAreaByName: function(reqParams, done, areaId){
         areaId = typeof areaId !== 'undefined'? areaId:0;
         db.get().query('SELECT * FROM location_area c \n\
-                        where area_name = ? and area_status != "2" and area_id != ? ', [reqParams.area_name, areaId] ,function (err, rows) {
+                        where area_name = ? and city_id = ? and area_status != "2" and area_id != ? ', [reqParams.area_name, reqParams.area_city_id, areaId] ,function (err, rows) {
+            if (err) 
+                return done(err)
+            return done(null, rows)
+        })
+    },
+    getZoneByName: function(reqParams, done, zoneId){
+        console.log('get zone by name queried');
+        zoneId = typeof zoneId !== 'undefined'? zoneId:0;
+        db.get().query('SELECT * FROM location_zone z \n\
+                        where zone_name = ? and zone_area_id = ? and zone_status != "2" and zone_id != ? ', [reqParams.zone_name, reqParams.zone_area_id,zoneId] ,function (err, rows) {
             if (err) 
                 return done(err)
             return done(null, rows)
@@ -185,6 +217,16 @@ var locations = {
             
     getZones: function(done){
         db.get().query('SELECT zone_id, zone_name FROM location_zone where zone_status = "1"  ', function (err, rows) {
+            if (err) 
+                return done(err)
+            return done(null, rows)
+        })
+    },
+    
+    getZone: function(zoneId, done){
+        db.get().query('SELECT zone_id, zone_name, area.area_id, area.area_name FROM location_zone zone\n\
+                        join location_area area on area.area_id = zone.zone_area_id and area.area_status != "2"\n\
+                        where zone_id = ?  ',zoneId, function (err, rows) {
             if (err) 
                 return done(err)
             return done(null, rows)
