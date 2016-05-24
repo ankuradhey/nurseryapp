@@ -196,8 +196,8 @@ angular.module('sbAdminApp')
             }
             var data = {city_state_id: $scope.location.state.state_id, city_name: $scope.location.city_name};
 
-            if ($scope.stateId) {
-                var url = baseUrl + '/adminapi/v1/city/' + $scope.stateId;
+            if ($scope.cityId) {
+                var url = baseUrl + '/adminapi/v1/city/' + $scope.cityId;
                 var method = 'PUT';
             } else {
                 var url = baseUrl + '/adminapi/v1/city';
@@ -271,7 +271,7 @@ angular.module('sbAdminApp')
             }
             var data = {area_city_id: $scope.location.city.city_id, area_name: $scope.location.area_name};
 
-            if ($scope.stateId) {
+            if ($scope.areaId) {
                 var url = baseUrl + '/adminapi/v1/area/' + $scope.areaId;
                 var method = 'PUT';
             } else {
@@ -314,6 +314,71 @@ angular.module('sbAdminApp')
         }, function(data, status, headers, conf) {
             $scope.alert.show = true;
         });
+
+    }])
+.controller('zoneAddController', ['$scope', '$http', '$stateParams','areas', '$state', function($scope, $http, $stateParams, areas, $state) {
+        $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
+        $scope.location = {zone:{}};
+        $scope.areas = areas.data.areas;
+        $scope.zoneId = $stateParams.zoneId;
+
+        if ($scope.zoneId) {
+            $http({
+                method: 'GET',
+                url: baseUrl + '/adminapi/v1/zone/zoneid/' + $scope.zoneId
+            }).success(function(data, status, headers, conf) {
+                if (data.zone && Object.keys(data.zone).length) {
+                    var zone = data.zone;
+                    $scope.location.area = {area_id:zone.area_id, city_name:zone.area_name}
+                    $scope.location.zone_name = zone.zone_name;
+                } else {
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'danger';
+                }
+            }).error(function(data, status, headers, conf) {
+                $scope.alert.show = true;
+                $scope.alert.type = 'danger';
+            });
+        }
+
+        $scope.saveZone = function() {
+            $scope.$broadcast('show-errors-check-validity');
+            if ($scope.locationForm.$invalid) {
+                return;
+            }
+            var data = {zone_area_id: $scope.location.area.area_id, zone_name: $scope.location.zone_name};
+
+            if ($scope.zoneId) {
+                var url = baseUrl + '/adminapi/v1/zone/' + $scope.zoneId;
+                var method = 'PUT';
+            } else {
+                var url = baseUrl + '/adminapi/v1/zone';
+                var method = 'POST';
+            }
+            
+            $http({
+                        method: method,
+                        url: url,
+                        headers: {'Content-Type': 'application/json'},
+                        data: data
+                    }).success(function (data, status, headers, conf) {
+                        if (data.success) {
+                            $scope.alert.message = data.message;
+                            $scope.alert.show = true;
+                            $scope.alert.type = 'success';
+                            $state.go('dashboard.zones');
+                            $scope.$broadcast('show-errors-reset');0
+                        } else {
+                            $scope.alert.message = data.message;
+                            $scope.alert.show = true;
+                            $scope.alert.type = 'danger';
+                        }
+                    }).error(function (data, status, headers, conf) {
+                        $scope.alert.show = true;
+                        $scope.alert.type = 'danger';
+                    })
+
+        }
 
     }])
         ;

@@ -63,6 +63,16 @@ angular.module('sbAdminApp')
             
             return promise;
         },
+        getAreas:function(){
+            var promise = $http({
+               method:'GET',
+               url:baseUrl+'/adminapi/v1/area'
+            }).success(function(data,status, headers, conf){
+                return data;
+            });
+            
+            return promise;
+        },
         getSchoolTypes: function(){
             var promise = $http({
                method:'GET',

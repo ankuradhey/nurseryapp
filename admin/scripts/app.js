@@ -657,6 +657,62 @@ var app = angular
                                 }
                             }
                         })
+                        .state('dashboard.addzone', {
+                            url: '/addzone',
+                            access: access.admin,
+                            controller: 'zoneAddController',
+                            data: {collapseVar: 'location'},
+                            templateUrl: 'views/location/addzone.html',
+                            resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
+                                areas:function(schoolService){
+                                    return schoolService.getAreas();
+                                },
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/locationController.js',
+                                        ]
+                                    })
+                                }
+                            }
+                        })
+                        .state('dashboard.editzone', {
+                            url: '/editzone/:zoneId',
+                            access: access.admin,
+                            controller: 'zoneAddController',
+                            data: {collapseVar: 'location'},
+                            templateUrl: 'views/location/addzone.html',
+                            resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
+                                areas:function(schoolService){
+                                    return schoolService.getAreas();
+                                },
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/locationController.js',
+                                        ]
+                                    })
+                                }
+                            }
+                        })
                         .state('dashboard.zones', {
                             url: '/zones',
                             access: access.admin,

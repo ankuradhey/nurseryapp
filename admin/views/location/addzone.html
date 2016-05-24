@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Add Zone</h1>
+    </div>  
+    <!-- /.col-lg-12 -->
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <uib-alert ng-if="alert.show" type="{{alert.type}}" close="alert.show = false">{{alert.message}}</uib-alert>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Fill zone details
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form role="form" novalidate name="locationForm">
+                            <div class="form-group" show-errors ng-class="{'has-error':locationForm.state_name.$invalid && locationForm.state_name.$dirty}">
+                                <label>Choose area</label>
+                                <select name="zone_area_id" ng-model="location.area" 
+                                        class="form-control" required
+                                        ng-options="area as area.area_name for area in areas track by area.area_id"
+                                        >
+                                    <option value="">-- Select --</option>
+                                </select>
+                                <p class="help-block" ng-if="locationForm.zone_area_id.$error.required && locationForm.zone_area_id.$dirty">City name is required</p>
+                            </div>
+                            <div class="form-group" show-errors ng-class="{'has-error':locationForm.city_name.$invalid && locationForm.city_name.$dirty}">
+                                <label>Zone Name</label>
+                                <input class="form-control" name="zone_name" ng-model="location.zone_name" required>
+                                <p class="help-block" ng-if="locationForm.zone_name.$error.required && locationForm.zone_name.$dirty">Zone name is required</p>
+                            </div>
+                            <button type="submit" class="btn btn-default" ng-click="saveZone()" ng-disabled="locationForm.$invalid">Submit Button</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
