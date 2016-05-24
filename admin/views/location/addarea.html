@@ -23,14 +23,14 @@
                                         >
                                     <option value="">-- Select --</option>
                                 </select>
-                                <p class="help-block" ng-if="locationForm.area_city_id.$error.required && locationForm.area_city_id.$dirty">Country name is required</p>
+                                <p class="help-block" ng-if="locationForm.area_city_id.$error.required && locationForm.area_city_id.$dirty">City name is required</p>
                             </div>
                             <div class="form-group" show-errors ng-class="{'has-error':locationForm.city_name.$invalid && locationForm.city_name.$dirty}">
-                                <label>State Name</label>
-                                <input class="form-control" name="city_name" ng-model="location.city_name" required>
-                                <p class="help-block" ng-if="locationForm.city_name.$error.required && locationForm.city_name.$dirty">City name is required</p>
+                                <label>Area Name</label>
+                                <input class="form-control" name="area_name" ng-model="location.area_name" required>
+                                <p class="help-block" ng-if="locationForm.area_name.$error.required && locationForm.area_name.$dirty">Area name is required</p>
                             </div>
-                            <button type="submit" class="btn btn-default" ng-click="saveState()" ng-disabled="locationForm.$invalid">Submit Button</button>
+                            <button type="submit" class="btn btn-default" ng-click="saveArea()" ng-disabled="locationForm.$invalid">Submit Button</button>
                         </form>
                     </div>
                 </div>

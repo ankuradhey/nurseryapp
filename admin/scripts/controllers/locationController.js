@@ -164,7 +164,7 @@ angular.module('sbAdminApp')
         });
 
     }])
-.controller('cityAddController', ['$scope', '$http', '$stateParams','states', '$state', function($scope, $http, $stateParams, states, $state) {
+    .controller('cityAddController', ['$scope', '$http', '$stateParams','states', '$state', function($scope, $http, $stateParams, states, $state) {
         $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
         $scope.location = {state:{}};
         $scope.states = states.data.states;
@@ -242,13 +242,13 @@ angular.module('sbAdminApp')
 .controller('areaAddController', ['$scope', '$http', '$stateParams','cities', '$state', function($scope, $http, $stateParams, cities, $state) {
         $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
         $scope.location = {city:{}};
-        $scope.cities = states.data.cities;
+        $scope.cities = cities.data.cities;
         $scope.areaId = $stateParams.areaId;
 
         if ($scope.areaId) {
             $http({
                 method: 'GET',
-                url: baseUrl + '/adminapi/v1/city/cityid/' + $scope.areaId
+                url: baseUrl + '/adminapi/v1/area/areaid/' + $scope.areaId
             }).success(function(data, status, headers, conf) {
                 if (data.area && Object.keys(data.area).length) {
                     var area = data.area;
@@ -269,13 +269,13 @@ angular.module('sbAdminApp')
             if ($scope.locationForm.$invalid) {
                 return;
             }
-            var data = {area_city_id: $scope.location.state.state_id, area_name: $scope.location.area_name};
+            var data = {area_city_id: $scope.location.city.city_id, area_name: $scope.location.area_name};
 
             if ($scope.stateId) {
-                var url = baseUrl + '/adminapi/v1/city/' + $scope.stateId;
+                var url = baseUrl + '/adminapi/v1/area/' + $scope.areaId;
                 var method = 'PUT';
             } else {
-                var url = baseUrl + '/adminapi/v1/city';
+                var url = baseUrl + '/adminapi/v1/area';
                 var method = 'POST';
             }
             
@@ -289,7 +289,7 @@ angular.module('sbAdminApp')
                             $scope.alert.message = data.message;
                             $scope.alert.show = true;
                             $scope.alert.type = 'success';
-                            $state.go('dashboard.cities');
+                            $state.go('dashboard.areas');
                             $scope.$broadcast('show-errors-reset');0
                         } else {
                             $scope.alert.message = data.message;

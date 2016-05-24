@@ -630,7 +630,7 @@ var app = angular
                             }
                         })
                         .state('dashboard.editarea', {
-                            url: '/editarea',
+                            url: '/editarea/:areaId',
                             access: access.admin,
                             controller: 'areaAddController',
                             data: {collapseVar: 'location'},
