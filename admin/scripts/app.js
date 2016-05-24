@@ -865,7 +865,7 @@ var app = angular
                         .state('dashboard.reviews', {
                             url: '/reviews',
                             access: access.admin,
-                            data: {collapseVar: 'parent'},
+                            data: {collapseVar: 'school'},
                             controller: 'reviewController',
                             templateUrl: 'views/reviews/list.html',
                             resolve: {
@@ -886,7 +886,92 @@ var app = angular
                                     })
                                 }
                             }
-                        });
+                        })
+                        .state('dashboard.schooltypes', {
+                            url: '/schooltypes',
+                            access: access.admin,
+                            data: {collapseVar: 'school'},
+                            controller: 'SchoolTypeCtrl',
+                            templateUrl: 'views/schools/schooltypelist.html',
+                            resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/schoolController.js',
+                                        ]
+                                    })
+                                },
+                                schoolTypes:function(schoolService){
+                                    return schoolService.getSchoolTypes();
+                                }
+                            }
+                        })
+                        .state('dashboard.editschooltype', {
+                            url: '/editschooltype/:schoolTypeId',
+                            access: access.admin,
+                            data: {collapseVar: 'school'},
+                            controller: 'SchoolTypeAddCtrl',
+                            templateUrl: 'views/reviews/list.html',
+                            resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/schoolController.js',
+                                        ]
+                                    })
+                                },
+                                classes:function(schoolService){
+                                    return schoolService.getSchoolClasses();
+                                }
+                            }
+                        })
+                        .state('dashboard.addschooltype', {
+                            url: '/addschooltype',
+                            access: access.admin,
+                            data: {collapseVar: 'school'},
+                            controller: 'SchoolTypeAddCtrl',
+                            templateUrl: 'views/schools/schooltype.html',
+                            resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/schoolController.js',
+                                        ]
+                                    })
+                                },
+                                classes:function(schoolService){
+                                    return schoolService.getSchoolClasses();
+                                }
+                            }
+                        })
+                        ;
 
                 //when api denies requested resources then redirect to login - reason may be unauthorized access or session timeout
 //                $provide.factory('sessionInterceptor', function($q, $location){

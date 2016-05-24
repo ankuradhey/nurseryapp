@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Add school type</h1>
+    </div>  
+    <!-- /.col-lg-12 -->
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <uib-alert ng-if="alert.show" type="{{alert.type}}" close="alert.show = false">{{alert.message}}</uib-alert>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Fill school type details
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form role="form" novalidate name="schoolForm" enctype="multipart/form-data">
+                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_type_name.$invalid && schoolForm.school_type_name.$dirty}">
+                                <label>School Type Name</label>
+                                <input class="form-control" name="school_type_name" ng-model="school.type" required>
+                                <p class="help-block" ng-if="schoolForm.school_type_name.$error.required && schoolForm.school_type_name.$dirty">School name is required</p>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error':school.school_type_classes.$invalid}">
+                                <label>Choose Classes</label>
+                                <select name="school_type_classes" class="form-control" ng-model='school.type_class' required
+                                        multiple
+                                        ng-options="class for class in classes track by class"
+                                        >
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-default" ng-click="saveSchoolType()" ng-disabled="schoolForm.$invalid">Submit Button</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -298,4 +298,79 @@ angular.module('sbAdminApp')
                 }
 
             }])
+        .controller('SchoolTypeCtrl', ['$scope', '$http', '$state', '$stateParams','schoolTypes', function ($scope, $http, $state, $stateParams, schoolTypes) {
+                $scope.schoolTypes = schoolTypes.data.types;
+                
+                
+            }])
+        .controller('SchoolTypeAddCtrl', ['$scope', '$http', 'classes', '$state', '$stateParams', function ($scope, $http, classes, $state, $stateParams) {
+                $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
+                $scope.classes = classes;
+                $scope.schoolTypeId = $stateParams.schoolTypeId;
+                $scope.school = {type:'',type_class:''};
+                //check if its an edit case
+
+                if ($scope.schoolTypeId) {
+                    $http({
+                        method: 'GET',
+                        url: baseUrl + '/adminapi/v1/schooltype/' + $scope.schoolTypeId
+                    }).success(function (data, status, headers, conf) {
+                        if (data.type && Object.keys(data.type).length) {
+                            var type = data.type;
+                            $scope.school.type = type.school_type_name;
+                            $scope.school.type_class = type.school_type_class;
+                        } else {
+                            $scope.alert.show = true;
+                            $scope.alert.type = 'danger';
+                        }
+                    }).error(function (data, status, headers, conf) {
+                        $scope.alert.show = true;
+                        $scope.alert.type = 'danger';
+                    });
+                }
+                
+                
+                $scope.saveSchoolType = function(){
+                    $scope.$broadcast('show-errors-check-validity');
+                    if ($scope.schoolForm.$invalid) {
+                        return;
+                    }
+
+                    var data = {
+                        school_type_name: $scope.school.type,
+                        school_type_classes: $scope.school.type_class,
+                    }
+                    
+                    if ($scope.schoolTypeId) {
+                        var url = baseUrl + '/adminapi/v1/schooltype/' + $scope.schooltypeId;
+                        var method = 'PUT';
+                    } else {
+                        var url = baseUrl + '/adminapi/v1/schooltype';
+                        var method = 'POST';
+                    }
+
+                    $http({
+                        method: method,
+                        url: url,
+                        headers: {'Content-Type': 'application/json'},
+                        data: data
+                    }).success(function (data, status, headers, conf) {
+                        if (data.success) {
+                            $scope.alert.message = data.message;
+                            $scope.alert.show = true;
+                            $scope.alert.type = 'success';
+                            $state.go('dashboard.schooltypes');
+                            $scope.$broadcast('show-errors-reset');
+                        } else {
+                            $scope.alert.message = data.message;
+                            $scope.alert.show = true;
+                            $scope.alert.type = 'danger';
+                        }
+                    }).error(function (data, status, headers, conf) {
+                        $scope.alert.show = true;
+                        $scope.alert.type = 'danger';
+                    })
+                }
+                
+            }])
         ;

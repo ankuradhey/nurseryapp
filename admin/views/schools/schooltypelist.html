@@ -1,0 +1,62 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">School Types</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                List of school types
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <p><button class="btn btn-primary" ui-sref="dashboard.addschooltype">Add School Type</button></p>
+                <div class="dataTable_wrapper">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>School Type Name</th>
+                                <th>Classes</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="odd gradeX"  ng-class-even="'even gradeC'" ng-class-odd="'odd gradeX'" ng-repeat="type in schoolTypes">
+                                <td>{{$index+1}}</td>
+                                <td>{{type.school_type_name}}</td>
+                                <td>{{type.school_type_classes}}</td>
+                                <td class="center">
+                                    <button type='button' 
+                                            ng-if='type.school_type_status!="1"'
+                                            class='btn-default btn-xs' 
+                                            ng-click="updateStatus('1', type.school_type_id)"
+                                            >
+                                        Inactive
+                                    </button>
+                                    <button type='button' 
+                                            ng-if='type.school_type_status=="1"'
+                                            class='btn-info btn-xs' 
+                                            ng-click="updateStatus('0', type.school_type_id)"
+                                            >
+                                        Active
+                                    </button>
+                                    <button type='button' class='btn-primary btn-xs' ui-sref="dashboard.editschooltype({schoolTypeId:type.school_type_id})">Edit</button>
+                                    <button type='button' class='btn-warning btn-xs' ng-click="deleteSchool(type.school_type_id)">Delete</button>
+                                </td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>

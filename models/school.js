@@ -104,7 +104,40 @@ var schools = {
                 return done(err);
             return done(null, rows);
         })
-    }
+    },
+    getSchoolType: function(schoolTypeId, done){
+        db.get().query('select * from school_type where school_type_status != "2" and school_type_id = ?  ',schoolTypeId, function(err, rows){
+            if(err)
+                return done(err);
+            return done(null, rows);
+        })
+    },
+    getSchoolTypeByName: function(schoolTypeName, schoolTypeId, done){
+        schoolTypeId = typeof schoolTypeId != 'undefined'?schoolTypeId:0;
+//        console.log('select * from school_type where school_type_status != "2" and school_type_name = ? and school_type_id != ? ', [schoolTypeName, schoolTypeId]);
+        db.get().query('select * from school_type where school_type_status != "2" and school_type_name = ? and school_type != ? ',[schoolTypeName, schoolTypeId], function(err, rows){
+            if(err)
+                return done(err);
+            return done(null, rows);
+        })
+    },
+    addSchoolType: function(schoolTypeParams, done) {
+        schoolTypeParams.school_type_classes = schoolTypeParams.school_type_classes.join(',');
+        db.get().query('insert into school_type set school_type_name = ?, school_type_classes = ?, school_type_status = "1"', [schoolTypeParams.school_type_name ,schoolTypeParams.school_type_classes],function(err, rows) {
+            if (err)
+                return done(err)
+            return done(null, rows);
+        });
+    },
+    updateSchoolType: function(schoolTypeParams, schoolTypeId, done) {
+        schoolTypeParams.school_type_classes = schoolTypeParams.school_type_classes.join(',');
+        db.get().query('update school_type set school_type_name = ?, school_type_classes = ? where school_type = ? ',[schoolTypeParams.school_type_name, schoolTypeParams.school_type_classes, schoolTypeId], function(err, rows) {
+            if (err)
+                return done(err)
+            return done(null, rows);
+        });
+    },
+    
 
 };
 

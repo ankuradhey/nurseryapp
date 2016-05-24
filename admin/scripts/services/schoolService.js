@@ -81,6 +81,9 @@ angular.module('sbAdminApp')
                 return data;
             });
             return promise;
+        },
+        getSchoolClasses: function(){
+            return ['nursery','lkg','ukg','kg','prep','i','ii','iii','iv','v','vi','vii','viii','ix','x','xi','xii'];
         }
     }
 }])

@@ -81,6 +81,9 @@ router.put('/adminapi/v1/parent/:parentId',userController.updateParent);
 router.delete('/adminapi/v1/parent/:parentId',userController.deleteParent);
 
 router.get('/adminapi/v1/schooltypes',schoolController.getSchoolTypes);
+router.get('/adminapi/v1/schooltype/:schoolTypeId',schoolController.getSchoolType);
+router.post('/adminapi/v1/schooltype',schoolController.addSchoolType);
+router.put('/adminapi/v1/schooltype/:schoolTypeId',schoolController.updateSchoolType);
 
 router.get('/adminapi/v1/reviews',reviewController.getReviews);
 router.put('/adminapi/v1/review/:reviewId',reviewController.updateReview);
