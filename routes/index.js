@@ -61,7 +61,11 @@ router.post('/adminapi/v1/city',locationController.addCity);
 
 
 router.get('/adminapi/v1/area/:cityId',locationController.getAreas);
+router.get('/adminapi/v1/area/areaid/:areaId',locationController.getArea);
 router.get('/adminapi/v1/area',locationController.getAreas);
+router.post('/adminapi/v1/area',locationController.addArea);
+
+
 router.get('/adminapi/v1/zone/:areaId',locationController.getZones);
 router.get('/adminapi/v1/zone',locationController.getZones);
 

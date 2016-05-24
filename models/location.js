@@ -79,6 +79,14 @@ var locations = {
             return done(null, rows)
         })
     },
+    addArea: function(reqParams, done){
+        console.log('add area query - ','insert into location_area set area_name = ?, city_id = ?, area_status = "1" ')
+        db.get().query('insert into location_area set area_name = ?, city_id = ?, area_status = "1"  ',[reqParams.area_name, reqParams.area_city_id] , function (err, rows) {
+            if (err) 
+                return done(err)
+            return done(null, rows)
+        })
+    },
     getState: function(stateId, done){
         console.log('get state query run');
         db.get().query('SELECT * FROM state s \n\
@@ -102,6 +110,16 @@ var locations = {
         cityId = typeof cityId !== 'undefined'? cityId:0;
         db.get().query('SELECT * FROM city c \n\
                         where city_name = ? and city_status != "2" and city_id != ? ', [reqParams.city_name, cityId] ,function (err, rows) {
+            if (err) 
+                return done(err)
+            return done(null, rows)
+        })
+    },
+    
+    getAreaByName: function(reqParams, done, areaId){
+        areaId = typeof areaId !== 'undefined'? areaId:0;
+        db.get().query('SELECT * FROM location_area c \n\
+                        where area_name = ? and area_status != "2" and area_id != ? ', [reqParams.area_name, areaId] ,function (err, rows) {
             if (err) 
                 return done(err)
             return done(null, rows)
@@ -142,6 +160,15 @@ var locations = {
             
     getAreas: function(done){
         db.get().query('SELECT area_id, area_name FROM location_area where area_status = "1"  ', function (err, rows) {
+            if (err) 
+                return done(err)
+            return done(null, rows)
+        })
+    },
+    getArea: function(areaId, done){
+        db.get().query('SELECT area_id, area_name, city.city_id, city.city_name FROM location_area \n\
+                        join city on city.city_id = location_area.city_id and city.city_status != "2"\n\
+                        where area_id = ?  ',areaId, function (err, rows) {
             if (err) 
                 return done(err)
             return done(null, rows)
