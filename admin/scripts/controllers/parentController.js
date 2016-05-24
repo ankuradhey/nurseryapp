@@ -118,7 +118,7 @@ angular.module('sbAdminApp')
                             $scope.alert.show = true;
                             $scope.alert.type = 'success';
                             $scope.$broadcast('show-errors-reset');
-                            $state.reload();
+                            //$state.reload();
                         } else {
                             $scope.alert.message = data.message;
                             $scope.alert.show = true;

@@ -813,6 +813,31 @@ var app = angular
                                 }
                             }
                         })
+                        .state('dashboard.profile', {
+                            url: '/profile/:parentId',
+                            access: access.admin,
+                            data: {collapseVar: 'parent'},
+                            controller: 'parentAddController',
+                            templateUrl: 'views/pages/profile.html',
+                            resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/parentController.js',
+                                        ]
+                                    })
+                                }
+                            }
+                        })
                         .state('login', {
                             url: '/login',
                             controller: 'loginController',

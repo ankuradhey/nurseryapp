@@ -27,6 +27,7 @@ angular.module('sbAdminApp')
                                     userInfo = {
                                         accessToken: result.data.token,
                                         userName: result.data.user.user_email,
+                                        userId: result.data.user.user_id,
 //                                        role:result.data.user.user_type
                                         role:userRoles[result.data.user.user_type]
                                     };

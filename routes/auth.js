@@ -92,7 +92,7 @@ var auth = {
                         response.message = 'Success';
                         response.success = true;
                         response.error = false;
-                        var userDetails = {user_email: result[0].user_email, user_type: result[0].user_type};
+                        var userDetails = {user_email: result[0].user_email, user_type: result[0].user_type, user_id:result[0].user_id};
                         generateToken(userDetails, function (_token) {
                             response.token = _token.token;
                             response.user = _token.user;
@@ -318,6 +318,7 @@ var auth = {
 
 //private method
 function generateToken(user, done) {
+    console.log(user);
     var token = jwt.sign(user, config.secret, {
         expiresIn: config.loginExpirySeconds // expires in 24 hours
     });
