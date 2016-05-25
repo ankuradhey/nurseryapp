@@ -103,6 +103,7 @@ module.exports = {
                 if (err) {
                     response.message = "Oops! Some error occurred";
                     console.log(err);
+                    console.log('error occurred');
                     res.send(JSON.stringify(response))
                 } else if (rows.length) {
                     if (rows[0].user_phone == userParams.user_phone)
@@ -111,7 +112,7 @@ module.exports = {
                         response.message = "User with " + userParams.user_email + " email id already exists";
                     else
                         console.log('Error: user with number and phone does not exist. Still user not allowed to register. Resolve this');
-
+                    console.log('user found');
                     res.send(JSON.stringify(response));
 
                 } else {
@@ -128,6 +129,7 @@ module.exports = {
                             response.error = false;
                             response.message = 'User successfully registered';
                             response.userId = userId;
+                            console.log('User registered! Hurray!!');
                         }
                         res.send(response);
                     })
