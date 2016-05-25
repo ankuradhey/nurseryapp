@@ -93,7 +93,7 @@ module.exports = {
 //        var invalid = validate(userParams, userSchema);
         res.setHeader('Content-Type', 'application/json');
         var $invalidRes = validate(userParams, userSchema);
-
+        response = new responseClass();
         if ($invalidRes) {
             response.errors = $invalidRes;
             res.send(JSON.stringify(response));
@@ -129,7 +129,7 @@ module.exports = {
                             response.message = 'User successfully registered';
                             response.userId = userId;
                         }
-                        res.send(JSON.stringify(response));
+                        res.send(response);
                     })
                 }
 
