@@ -98,12 +98,10 @@ module.exports = {
             response.errors = $invalidRes;
             res.send(JSON.stringify(response));
         } else {
-            console.log('$invalidRes', $invalidRes);
             user.validateUser(userParams.user_email, userParams.user_phone, function (err, rows) {
                 if (err) {
                     response.message = "Oops! Some error occurred";
                     console.log(err);
-                    console.log('error occurred');
                     res.send(JSON.stringify(response))
                 } else if (rows.length) {
                     if (rows[0].user_phone == userParams.user_phone)
@@ -114,17 +112,15 @@ module.exports = {
                         console.log('Error: user with number and phone does not exist. Still user not allowed to register. Resolve this');
                     console.log('user found');
                     res.send(JSON.stringify(response));
-
                 } else {
                     user.create(userParams, function (err, userId) {
                         if (err) {
-                            console.log(err);
                             response.message = 'Oops! Some error occurred';
                         } else {
                             var token = jwt.sign(userParams, config.secret, {
                                 expiresIn: config.loginExpirySeconds // expires in 24 hours
                             });
-                            reponse.token = token;
+                            response.token = token;
                             response.success = true;
                             response.error = false;
                             response.message = 'User successfully registered';
