@@ -8,7 +8,7 @@
 var school = require('../models/school.js'),
         board = require('../models/board.js'),
         response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []},
-responseClass = function () {
+responseClass = function() {
     return {
         error: true,
         success: false,
@@ -24,8 +24,8 @@ validate = require('validate.js'),
 
 
 module.exports = {
-    getAll: function (req, res) {
-        school.getAll(function (err, rows) {
+    getAll: function(req, res) {
+        school.getAll(function(err, rows) {
             if (err)
                 response.errors = err;
             else {
@@ -37,8 +37,8 @@ module.exports = {
             res.send(response);
         });
     },
-    getAllActive: function (req, res) {
-        school.getAllActive(function (err, rows) {
+    getAllActive: function(req, res) {
+        school.getAllActive(function(err, rows) {
             if (err)
                 response.errors = err;
             else {
@@ -50,9 +50,9 @@ module.exports = {
             res.send(response);
         });
     },
-    getOne: function (req, res) {
+    getOne: function(req, res) {
         var schoolId = req.params.schoolId
-        school.getOne(schoolId, function (err, rows) {
+        school.getOne(schoolId, function(err, rows) {
             console.log(rows);
             if (err) {
                 response = new responseClass();
@@ -69,8 +69,8 @@ module.exports = {
         })
         //TO DO
     },
-    getBoards: function (req, res) {
-        board.getAll(function (err, rows) {
+    getBoards: function(req, res) {
+        board.getAll(function(err, rows) {
             if (err)
                 response.errors = err;
             else {
@@ -82,8 +82,8 @@ module.exports = {
             res.send(response);
         })
     },
-    addBoard: function (req, res) {
-        board.addBoard(req.body.board_name, function (err, rows) {
+    addBoard: function(req, res) {
+        board.addBoard(req.body.board_name, function(err, rows) {
             if (err) {
                 response = new responseClass();
                 response.errors = err;
@@ -97,8 +97,8 @@ module.exports = {
             res.send(response);
         });
     },
-    updateBoard: function (req, res) {
-        board.updateBoard(req.params.boardId, req.body, function (err, rows) {
+    updateBoard: function(req, res) {
+        board.updateBoard(req.params.boardId, req.body, function(err, rows) {
             if (err) {
                 response = new responseClass();
                 response.errors = err;
@@ -112,8 +112,8 @@ module.exports = {
             res.send(response);
         });
     },
-    getBoard: function (req, res) {
-        board.getOne(req.params.boardId, function (err, rows) {
+    getBoard: function(req, res) {
+        board.getOne(req.params.boardId, function(err, rows) {
             if (err) {
                 response = new responseClass();
                 response.errors = err;
@@ -128,8 +128,8 @@ module.exports = {
             res.send(response);
         });
     },
-    deleteBoard: function (req, res) {
-        board.deleteBoard(req.params.boardId, function (err, rows) {
+    deleteBoard: function(req, res) {
+        board.deleteBoard(req.params.boardId, function(err, rows) {
             if (err) {
                 response = new responseClass();
                 response.errors = err;
@@ -143,7 +143,7 @@ module.exports = {
             res.send(response);
         });
     },
-    addSchool: function (req, res) {
+    addSchool: function(req, res) {
 
         //update school_img path
         if (req.body.school_logo) {
@@ -153,43 +153,84 @@ module.exports = {
         if (req.body.school_img)
             req.body.school_img = config.baseUrl + '/uploads/' + req.body.school_img;
 
-        school.create(req.body, function (err, rows) {
-            if (err)
+        response = new responseClass;
+        school.getSchoolAvailability(req.body, 0, function(err, rows) {
+            console.log(err,rows);
+            if(err){
                 response.errors = err;
-            else {
-                response.message = 'School Successfully added';
-                response.success = true;
-                response.error = false;
+                res.send(response);
             }
-            res.send(response);
+            else if(rows && Object.keys(rows).length){
+                response.message = 'Record already exist';
+                for (var i in rows){
+                    if(rows[i]['school_email'] == req.body.school_email)
+                        response.message = 'Email already exist';
+                    else if(rows[i]['school_affiliation_code'] == req.body.school_affiliation_code)
+                        response.message = 'School with same affiliation code already exist';
+                    else if(rows[i]['school_phone'] == req.body.school_phone)
+                        response.message = 'School with same phone number already exist';
+                }
+                res.json(response);
+            }else{
+                school.create(req.body, function(err, rows) {
+                    if (err)
+                        response.errors = err;
+                    else {
+                        response.message = 'School Successfully added';
+                        response.success = true;
+                        response.error = false;
+                    }
+                    res.send(response);
+                })
+            }
+        });
+        ;
+    },
+    updateSchool: function(req, res) {
+
+        //update school_img path
+        if (req.body.school_logo) {
+            req.body.school_logo = config.baseUrl + '/uploads/' + req.body.school_logo;
+        }
+
+        if (req.body.school_img)
+            req.body.school_img = config.baseUrl + '/uploads/' + req.body.school_img;
+
+        var schoolId = req.params.schoolId
+        
+        school.getSchoolAvailability(req.body, schoolId, function(err, rows) {
+            if(err){
+                response.errors = err;
+                res.send(response);
+            }else if(rows && Object.keys(rows).length){
+                response.message = 'Record already exist';
+                for (var i in rows){
+                    if(rows[i]['school_email'] == req.body.school_email)
+                        response.message = 'Email already exist';
+                    else if(rows[i]['school_affiliation_code'] == req.body.school_affiliation_code)
+                        response.message = 'School with same affiliation code already exist';
+                    else if(rows[i]['school_phone'] == req.body.school_phone)
+                        response.message = 'School with same phone number already exist';
+                }
+                res.send(response);
+            }else{
+                school.update(schoolId, req.body, function(err, rows) {
+                    if (err)
+                        response.errors = err;
+                    else {
+                        response = {};
+                        response.message = 'School Updated Successfully';
+                        response.success = true;
+                        response.error = false;
+                    }
+                    res.send(response);
+                });
+            }
         });
     },
-    updateSchool: function (req, res) {
-
-        //update school_img path
-        if (req.body.school_logo) {
-            req.body.school_logo = config.baseUrl + '/uploads/' + req.body.school_logo;
-        }
-
-        if (req.body.school_img)
-            req.body.school_img = config.baseUrl + '/uploads/' + req.body.school_img;
-
+    deleteSchool: function(req, res) {
         var schoolId = req.params.schoolId
-        school.update(schoolId, req.body, function (err, rows) {
-            if (err)
-                response.errors = err;
-            else {
-                response = {};
-                response.message = 'School Updated Successfully';
-                response.success = true;
-                response.error = false;
-            }
-            res.send(response);
-        })
-    },
-    deleteSchool: function (req, res) {
-        var schoolId = req.params.schoolId
-        school.deleteSchool(schoolId, function (err, rows) {
+        school.deleteSchool(schoolId, function(err, rows) {
             if (err)
                 response.errors = err;
             else {
@@ -201,8 +242,8 @@ module.exports = {
             res.send(response);
         })
     },
-    getSchoolTypes: function (req, res) {
-        school.getSchoolTypes('1', function (err, rows) { // passing status as active : 1 for getting all active school types
+    getSchoolTypes: function(req, res) {
+        school.getSchoolTypes('1', function(err, rows) { // passing status as active : 1 for getting all active school types
             response = new responseClass;
             if (err)
                 response.errors = err;
@@ -215,8 +256,8 @@ module.exports = {
             res.send(response);
         })
     },
-    getSchoolType: function (req, res) {
-        school.getSchoolType(req.params.schoolTypeId, function (err, rows) { // passing status as active : 1 for getting all active school types
+    getSchoolType: function(req, res) {
+        school.getSchoolType(req.params.schoolTypeId, function(err, rows) { // passing status as active : 1 for getting all active school types
             response = new responseClass;
             if (err)
                 response.errors = err;
@@ -229,8 +270,8 @@ module.exports = {
             res.send(response);
         })
     },
-    addSchoolType: function (req, res) {
-        school.getSchoolTypeByName(req.body.school_type_name, 0, function (err, rows) {
+    addSchoolType: function(req, res) {
+        school.getSchoolTypeByName(req.body.school_type_name, 0, function(err, rows) {
             response = new responseClass;
             console.log(err, rows);
             if (err) {
@@ -241,7 +282,7 @@ module.exports = {
                 res.send(response);
             } else {
                 console.log('inside');
-                school.addSchoolType(req.body, function (err, rows) { // passing status as active : 1 for getting all active school types
+                school.addSchoolType(req.body, function(err, rows) { // passing status as active : 1 for getting all active school types
                     if (err)
                         response.errors = err;
                     else {
@@ -254,8 +295,8 @@ module.exports = {
             }
         });
     },
-    updateSchoolType: function (req, res) {
-        school.getSchoolTypeByName(req.body.school_type_name, req.params.schoolTypeId, function (err, rows) {
+    updateSchoolType: function(req, res) {
+        school.getSchoolTypeByName(req.body.school_type_name, req.params.schoolTypeId, function(err, rows) {
             if (err) {
                 response.errors = err;
                 res.send(response);
@@ -263,7 +304,7 @@ module.exports = {
                 response.message = 'Record already exists';
                 res.send(response);
             } else {
-                school.getSchoolType(req.params.schoolTypeId, function (err, rows) { // passing status as active : 1 for getting all active school types
+                school.getSchoolType(req.params.schoolTypeId, function(err, rows) { // passing status as active : 1 for getting all active school types
                     response = new responseClass;
                     if (err)
                         response.errors = err;

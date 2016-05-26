@@ -862,6 +862,65 @@ var app = angular
                                 }
                             }
                         })
+                        .state('register', {
+                            url: '/register',
+                            controller: 'SchoolAddCtrl',
+                            access: access.anon,
+                            templateUrl: 'views/pages/register.html',
+                            resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo) {
+                                        return $q.reject({authenticated: true});
+                                    } else {
+                                        return $q.when();
+                                    }
+                                },
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/schoolController.js',
+//              'scripts/services/schoolService.js',
+                                        ]
+                                    })
+                                },
+                                boards: function (schoolService) {
+                                    return  schoolService.getBoards()
+                                },
+                                countries: function (schoolService) {
+                                    return schoolService.getCountries();
+                                },
+                                schoolType: function (schoolService) {
+                                    return schoolService.getSchoolTypes();
+                                }
+                            }
+                        })
+                        .state('dashboard.subscription', {
+                            url: '/subscription',
+                            access: access.admin,
+                            data: {collapseVar: 'school'},
+                            controller: 'subscriptionController',
+                            templateUrl: 'views/subscription/list.html',
+                            resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/reviewController.js',
+                                        ]
+                                    })
+                                }
+                            }
+                        })
                         .state('dashboard.reviews', {
                             url: '/reviews',
                             access: access.admin,

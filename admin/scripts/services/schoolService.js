@@ -84,6 +84,20 @@ angular.module('sbAdminApp')
         },
         getSchoolClasses: function(){
             return ['nursery','lkg','ukg','kg','prep','i','ii','iii','iv','v','vi','vii','viii','ix','x','xi','xii'];
+        },
+        getSubscriptions: function(schoolId){
+            if(typeof schoolId != 'undefined')
+                var url = baseUrl+'/adminapi/v1/subscriptions/school/'+schoolId;
+            else
+                var url = baseUrl+'/adminapi/v1/subscriptions';
+            
+            var promise = $http({
+               method:'GET',
+               url:baseUrl+'/adminapi/v1/subscriptions/school/'
+            }).success(function(data,status, headers, conf){
+                return data;
+            });
+            return promise;
         }
     }
 }])

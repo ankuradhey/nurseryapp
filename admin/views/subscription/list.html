@@ -1,0 +1,12 @@
+<div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Subscription Types</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <stats ng-repeat="subscription in subscriptions" comments="{{subscription.plan_name}}" colour="primary" type="schools" goto="dashboard.home"></stats>
+    </div>
+</div>
