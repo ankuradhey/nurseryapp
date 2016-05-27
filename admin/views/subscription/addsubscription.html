@@ -1,0 +1,69 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Add Subscription</h1>
+    </div>  
+    <!-- /.col-lg-12 -->
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <uib-alert ng-if="alert.show" type="{{alert.type}}" close="alert.show = false">{{alert.message}}</uib-alert>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Fill school details
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form role="form" novalidate name="subscriptionForm">
+                            <div class="form-group" show-errors ng-class="{'has-error':subscriptionForm.subscription_plan_id.$invalid && subscriptionForm.subscription_plan_id.$dirty}">
+                                <label>Subscription Type</label>
+                                <select name="subscription_plan_id" class="form-control" ng-model="plan"
+                                        ng-options="plan as plan.plan_name for plan in subscriptions track by plan.plan_id"
+                                        required
+                                        ng-change="changeSubscription()">
+                                    <option value="">-- Select --</option>
+                                </select>
+                                <p class="help-block" ng-if="subscriptionForm.subscription_plan_id.$error.required && subscriptionForm.subscription_plan_id.$dirty">Please choose any plan</p>
+                            </div>
+                            <div class="form-group" show-errors ng-class="{'has-error':subscriptionForm.school_type.$invalid && subscriptionForm.school_type.$dirty}">
+                                <label>Price</label>
+                                <input type="text" required readonly 
+                                       class="form-control"
+                                       name="subscription_amount" ng-model="plan.plan_amount">
+                                <p class="help-block" ng-if="subscriptionForm.subscription_amount.$invalid && subscriptionForm.subscription_amount.$dirty">Subscription amount is required</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Duration (in months)</label>
+                                <input type="text" required readonly 
+                                       class="form-control"
+                                       name="subscription_amount" ng-model="plan.plan_duration">
+                            </div>
+                            <div class="form-group">
+                                <label>Date from</label>
+                                <p class="input-group">
+                                    <input type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy"
+                                           ng-model="dt" is-open="popup1.opened"
+                                           datepicker-option="dateOptions"
+                                           ng-required="true" close-text="Close">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="open1()">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="form-group">
+                                <label>Date top</label>
+                                    <input type="text" class="form-control"
+                                           readonly
+                                           ng-model="dateTo"
+                                           ng-required="true">
+                            </div>
+                            <button type="submit" class="btn btn-default" ng-click="saveSubscription()" ng-disabled="subscriptionForm.$invalid">Submit Button</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

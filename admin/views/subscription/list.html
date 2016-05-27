@@ -7,6 +7,49 @@
     </div>
     <!-- /.row -->
     <div class="row">
-        <stats ng-repeat="subscription in subscriptions" comments="{{subscription.plan_name}}" colour="primary" type="schools" goto="dashboard.home"></stats>
+        <div class="col-lg-3 col-md-6" ng-repeat="subscription in subscriptions" >
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-{{type}} fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{number}}</div>
+                            <div>{{subscription.plan_name}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-{{type}} fa-5x"></i>
+                            Duration
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{subscription.plan_duration}}</div>
+                            <div>Months</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-{{type}} fa-5x"></i>
+                            Price
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{subscription.plan_amount}}</div>
+                            <div>Rs</div>
+                        </div>
+                    </div>
+                </div>
+                <a >
+                    <div class="panel-footer">
+                        <span class="pull-left"><a href="javascript:;" ui-sref="dashboard.addsubscription({subscriptionId:subscription.plan_id})">Purchase Now</a></span>
+                        <span class="pull-right"><a href="javascript:;" ui-sref="dashboard.addsubscription({subscriptionId:subscription.plan_id})"><i class="fa fa-arrow-circle-right"></i></a></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
 </div>

@@ -905,7 +905,7 @@ var app = angular
                             resolve: {
                                 auth: function ($q, authService) {
                                     var userInfo = authService.getUserInfo();
-                                    if (userInfo && authService.authorize(access.admin)) {
+                                    if (userInfo && authService.authorize(access.school)) {
                                         return $q.when(userInfo);
                                     } else {
                                         return $q.reject({authenticated: false});
@@ -915,9 +915,39 @@ var app = angular
                                     return $ocLazyLoad.load({
                                         name: 'sbAdminApp',
                                         files: [
-                                            'scripts/controllers/reviewController.js',
+                                            'scripts/controllers/subscriptionController.js',
                                         ]
                                     })
+                                },
+                                subscription:function(schoolService){
+                                    return schoolService.getSubscriptions();
+                                }
+                            }
+                        })
+                        .state('dashboard.addsubscription', {
+                            url: '/addsubscription/:subscriptionId',
+                            data: {collapseVar: 'school'},
+                            controller: 'subscriptionController',
+                            templateUrl: 'views/subscription/addsubscription.html',
+                            resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.school)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/subscriptionController.js',
+                                        ]
+                                    })
+                                },
+                                subscription:function(schoolService){
+                                    return schoolService.getSubscriptions();
                                 }
                             }
                         })

@@ -93,7 +93,7 @@ angular.module('sbAdminApp')
             
             var promise = $http({
                method:'GET',
-               url:baseUrl+'/adminapi/v1/subscriptions/school/'
+               url:url
             }).success(function(data,status, headers, conf){
                 return data;
             });
