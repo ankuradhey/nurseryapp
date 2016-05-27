@@ -8,6 +8,7 @@ var schoolController = require('../controllers/schoolController.js');
 var dashboardController = require('../controllers/dashboardController.js');
 var locationController = require('../controllers/locationController.js');
 var reviewController = require('../controllers/reviewController.js');
+var subscriptionController = require('../controllers/subscriptionController.js');
 //var user = require('./users.js');
  
 /*
@@ -88,5 +89,8 @@ router.put('/adminapi/v1/schooltype/:schoolTypeId',schoolController.updateSchool
 router.get('/adminapi/v1/reviews',reviewController.getReviews);
 router.put('/adminapi/v1/review/:reviewId',reviewController.updateReview);
 router.delete('/adminapi/v1/review/:reviewId',reviewController.deleteReview);
+
+router.get('/adminapi/v1/subscriptions',subscriptionController.getAll);
+router.get('/adminapi/v1/subscription/:subscriptionId',subscriptionController.getOne);
 
 module.exports = router;
