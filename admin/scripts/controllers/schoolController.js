@@ -83,6 +83,7 @@ angular.module('sbAdminApp')
                 $scope.school = {name: '', affiliation: '', phone: '', address: '', board: '', medium: '', year: '', password:123456};
                 $scope.location = {country: {country_id: '', country_name: '-- Select --'}, state: '', city: '', area: '', zone: ''};
                 $scope.types = schoolType.data.types;
+                $scope.numberCount = 0;
                 //check if its an edit case
 
                 if ($scope.schoolId) {
@@ -97,6 +98,8 @@ angular.module('sbAdminApp')
                             $scope.school.password = '';
                             $scope.school.affiliation = school.school_affiliation_code;
                             $scope.school.phone = school.school_phone;
+                            $scope.school.contact_person = school.school_contact_person;
+                            $scope.school.helpline_number = school.school_helpline_number;
                             $scope.school.address = school.school_address;
                             $scope.school.board = {board_id: school.board_id, board_name: school.board_name};
                             $scope.school.medium = school.school_medium;
@@ -109,6 +112,12 @@ angular.module('sbAdminApp')
                             $scope.location.city = {city_id: school.city_id, city_name: school.city_id};
                             $scope.location.area = {area_id: school.area_id, area_name: school.area_name};
                             $scope.location.zone = {zone_id: school.zone_id, zone_name: school.zone_name};
+                            
+                            //additional number
+                            var additionalNumber = school.school_phone_secondary.split(',');
+                            $scope.additionalNumberArr = additionalNumber;
+                            $scope.school.phone_secondary = additionalNumber;
+                            
                         } else {
                             $scope.alert.show = true;
                             $scope.alert.type = 'danger';
@@ -197,13 +206,23 @@ angular.module('sbAdminApp')
                     if ($scope.schoolForm.$invalid) {
                         return;
                     }
-
+                    
+                    //additional number
+                    var additionalNumber = $scope.school.phone_secondary;
+                            
+                    additionalNumber = additionalNumber.filter(function(elem, pos, arr){
+                        return arr[pos] && arr.indexOf(elem) == pos;
+                    });
+                    additionalNumber = additionalNumber.join(',');
 
                     var data = {
                         school_name: $scope.school.name,
                         school_email: $scope.school.email,
                         school_affiliation_code: $scope.school.affiliation,
                         school_phone: $scope.school.phone,
+                        school_phone_secondary: additionalNumber,
+                        school_helpline_number: $scope.school.helpline_number,
+                        school_contact_person: $scope.school.contact_person,
                         school_address: $scope.school.address,
                         school_board: $scope.school.board.board_id,
                         school_medium: $scope.school.medium,
@@ -296,7 +315,10 @@ angular.module('sbAdminApp')
                         console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
                     });
                 }
-
+                
+                $scope.addNumberBlock = function(){
+                     $scope.additionalNumberArr.push($scope.additionalNumberArr.length)
+                }
             }])
         .controller('SchoolTypeCtrl', ['$scope', '$http', '$state', '$stateParams','schoolTypes', function ($scope, $http, $state, $stateParams, schoolTypes) {
                 $scope.schoolTypes = schoolTypes.data.types;

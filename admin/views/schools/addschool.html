@@ -16,19 +16,45 @@
                     <div class="col-lg-12">
                         <form role="form" novalidate name="schoolForm" enctype="multipart/form-data">
                             <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_name.$invalid && schoolForm.school_name.$dirty}">
-                                <label>School Name</label>
+                                <label>School Name*</label>
                                 <input class="form-control" name="school_name" ng-model="school.name" required>
                                 <p class="help-block" ng-if="schoolForm.school_name.$error.required && schoolForm.school_name.$dirty">School name is required</p>
                             </div>
                             <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_affiliation_code.$invalid && schoolForm.school_affiliation_code.$dirty}">
-                                <label>Affilication Code</label>
+                                <label>Affilication Code*</label>
                                 <input type="text" class="form-control" name="school_affiliation_code" ng-model='school.affiliation' required>
                                 <p class="help-block" ng-if="schoolForm.school_affiliation_code.$error.required && schoolForm.school_affiliation_code.$dirty">Affiliation code is required</p>
                             </div>
                             <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_affiliation_code.$invalid && schoolForm.school_affiliation_code.$dirty}">
-                                <label>Phone</label>
-                                <input type="tel" class="form-control" name="school_phone" ng-model='school.phone' required>
+                                <label>Phone*</label>
+                                <input type="tel" pattern="^\d{10}$" class="form-control" id="school_phone" name="school_phone" ng-model='school.phone' required>
                                 <p class="help-block" ng-if="schoolForm.school_phone.$error.required && schoolForm.school_phone.$dirty">Phone number is required</p>
+                                <p class="help-block" ng-if="schoolForm.school_phone.$error.tel && schoolForm.school_phone.$dirty">Phone number not valid</p>
+                            </div>
+                            <div id="additionalNumberBody">
+                                <div class="form-group" id="additionalNumberCopy" 
+                                     ng-repeat='addnumber in additionalNumberArr track by $index'
+                                     show-errors 
+                                     ng-class="{'has-error':schoolForm.school_phone_secondary[$index].$invalid && schoolForm.school_phone_secondary[$index].$dirty}">
+                                    <label>Additional Phone Number*</label>
+                                    <input type="tel" class="form-control" 
+                                           pattern="^\d{10}$" 
+                                           name="school_phone_secondary[$index]" 
+                                           ng-model='school.phone_secondary[$index]' >
+                                    <p class="help-block" ng-if="schoolForm.school_phone_secondary[$index].$error.tel && schoolForm.school_phone_secondary[$index].$dirty">Phone number is not valid</p>
+                                    <button type="button" class="btn btn-link btn-danger" ng-show="$index != 0" ng-click="additionalNumberArr.splice($index, 1)">Remove</button>
+                                </div>
+                                <button type="button" class="btn btn-link" ng-click="additionalNumberArr.push(additionalNumberArr.length)">Add More</button>
+                            </div>
+                            <div class="form-group">
+                                <label>Contact Person</label>
+                                <input type="text" class="form-control" name="school_contact_person" ng-model='school.contact_person'>
+                            </div>
+                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_helpline_number.$invalid && schoolForm.school_helpline_number.$dirty}">
+                                <label>Helpline Number*</label>
+                                <input type="tel" class="form-control" pattern="^\d{3,}-\d{6,}$" name="school_helpline_number" ng-model='school.helpline_number'>
+                                <p class="help-block" ng-if="schoolForm.school_helpline_number.$error.required && schoolForm.school_helpline_number.$dirty">Helpline number is required</p>
+                                <p class="help-block" ng-if="schoolForm.school_helpline_number.$error.tel && schoolForm.school_helpline_number.$dirty">Helpline number not valid</p>
                             </div>
                             <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_address.$invalid && schoolForm.school_address.$dirty}">
                                 <label>Address</label>

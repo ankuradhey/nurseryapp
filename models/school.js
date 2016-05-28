@@ -94,7 +94,6 @@ var schools = {
         }
 
         query += ' where school_id = ' + schoolId;
-        console.log(query);
 
         db.get().query(query, function(err, rows) {
             if (err)
@@ -103,7 +102,17 @@ var schools = {
         });
     },
     getSchoolTypes: function(status, done) {
-        db.get().query('select * from school_type where school_type_status = "' + status + '"  ', function(err, rows) {
+
+        db.get().query('select school_type_id, \n\
+                        concat(\n\
+                                school_type_name, \n\
+                                " [", \n\
+                                substring(school_type_classes, 1, locate(",",school_type_classes,1)-1),\n\
+                                "->",\n\
+                                SUBSTRING_INDEX(school_type_classes,",",-1),\n\
+                                "]"\n\
+                            ) as school_type_name, school_type_classes from school_type where school_type_status = "' + status + '"  ', function(err, rows) {
+            console.log(err);
             if (err)
                 return done(err);
             return done(null, rows);

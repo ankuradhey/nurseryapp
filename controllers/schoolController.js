@@ -53,7 +53,6 @@ module.exports = {
     getOne: function(req, res) {
         var schoolId = req.params.schoolId
         school.getOne(schoolId, function(err, rows) {
-            console.log(rows);
             if (err) {
                 response = new responseClass();
                 response.errors = err;
