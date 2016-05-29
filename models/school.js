@@ -34,10 +34,13 @@ var schools = {
                 return done(err)
             return done(null, rows);
         })
-    },
+    }, 
     getOne: function(id, done) {
         db.get().query('SELECT s.*, board.board_id, board.board_name, c.country_id, c.country_name, st.state_id, st.state_name, city.city_id, city.city_name,  \n\
-                        stype.school_type_id, stype.school_type_name, area.area_id, area.area_name, zone.zone_id, zone.zone_name FROM school s\n\
+                        stype.school_type_id, stype.school_type_name, area.area_id, area.area_name, zone.zone_id, zone.zone_name, \n\
+                        medium.medium_id, medium.medium_name \n\
+                        FROM school s\n\
+                        left join school_medium medium on medium.medium_id = s.school_medium and medium.medium_status = "1" \n\
                         join board_master board on board.board_id = s.school_board and board.board_status = "1"\n\
                         left join school_type stype on stype.school_type_id = s.school_type and stype.school_type_status = "1"\n\
                         left join country c on c.country_id = s.school_country and c.country_status = "1"\n\

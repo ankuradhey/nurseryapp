@@ -74,9 +74,10 @@ angular.module('sbAdminApp')
         }
 
     }])
-        .controller('SchoolAddCtrl', ['$rootScope', '$scope', '$http', '$stateParams', 'boards', 'countries', 'schoolType', 'Upload', '$state',
-    function($rootScope, $scope, $http, $stateParams, boards, countries, schoolType, Upload, $state) {
+        .controller('SchoolAddCtrl', ['$rootScope', '$scope', '$http', '$stateParams', 'boards', 'countries', 'schoolType', 'medium', 'Upload', '$state',
+    function($rootScope, $scope, $http, $stateParams, boards, countries, schoolType, medium, Upload, $state) {
         $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
+        $scope.mediums = medium.data.mediums;
         $scope.boards = boards.data.boards;
         $scope.countries = countries.data.countries;
         $scope.schoolId = $stateParams.schoolId;
@@ -102,7 +103,7 @@ angular.module('sbAdminApp')
                     $scope.school.helpline_number = school.school_helpline_number;
                     $scope.school.address = school.school_address;
                     $scope.school.board = {board_id: school.board_id, board_name: school.board_name};
-                    $scope.school.medium = school.school_medium;
+                    $scope.school.medium = {medium_id:school.medium_id,medium_name:school.medium_name};
                     $scope.school.year = school.school_establish_year;
                     $scope.school.website = school.school_website;
                     $scope.school.description = school.school_desc;
@@ -225,7 +226,7 @@ angular.module('sbAdminApp')
                 school_contact_person: $scope.school.contact_person,
                 school_address: $scope.school.address,
                 school_board: $scope.school.board.board_id,
-                school_medium: $scope.school.medium,
+                school_medium: $scope.school.medium.medium_id,
                 school_establish_year: $scope.school.year,
                 school_website: $scope.school.website,
                 school_type: $scope.school.type.school_type_id,

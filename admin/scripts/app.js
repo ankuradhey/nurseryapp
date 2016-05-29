@@ -236,6 +236,9 @@ var app = angular
                                 },
                                 schoolType: function (schoolService) {
                                     return schoolService.getSchoolTypes();
+                                },
+                                medium: function(schoolService){
+                                    return schoolService.getMediums();
                                 }
                             }
                         })
@@ -270,6 +273,9 @@ var app = angular
                                 },
                                 schoolType: function (schoolService) {
                                     return schoolService.getSchoolTypes();
+                                },
+                                medium: function(schoolService){
+                                    return schoolService.getMediums();
                                 }
                             }
                         })

@@ -83,18 +83,22 @@
                                 <textarea rows="10" class="form-control" name="school_desc" ng-model="school.description"></textarea>
                             </div>
                             <div class="form-group" ng-class="{'has-error':school.board.$invalid}">
-                                <label>Choose Board</label>
+                                <label>Choose Board*</label>
                                 <select name="school_board" class="form-control" ng-model='school.board' required
                                         ng-options="board as board.board_name for board in boards track by board.board_id"
                                         >
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label>Choose Medium</label>
-                                <select name="school_medium" class="form-control" ng-model="school.medium">
+                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_medium.$invalid && schoolForm.school_medium.$dirty}">
+                                <label>Choose Medium*</label>
+                                <select name="school_medium" class="form-control" 
+                                        ng-model="school.medium"
+                                        ng-options="medium as medium.medium_name for medium in mediums track by medium.medium_id"
+                                        required
+                                        >
                                     <option value="">-- Select --</option>
-                                    <option value="english">English</option>
-                                    <option value="hindi">Hindi</option>
+<!--                                    <option value="english">English</option>
+                                    <option value="hindi">Hindi</option>-->
                                 </select>
                             </div>
                             <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_type.$invalid && schoolForm.school_type.$dirty}">
