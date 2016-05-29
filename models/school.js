@@ -101,6 +101,77 @@ var schools = {
             return done(null, rows);
         });
     },
+    getMediums: function(done) {
+        db.get().query('select * from school_medium where medium_status != "2"', function(err, rows) {
+            console.log(err);
+            if (err)
+                return done(err);
+            return done(null, rows);
+        })
+    },
+    getMedium: function(mediumId, done) {
+        db.get().query('select * from school_medium where medium_status != "2" and medium_id = ?', mediumId, function(err, rows) {
+            console.log(err);
+            if (err)
+                return done(err);
+            return done(null, rows);
+        })
+    },
+    getMediumByName: function(mediumName, mediumId, done) {
+        mediumId = typeof mediumId != 'undefined' ? mediumId : 0;
+        console.log([mediumName.toLowerCase(), mediumId]);
+        db.get().query('select * from school_medium where medium_status != 2 and medium_name = ? and medium_id != ? ', [mediumName.toLowerCase(), mediumId], function(err, rows) {
+            console.log(err);
+            if (err)
+                return done(err);
+            return done(null, rows);
+        })
+    },
+    addMedium: function(mediumParams, done) {
+        db.get().query('insert into school_medium set medium_name = ?, medium_status = "1" ', [mediumParams.medium_name, mediumParams.medium_status], function(err, rows) {
+            if (err)
+                return done(err)
+            return done(null, rows);
+        });
+    },
+    updateMediumStatus: function(mediumStatus, mediumId, done){
+        db.get().query('update school_medium set medium_status = ? where medium_id = ? ', [mediumStatus, mediumId], function(err, rows) {
+            if (err)
+                return done(err)
+            return done(null, rows);
+        });
+    },
+    updateMedium: function(mediumParams, mediumId, done) {
+
+        var query = 'update school_medium set'
+        var arr = [];
+        var _count = 0;
+        for (var i in mediumParams) {
+            if (_count + 1 == Object.keys(mediumParams).length)
+                query += '  ' + i + ' = ' + '"' + mediumParams[i] + '"';
+            else
+                query += ' ' + i + ' = ' + '"' + mediumParams[i] + '",';
+            _count++;
+        }
+
+        query += ' where medium_id = ' + mediumId;
+
+        db.get().query(query, function(err, rows) {
+            if (err)
+                return done(err)
+            return done(null, rows);
+        });
+    
+    },
+    deleteMedium: function(mediumId, done) {
+console.log(mediumId)
+        db.get().query('update school_medium set medium_status = "2" where medium_id = ? ', mediumId, function(err, rows) {
+            console.log(err, rows);
+            if (err)
+                return done(err)
+            return done(null, rows);
+        });
+    },
     getSchoolTypes: function(status, done) {
 
         db.get().query('select school_type_id, \n\
@@ -126,11 +197,11 @@ var schools = {
         })
     },
     getSchoolAvailability: function(schoolParams, schoolId, done) {
-        schoolId = typeof schoolId != 'undefined'?schoolId:0;
-        console.log('getSchoolAvailability - ',[schoolId, schoolParams.school_email, schoolParams.school_affiliation_code, schoolParams.school_phone]);
+        schoolId = typeof schoolId != 'undefined' ? schoolId : 0;
+        console.log('getSchoolAvailability - ', [schoolId, schoolParams.school_email, schoolParams.school_affiliation_code, schoolParams.school_phone]);
         db.get().query('select school_email, school_affiliation_code, school_phone  from school \n\
                         where school_status != "2" and school_id != ? and (school_email = ? or school_affiliation_code = ? or school_phone = ?) ',
-                        [schoolId, schoolParams.school_email, schoolParams.school_affiliation_code, schoolParams.school_phone], function(err, rows) {
+                [schoolId, schoolParams.school_email, schoolParams.school_affiliation_code, schoolParams.school_phone], function(err, rows) {
             if (err)
                 return done(err);
             return done(null, rows);
@@ -162,7 +233,7 @@ var schools = {
             return done(null, rows);
         });
     },
-    updateSchoolType: function(schoolTypeParams, schoolTypeId, done) {
+            updateSchoolType: function(schoolTypeParams, schoolTypeId, done) {
         schoolTypeParams.school_type_classes = schoolTypeParams.school_type_classes.join(',');
         db.get().query('update school_type set school_type_name = ?, school_type_classes = ? where school_type = ? ', [schoolTypeParams.school_type_name, schoolTypeParams.school_type_classes, schoolTypeId], function(err, rows) {
             if (err)

@@ -93,4 +93,11 @@ router.delete('/adminapi/v1/review/:reviewId',reviewController.deleteReview);
 router.get('/adminapi/v1/subscriptions',subscriptionController.getAll);
 router.get('/adminapi/v1/subscription/:subscriptionId',subscriptionController.getOne);
 
+router.get('/adminapi/v1/mediums',schoolController.getMediums);
+router.get('/adminapi/v1/medium/:mediumId',schoolController.getMedium);
+router.post('/adminapi/v1/medium',schoolController.addMedium);
+router.put('/adminapi/v1/medium/:mediumId',schoolController.updateMedium);
+router.delete('/adminapi/v1/medium/:mediumId',schoolController.deleteMedium);
+router.patch('/adminapi/v1/medium/status/:mediumId',schoolController.updateMediumStatus);
+
 module.exports = router;

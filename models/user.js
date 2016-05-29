@@ -154,7 +154,7 @@ exports.getAllByUser = function(userId, done) {
 }
 
 exports.getAllParents = function(done){
-  db.get().query('select user_id, user_email, user_first_name, user_last_name, user_phone, user_address from user where user_type= "parent" and user_status != "2" ', function(err, rows){
+  db.get().query('select user_id, user_email, user_first_name, user_last_name, user_phone, user_address, user_status from user where user_type= "parent" and user_status != "2" ', function(err, rows){
       if(err)
           return done(err);
       done(null, rows);

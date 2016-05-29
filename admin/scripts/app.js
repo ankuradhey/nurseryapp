@@ -1004,6 +1004,84 @@ var app = angular
                                 }
                             }
                         })
+                        .state('dashboard.mediums', {
+                            url: '/mediums',
+                            access: access.admin,
+                            data: {collapseVar: 'school'},
+                            controller: 'mediumController',
+                            templateUrl: 'views/schools/mediumlist.html',
+                            resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/schoolController.js',
+                                        ]
+                                    })
+                                },
+                                medium: function(schoolService){
+                                    return schoolService.getMediums();
+                                }
+                            }
+                        })
+                        .state('dashboard.addmedium', {
+                            url: '/addmedium',
+                            access: access.admin,
+                            data: {collapseVar: 'school'},
+                            controller: 'mediumAddController',
+                            templateUrl: 'views/schools/addmedium.html',
+                            resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/schoolController.js',
+                                        ]
+                                    })
+                                }
+                            }
+                        })
+                        .state('dashboard.editmedium', {
+                            url: '/editmedium/:mediumId',
+                            access: access.admin,
+                            data: {collapseVar: 'school'},
+                            controller: 'mediumAddController',
+                            templateUrl: 'views/schools/addmedium.html',
+                            resolve: {
+                                auth: function ($q, authService) {
+                                    var userInfo = authService.getUserInfo();
+                                    if (userInfo && authService.authorize(access.admin)) {
+                                        return $q.when(userInfo);
+                                    } else {
+                                        return $q.reject({authenticated: false});
+                                    }
+                                },
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/schoolController.js',
+                                        ]
+                                    })
+                                }
+                            }
+                        })
                         .state('dashboard.editschooltype', {
                             url: '/editschooltype/:schoolTypeId',
                             access: access.admin,
