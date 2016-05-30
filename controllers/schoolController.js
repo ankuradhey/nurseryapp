@@ -198,6 +198,7 @@ module.exports = {
         var schoolId = req.params.schoolId
 
         school.getSchoolAvailability(req.body, schoolId, function(err, rows) {
+            console.log(err);
             if (err) {
                 response.errors = err;
                 res.send(response);
@@ -214,6 +215,7 @@ module.exports = {
                 res.send(response);
             } else {
                 school.update(schoolId, req.body, function(err, rows) {
+                    console.log(err);
                     if (err)
                         response.errors = err;
                     else {
