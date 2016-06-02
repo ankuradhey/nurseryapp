@@ -42,7 +42,7 @@
                             </div>
                             <div class="form-group" show-errors ng-class="{'has-error':parentForm.user_address.$invalid && parentForm.user_address.$dirty}">
                                 <label>Address</label>
-                                <input class="form-control" name="user_phone" ng-model="user.user_address" required>
+                                <input class="form-control" name="user_address" ng-model="user.user_address" required>
                                 <p class="help-block" ng-if="parentForm.user_address.$error.required && parentForm.user_address.$dirty">Address is required</p>
                             </div>
                             <button type="submit" class="btn btn-default" ng-click="saveParent()" ng-disabled="parentForm.$invalid">Submit</button>

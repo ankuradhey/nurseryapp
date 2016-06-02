@@ -25,11 +25,11 @@
                                 <input type="text" class="form-control" name="school_affiliation_code" ng-model='school.affiliation' required>
                                 <p class="help-block" ng-if="schoolForm.school_affiliation_code.$error.required && schoolForm.school_affiliation_code.$dirty">Affiliation code is required</p>
                             </div>
-                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_affiliation_code.$invalid && schoolForm.school_affiliation_code.$dirty}">
+                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_phone.$invalid && schoolForm.school_phone.$dirty}">
                                 <label>Phone*</label>
                                 <input type="tel" pattern="^\d{10}$" class="form-control" id="school_phone" name="school_phone" ng-model='school.phone' required>
                                 <p class="help-block" ng-if="schoolForm.school_phone.$error.required && schoolForm.school_phone.$dirty">Phone number is required</p>
-                                <p class="help-block" ng-if="schoolForm.school_phone.$error.tel && schoolForm.school_phone.$dirty">Phone number not valid</p>
+                                <p class="help-block" ng-if="schoolForm.school_phone.$error.pattern && schoolForm.school_phone.$dirty">Phone number not valid</p>
                             </div>
                             <div id="additionalNumberBody">
                                 <div class="form-group" id="additionalNumberCopy" 
@@ -41,7 +41,7 @@
                                            pattern="^\d{10}$" 
                                            name="school_phone_secondary[$index]" 
                                            ng-model='school.phone_secondary[$index]' >
-                                    <p class="help-block" ng-if="schoolForm.school_phone_secondary[$index].$error.tel && schoolForm.school_phone_secondary[$index].$dirty">Phone number is not valid</p>
+                                    <p class="help-block" ng-if="schoolForm.school_phone_secondary[$index].$error.pattern && schoolForm.school_phone_secondary[$index].$dirty">Phone number is not valid</p>
                                     <button type="button" class="btn btn-link btn-danger" ng-show="$index != 0" ng-click="additionalNumberArr.splice($index, 1)">Remove</button>
                                 </div>
                                 <button type="button" class="btn btn-link" ng-click="additionalNumberArr.push(additionalNumberArr.length)">Add More</button>
@@ -157,7 +157,7 @@
                                        accept='image/*'
                                        ng-change='uploadLogo(school.logo)'
                                        />
-                                <p>{{progress}}</p>
+                                <p>{{progress1}}</p>
                                 <p class='help-block' ng-show="schoolForm.school_logo.$error.maxSize">
                                     File too large {{school.logo.size / 1000000|number:1}}MB: max 20M
                                 </p>
@@ -170,7 +170,7 @@
                                        accept='image/*'
                                        ng-change='uploadImage(school.img)'
                                        />
-                                <p>{{progress}}</p>
+                                <p>{{progress2}}</p>
                                 <p class='help-block' ng-show="schoolForm.school_img.$error.maxSize">
                                     File too large {{school.logo.size / 1000000|number:1}}MB: max 20M
                                 </p>
