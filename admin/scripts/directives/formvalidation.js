@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('sbAdminApp').
-        directive('formValidate', function() {
+        directive('formValidate', function($timeout) {
     return {
         restrict: 'A',
         require: '^form',
@@ -19,8 +19,15 @@ angular.module('sbAdminApp').
                 el.toggleClass('has-error', formCtrl[inputName].$invalid);
             })
 
-            scope.$on('show-errors-check-validity', function() {
+            scope.$on('show-errors-check-validity', function(event, data) {
+                console.log('how many times');  
                 el.toggleClass('has-error', formCtrl[inputName].$invalid);
+                if(formCtrl[inputName].$invalid){
+                    formCtrl[inputName].$setDirty();
+                    $timeout(function(){
+                        inputNgEl.focus();
+                    })
+                }
             });
 
             scope.$on('show-errors-reset', function() {

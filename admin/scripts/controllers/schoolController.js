@@ -84,6 +84,8 @@ angular.module('sbAdminApp')
         $scope.school = {name: '', affiliation: '', phone: '', address: '', board: '', medium: '', year: '', password: 123456};
         $scope.location = {country: {country_id: '', country_name: '-- Select --'}, state: '', city: '', area: '', zone: ''};
         $scope.types = schoolType.data.types;
+        $scope.additionalNumberArr = ['0'];
+        console.log($scope.additionalNumberArr);
         $scope.numberCount = 0;
         //check if its an edit case
 
@@ -116,12 +118,18 @@ angular.module('sbAdminApp')
 
                     //additional number
                     var additionalNumber = school.school_phone_secondary.split(',');
+                    
+                    if(!additionalNumber){
+                        additionalNumber = [0];
+                    }
+                    
                     $scope.additionalNumberArr = additionalNumber;
                     $scope.school.phone_secondary = additionalNumber;
 
                 } else {
                     $scope.alert.show = true;
                     $scope.alert.type = 'danger';
+                    angular.element('#alertMessage').focus();
                 }
             }).error(function(data, status, headers, conf) {
                 $scope.alert.show = true;
@@ -210,12 +218,15 @@ angular.module('sbAdminApp')
 
             //additional number
             var additionalNumber = $scope.school.phone_secondary;
-
-            additionalNumber = additionalNumber.filter(function(elem, pos, arr) {
-                return arr[pos] && arr.indexOf(elem) == pos;
-            });
-            additionalNumber = additionalNumber.join(',');
-
+            
+            if(additionalNumber){
+                console.log(additionalNumber);
+                additionalNumber = additionalNumber.filter(function(elem, pos, arr) {
+                    return arr[pos] && arr.indexOf(elem) == pos;
+                });
+                additionalNumber = additionalNumber.join(',');
+            }
+            
             var data = {
                 school_name: $scope.school.name,
                 school_email: $scope.school.email,

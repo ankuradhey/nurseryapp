@@ -6,7 +6,8 @@
 </div>
 <div class="row">
     <div class="col-lg-12">
-        <uib-alert ng-if="alert.show" type="{{alert.type}}" close="alert.show = false">{{alert.message}}</uib-alert>
+        <uib-alert id="alertMessage" ng-if="alert.show" type="{{alert.type}}" close="alert.show = false"
+                 ng-focus="alert.show"   tabindex="1">{{alert.message}}</uib-alert>
         <div class="panel panel-default">
             <div class="panel-heading">
                 Fill school details
@@ -14,27 +15,27 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-lg-12">
-                        <form role="form" novalidate name="schoolForm" enctype="multipart/form-data">
-                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_name.$invalid && schoolForm.school_name.$dirty}">
+                        <form role="form"  novalidate name="schoolForm" enctype="multipart/form-data">
+                            <div class="form-group" form-validate show-errors ng-class="{'has-error':schoolForm.school_name.$invalid && schoolForm.school_name.$dirty}">
                                 <label>School Name*</label>
                                 <input class="form-control" name="school_name" ng-model="school.name" required>
                                 <p class="help-block" ng-if="schoolForm.school_name.$error.required && schoolForm.school_name.$dirty">School name is required</p>
                             </div>
-                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_affiliation_code.$invalid && schoolForm.school_affiliation_code.$dirty}">
+                            <div class="form-group" form-validate show-errors ng-class="{'has-error':schoolForm.school_affiliation_code.$invalid && schoolForm.school_affiliation_code.$dirty}">
                                 <label>Affilication Code*</label>
                                 <input type="text" class="form-control" name="school_affiliation_code" ng-model='school.affiliation' required>
                                 <p class="help-block" ng-if="schoolForm.school_affiliation_code.$error.required && schoolForm.school_affiliation_code.$dirty">Affiliation code is required</p>
                             </div>
-                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_phone.$invalid && schoolForm.school_phone.$dirty}">
+                            <div class="form-group" form-validate show-errors ng-class="{'has-error':schoolForm.school_phone.$invalid && schoolForm.school_phone.$dirty}">
                                 <label>Phone*</label>
                                 <input type="tel" pattern="^\d{10}$" class="form-control" id="school_phone" name="school_phone" ng-model='school.phone' required>
                                 <p class="help-block" ng-if="schoolForm.school_phone.$error.required && schoolForm.school_phone.$dirty">Phone number is required</p>
                                 <p class="help-block" ng-if="schoolForm.school_phone.$error.pattern && schoolForm.school_phone.$dirty">Phone number not valid</p>
                             </div>
                             <div id="additionalNumberBody">
-                                <div class="form-group" id="additionalNumberCopy" 
+                                <div class="form-group" form-validate id="additionalNumberCopy" 
                                      ng-repeat='addnumber in additionalNumberArr track by $index'
-                                     show-errors 
+                                     form-validate show-errors 
                                      ng-class="{'has-error':schoolForm.school_phone_secondary[$index].$invalid && schoolForm.school_phone_secondary[$index].$dirty}">
                                     <label>Additional Phone Number*</label>
                                     <input type="tel" class="form-control" 
@@ -50,46 +51,47 @@
                                 <label>Contact Person</label>
                                 <input type="text" class="form-control" name="school_contact_person" ng-model='school.contact_person'>
                             </div>
-                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_helpline_number.$invalid && schoolForm.school_helpline_number.$dirty}">
+                            <div class="form-group" form-validate show-errors ng-class="{'has-error':schoolForm.school_helpline_number.$invalid && schoolForm.school_helpline_number.$dirty}">
                                 <label>Helpline Number*</label>
-                                <input type="tel" class="form-control" pattern="^\d{3,}-\d{6,}$" name="school_helpline_number" ng-model='school.helpline_number'>
+                                <input type="tel" class="form-control" pattern="^\d{3,}-\d{6,}$" name="school_helpline_number" ng-model='school.helpline_number' required>
                                 <p class="help-block" ng-if="schoolForm.school_helpline_number.$error.required && schoolForm.school_helpline_number.$dirty">Helpline number is required</p>
-                                <p class="help-block" ng-if="schoolForm.school_helpline_number.$error.tel && schoolForm.school_helpline_number.$dirty">Helpline number not valid</p>
+                                <p class="help-block" ng-if="schoolForm.school_helpline_number.$error.pattern && schoolForm.school_helpline_number.$dirty">Use xxx-xxxxxx format</p>
                             </div>
-                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_address.$invalid && schoolForm.school_address.$dirty}">
-                                <label>Address</label>
+                            <div class="form-group" form-validate show-errors ng-class="{'has-error':schoolForm.school_address.$invalid && schoolForm.school_address.$dirty}">
+                                <label>Address*</label>
                                 <textarea class="form-control" name="school_address" ng-model="school.address" required></textarea>
                                 <p class="help-block" ng-if="schoolForm.school_address.$error.required && schoolForm.school_address.$dirty">Address is required</p>
                             </div>
-                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_email.$invalid && schoolForm.school_email.$dirty}">
-                                <label>Email/Username</label>
+                            <div class="form-group" form-validate show-errors ng-class="{'has-error':schoolForm.school_email.$invalid && schoolForm.school_email.$dirty}">
+                                <label>Email/Username*</label>
                                 <input type="email" class="form-control" name="school_email" ng-model='school.email' required>
                                 <p class="help-block" ng-if="schoolForm.school_email.$error.required && schoolForm.school_email.$dirty">School Email is required</p>
                                 <p class="help-block" ng-if="schoolForm.school_email.$error.email && schoolForm.school_email.$dirty">School Email is not valid</p>
                             </div>
-                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_password.$invalid && schoolForm.school_password.$dirty}">
+                            <div class="form-group" form-validate show-errors ng-class="{'has-error':schoolForm.school_password.$invalid && schoolForm.school_password.$dirty}">
                                 <label>Password</label>
                                 <input type="password" class="form-control" name="school_password" ng-model='school.password'>
                                 <p class="help-block" ng-if="schoolForm.school_password.$error.required && schoolForm.school_password.$dirty">School Password is required</p>
                                 <p class="help-block">If you do not enter password, old password is used in edit case and for new user default password is chosen as - 123456</p>
                             </div>
-                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_website.$invalid && schoolForm.school_website.$dirty}">
+                            <div class="form-group" form-validate show-errors ng-class="{'has-error':schoolForm.school_website.$invalid && schoolForm.school_website.$dirty}">
                                 <label>Website</label>
                                 <input type="url" class="form-control" name="school_website" ng-model='school.website'>
                                 <p class="help-block" ng-if="schoolForm.school_website.$invalid && schoolForm.school_website.$dirty">School Url not valid</p>
                             </div>
-                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_desc.$invalid && schoolForm.school_desc.$dirty}">
+                            <div class="form-group" form-validate show-errors ng-class="{'has-error':schoolForm.school_desc.$invalid && schoolForm.school_desc.$dirty}">
                                 <label>School Description</label>
                                 <textarea rows="10" class="form-control" name="school_desc" ng-model="school.description"></textarea>
                             </div>
-                            <div class="form-group" ng-class="{'has-error':school.board.$invalid}">
+                            <div class="form-group" form-validate show-errors ng-class="{'has-error':schoolForm.school_board.$invalid && schoolForm.school_board.$dirty}">
                                 <label>Choose Board*</label>
                                 <select name="school_board" class="form-control" ng-model='school.board' required
                                         ng-options="board as board.board_name for board in boards track by board.board_id"
                                         >
                                 </select>
+                                <p class="help-block" ng-if="schoolForm.school_board.$invalid && schoolForm.school_board.$dirty">School board is required</p>
                             </div>
-                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_medium.$invalid && schoolForm.school_medium.$dirty}">
+                            <div class="form-group" form-validate show-errors ng-class="{'has-error':schoolForm.school_medium.$invalid && schoolForm.school_medium.$dirty}">
                                 <label>Choose Medium*</label>
                                 <select name="school_medium" class="form-control" 
                                         ng-model="school.medium"
@@ -100,9 +102,10 @@
 <!--                                    <option value="english">English</option>
                                     <option value="hindi">Hindi</option>-->
                                 </select>
+                                <p class="help-block" ng-if="schoolForm.school_medium.$invalid && schoolForm.school_medium.$dirty">School Medium is required</p>
                             </div>
-                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_type.$invalid && schoolForm.school_type.$dirty}">
-                                <label>School Type</label>
+                            <div class="form-group" form-validate show-errors ng-class="{'has-error':schoolForm.school_type.$invalid && schoolForm.school_type.$dirty}">
+                                <label>School Type*</label>
                                 <select name="school_type" class="form-control" ng-model="school.type"
                                         ng-options="typeVal as typeVal.school_type_name for typeVal in types track by typeVal.school_type_id"
                                         required>
@@ -175,7 +178,8 @@
                                     File too large {{school.logo.size / 1000000|number:1}}MB: max 20M
                                 </p>
                             </div>
-                            <button type="submit" class="btn btn-default" ng-click="saveSchool()" ng-disabled="schoolForm.$invalid">Submit</button>
+                            <button type="submit" class="btn btn-default" ng-click="saveSchool()" >Submit</button>
+                            <!--ng-disabled="schoolForm.$invalid"-->
                         </form>
                     </div>
                 </div>

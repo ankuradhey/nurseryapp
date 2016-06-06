@@ -223,7 +223,8 @@ var app = angular
                                         name: 'sbAdminApp',
                                         files: [
                                             'scripts/controllers/schoolController.js',
-                                            'scripts/directives/datepicker/datepicker.js'
+                                            'scripts/directives/datepicker/datepicker.js',
+                                            'scripts/directives/formvalidation.js'
 //              'scripts/services/schoolService.js',
                                         ]
                                     })
