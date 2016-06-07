@@ -246,6 +246,13 @@ var schools = {
             return done(null, rows);
         });
     },
+    deleteSchoolType: function(schoolTypeId, done) {
+        db.get().query('update school_type set school_type_status = "2" where school_type_id = ? ', [schoolTypeId], function(err, rows) {
+            if (err)
+                return done(err)
+            return done(null, rows);
+        });
+    },
     updateSchoolTypeStatus: function(status, schoolTypeId, done) {
         db.get().query('update school_type set school_type_status = ? where school_type_id = ? ', [status, schoolTypeId], function(err, rows) {
             if (err)
