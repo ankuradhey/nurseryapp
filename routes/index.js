@@ -46,12 +46,16 @@ router.get('/adminapi/v1/country',locationController.getCountries);
 router.post('/adminapi/v1/country',locationController.addCountry);
 router.get('/adminapi/v1/country/:countryId',locationController.getCountry);
 router.put('/adminapi/v1/country/:countryId',locationController.updateCountry);
+router.patch('/adminapi/v1/country/:countryId',locationController.updateCountryStatus);
+router.delete('/adminapi/v1/country/:countryId',locationController.deleteCountry);
 
 router.get('/adminapi/v1/state/:countryId',locationController.getStates);
 router.get('/adminapi/v1/state',locationController.getStates);
 router.get('/adminapi/v1/state/stateid/:stateId',locationController.getState);
 router.put('/adminapi/v1/state/:stateId',locationController.updateState);
+router.patch('/adminapi/v1/state/:stateId',locationController.updateStateStatus);
 router.post('/adminapi/v1/state',locationController.addState);
+router.delete('/adminapi/v1/state/:stateId',locationController.deleteState);
 
 
 router.get('/adminapi/v1/city/:stateId',locationController.getCities);

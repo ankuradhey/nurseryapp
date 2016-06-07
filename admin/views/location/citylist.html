@@ -29,6 +29,20 @@
                                 <td>{{$index+1}}</td>
                                 <td>{{city.city_name}}</td>
                                 <td class="center">
+                                    <button type='button' 
+                                            ng-if='country.country_status!="1"'
+                                            class='btn-default btn-xs' 
+                                            ng-click="updateStatus('1', city.city_id)"
+                                            >
+                                        Inactive
+                                    </button>
+                                    <button type='button' 
+                                            ng-if='country.country_status == "1"'
+                                            class='btn-info btn-xs' 
+                                            ng-click="updateStatus('0', city.city_id)"
+                                            >
+                                        Active
+                                    </button>
                                     <button type='button' class='btn-primary btn-xs' ui-sref="dashboard.editcity({cityId:city.city_id})">Edit</button>
                                     <button type='button' class='btn-warning btn-xs' ng-click="deleteCity(city.city_id)">Delete</button>
                                 </td>

@@ -10,9 +10,66 @@
  */
 
 angular.module('sbAdminApp')
-        .controller('countryController', ['$scope', '$http', 'countries', '$timeout', function($scope, $http, countries, $timeout) {
+        .controller('countryController', ['$scope', '$http', 'countries', '$timeout','$state', function($scope, $http, countries, $timeout, $state) {
         $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
         $scope.countries = countries.data.countries;
+        
+        
+        $scope.updateStatus = function(status, countryId) {
+            var s = confirm("Are you sure you want to update status of this country?");
+            if (!s)
+                return;
+
+            $http({
+                method: 'PATCH',
+                url: baseUrl + '/adminapi/v1/country/' + countryId,
+                headers: {'Content-Type': 'application/json'},
+                data: {country_status: status}
+            }).success(function(data, status, headers, conf) {
+                if (data.success) {
+                    $scope.alert.message = 'School status changed successfully';
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'success';
+                    $state.reload();
+                } else {
+                    $scope.alert.message = data.message;
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'danger';
+                }
+            }).error(function(data, status, headers, conf) {
+                $scope.alert.show = true;
+                $scope.alert.type = 'danger';
+            })
+
+        }
+        
+        
+        $scope.deleteCountry = function(countryId) {
+            var s = confirm("Are you sure you want to delete this school?");
+            if (!s)
+                return;
+
+            $http({
+                method: 'DELETE',
+                url: baseUrl + '/adminapi/v1/country/' + countryId,
+                headers: {'Content-Type': 'application/json'}
+            }).success(function(data, status, headers, conf) {
+                if (data.success) {
+                    $scope.alert.message = data.message;
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'success';
+                    $state.reload();
+                } else {
+                    $scope.alert.message = data.message;
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'danger';
+                }
+            }).error(function(data, status, headers, conf) {
+                $scope.alert.show = true;
+                $scope.alert.type = 'danger';
+            })
+        }
+        
     }])
         .controller('countryAddController', ['$scope', '$http', '$stateParams','$state', function($scope, $http, $stateParams, $state) {
         $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
@@ -77,7 +134,7 @@ angular.module('sbAdminApp')
         }
 
     }])
-        .controller('stateController', ['$scope', '$http', 'countries', '$timeout', function($scope, $http, countries, $timeout) {
+        .controller('stateController', ['$scope', '$http', 'countries', '$timeout','$state', function($scope, $http, countries, $timeout, $state) {
         $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
         $scope.states = {};
         $http.get(baseUrl + '/adminapi/v1/state', {'Content-Type': 'application/json'})
@@ -86,6 +143,60 @@ angular.module('sbAdminApp')
         }, function(data, status, headers, conf) {
             $scope.alert.show = true;
         });
+        
+        $scope.updateStatus = function(status, stateId) {
+            var s = confirm("Are you sure you want to update status of this country?");
+            if (!s)
+                return;
+
+            $http({
+                method: 'PATCH',
+                url: baseUrl + '/adminapi/v1/state/' + stateId,
+                headers: {'Content-Type': 'application/json'},
+                data: {state_status: status}
+            }).success(function(data, status, headers, conf) {
+                if (data.success) {
+                    $scope.alert.message = 'State status changed successfully';
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'success';
+                    $state.reload();
+                } else {
+                    $scope.alert.message = data.message;
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'danger';
+                }
+            }).error(function(data, status, headers, conf) {
+                $scope.alert.show = true;
+                $scope.alert.type = 'danger';
+            })
+
+        }
+        
+        $scope.deleteState = function(stateId) {
+            var s = confirm("Are you sure you want to delete this school?");
+            if (!s)
+                return;
+
+            $http({
+                method: 'DELETE',
+                url: baseUrl + '/adminapi/v1/state/' + stateId,
+                headers: {'Content-Type': 'application/json'}
+            }).success(function(data, status, headers, conf) {
+                if (data.success) {
+                    $scope.alert.message = data.message;
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'success';
+                    $state.reload();
+                } else {
+                    $scope.alert.message = data.message;
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'danger';
+                }
+            }).error(function(data, status, headers, conf) {
+                $scope.alert.show = true;
+                $scope.alert.type = 'danger';
+            })
+        }
 
     }])
     .controller('stateAddController', ['$scope', '$http', '$stateParams','countries', '$state', function($scope, $http, $stateParams, countries, $state) {

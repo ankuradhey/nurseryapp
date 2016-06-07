@@ -103,6 +103,32 @@ module.exports = {
             }
         });
     },
+    updateCountryStatus: function (req, res) {
+        location.updateCountryStatus(req.body.country_status, req.params.countryId, function (err, rows) {
+            response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
+            if (err)
+                response.errors = err;
+            else {
+                response.success = true;
+                response.error = false;
+                response.message = 'success';
+            }
+            res.send(response);
+        });
+    },
+    deleteCountry: function (req, res) {
+        location.deleteCountry(req.params.countryId, function (err, rows) {
+            response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
+            if (err)
+                response.errors = err;
+            else {
+                response.success = true;
+                response.error = false;
+                response.message = 'success';
+            }
+            res.send(response);
+        });
+    },
     getStates: function (req, res) {
         var countryId = 0;
 
@@ -178,6 +204,20 @@ module.exports = {
             }
         }, stateId);
     },
+    updateStateStatus: function (req, res) {
+        var stateId = req.params.stateId;
+        location.updateStateStatus(req.body.state_status, stateId, function (err, rows) {
+            response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
+            if (err)
+                response.errors = err;
+            else {
+                response.success = true;
+                response.error = false;
+                response.message = 'success';
+            }
+            res.send(response);
+        })
+    },
     addState: function (req, res) {
         location.getStateByName(req.body, function (err, rows) {
             response = new responseClass;
@@ -202,6 +242,21 @@ module.exports = {
                     res.send(response);
                 })
             }
+        })
+
+    },
+    deleteState: function (req, res) {
+        location.deleteState(req.params.stateId, function (err, rows) {
+            if (err) {
+                response.errors = err;
+                res.send(response);
+            }
+            else {
+                response.success = true;
+                response.error = false;
+                response.message = 'success';
+            }
+            res.send(response);
         })
 
     },

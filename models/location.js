@@ -4,7 +4,7 @@ var db = require('../db.js')
 var locations = {
     
     getCountries: function(done){
-        var query = 'SELECT country_id, country_name from country where country_status = "1" ';
+        var query = 'SELECT country_id, country_name, country_status from country where country_status != "2" ';
         db.get().query(query, function (err, rows) {
             if (err) 
                 return done(err)
@@ -36,6 +36,22 @@ var locations = {
             done(null, rows);
         });
     },
+    deleteCountry: function(countryId, done){
+        console.log("update country set country_status = '2' where country_id = "+countryId+" ");
+        
+        db.get().query('update country set country_status = "2" where country_id = ? ',[countryId], function (err, rows) {
+            if (err) return done(err)
+            done(null, rows);
+        });
+    },
+    updateCountryStatus: function(status,countryId, done){
+        console.log(status, countryId)
+        db.get().query('update country set country_status = ? where country_id = ? ',[status, countryId], function (err, rows) {
+            console.log(rows)
+            if (err) return done(err)
+            done(null, rows);
+        });
+    },
     getStatesByCountry: function(countryId, done){
         db.get().query('SELECT * FROM state where state_country_id = ? and state_status = "1"  ',countryId, function (err, rows) {
             if (err) 
@@ -45,7 +61,7 @@ var locations = {
     },
             
     getStates: function(done){
-        db.get().query('SELECT * FROM state where state_status = "1"  ', function (err, rows) {
+        db.get().query('SELECT * FROM state where state_status != "2"  ', function (err, rows) {
             if (err) 
                 return done(err)
             return done(null, rows)
@@ -53,6 +69,20 @@ var locations = {
     },
     updateState: function(reqParams, stateId, done){
         db.get().query('update state set state_name = ?, state_country_id = ? where state_id = ?  ',[reqParams.state_name, reqParams.state_country_id, stateId] , function (err, rows) {
+            if (err) 
+                return done(err)
+            return done(null, rows)
+        })
+    },
+    deleteState: function(stateId, done){
+        db.get().query('update state set state_status = "2" where state_id = ?  ',[stateId] , function (err, rows) {
+            if (err) 
+                return done(err)
+            return done(null, rows)
+        })
+    },
+    updateStateStatus: function(status, stateId, done){
+        db.get().query('update state set state_status = ? where state_id = ?  ',[status, stateId] , function (err, rows) {
             if (err) 
                 return done(err)
             return done(null, rows)
