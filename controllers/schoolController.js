@@ -349,7 +349,7 @@ module.exports = {
         })
     },
     getSchoolTypes: function(req, res) {
-        school.getSchoolTypes('1', function(err, rows) { // passing status as active : 1 for getting all active school types
+        school.getSchoolTypes(function(err, rows) { // passing status as active : 1 for getting all active school types
             response = new responseClass;
             if (err)
                 response.errors = err;
@@ -410,12 +410,12 @@ module.exports = {
                 response.message = 'Record already exists';
                 res.send(response);
             } else {
-                school.getSchoolType(req.params.schoolTypeId, function(err, rows) { // passing status as active : 1 for getting all active school types
+                school.updateSchoolType(req.body, req.params.schoolTypeId, function(err, rows) { // passing status as active : 1 for getting all active school types
                     response = new responseClass;
                     if (err)
                         response.errors = err;
                     else {
-                        response.type = rows[0];
+//                        response.type = rows[0];
                         response.message = 'Success';
                         response.success = true;
                         response.error = false;
@@ -424,6 +424,21 @@ module.exports = {
                 });
             }
 
+        });
+    },
+    updateSchoolTypeStatus: function(req, res) {
+        console.log(req.body.status, req.params.schoolTypeId);
+        school.updateSchoolTypeStatus(req.body.status, req.params.schoolTypeId, function(err, rows) { // passing status as active : 1 for getting all active school types
+            response = new responseClass;
+            if (err)
+                response.errors = err;
+            else {
+                response.type = rows[0];
+                response.message = 'Success';
+                response.success = true;
+                response.error = false;
+            }
+            res.send(response);
         });
     }
 };

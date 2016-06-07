@@ -107,7 +107,7 @@
                             <div class="form-group" form-validate show-errors ng-class="{'has-error':schoolForm.school_type.$invalid && schoolForm.school_type.$dirty}">
                                 <label>School Type*</label>
                                 <select name="school_type" class="form-control" ng-model="school.type"
-                                        ng-options="typeVal as typeVal.school_type_name for typeVal in types track by typeVal.school_type_id"
+                                        ng-options="typeVal as typeVal.school_type_name for typeVal in types | filter:{school_type_status:'1'} track by typeVal.school_type_id"
                                         required>
                                     <option value="">-- Select --</option>
                                 </select>

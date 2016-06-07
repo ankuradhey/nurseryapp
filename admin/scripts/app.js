@@ -1094,7 +1094,7 @@ var app = angular
                             access: access.admin,
                             data: {collapseVar: 'school'},
                             controller: 'SchoolTypeAddCtrl',
-                            templateUrl: 'views/reviews/list.html',
+                            templateUrl: 'views/schools/schooltype.html',
                             resolve: {
                                 auth: function ($q, authService) {
                                     var userInfo = authService.getUserInfo();

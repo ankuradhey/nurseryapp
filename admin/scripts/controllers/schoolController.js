@@ -333,11 +333,38 @@ angular.module('sbAdminApp')
         }
     }])
         .controller('SchoolTypeCtrl', ['$scope', '$http', '$state', '$stateParams', 'schoolTypes', function($scope, $http, $state, $stateParams, schoolTypes) {
+        $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
         $scope.schoolTypes = schoolTypes.data.types;
+        $scope.updateStatus = function(status, schoolTypeId) {
+            var s = confirm("Are you sure you want to "+(status?'activate':'deactivate')+" this school type?");
+            if (!s)
+                return;
 
+            $http({
+                method: 'PATCH',
+                url: baseUrl + '/adminapi/v1/schooltype/status/' + schoolTypeId,
+                headers: {'Content-Type': 'application/json'},
+                data: {status: status}
+            }).success(function(data, status, headers, conf) {
+                if (data.success) {
+                    $scope.alert.message = 'School type status changed successfully';
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'success';
+                    $state.reload();
+                } else {
+                    $scope.alert.message = data.message;
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'danger';
+                }
+            }).error(function(data, status, headers, conf) {
+                $scope.alert.show = true;
+                $scope.alert.type = 'danger';
+            })
+
+        }
 
     }])
-        .controller('SchoolTypeAddCtrl', ['$scope', '$http', 'classes', '$state', '$stateParams', function($scope, $http, classes, $state, $stateParams) {
+        .controller('SchoolTypeAddCtrl', ['$scope', '$http', 'classes', '$state', '$stateParams','$filter', function($scope, $http, classes, $state, $stateParams, $filter) {
         $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
         $scope.classes = classes;
         $scope.schoolTypeId = $stateParams.schoolTypeId;
@@ -352,7 +379,13 @@ angular.module('sbAdminApp')
                 if (data.type && Object.keys(data.type).length) {
                     var type = data.type;
                     $scope.school.type = type.school_type_name;
-                    $scope.school.type_class = type.school_type_class;
+                    if(type.school_type_classes){
+                       $scope.school.type_class = $filter('lowercase')(type.school_type_classes).split(',');
+                       console.log($scope.school.type_class);
+                    }else{
+                       $scope.school.type_class = '';
+                    }
+                    
                 } else {
                     $scope.alert.show = true;
                     $scope.alert.type = 'danger';
@@ -376,7 +409,7 @@ angular.module('sbAdminApp')
             }
 
             if ($scope.schoolTypeId) {
-                var url = baseUrl + '/adminapi/v1/schooltype/' + $scope.schooltypeId;
+                var url = baseUrl + '/adminapi/v1/schooltype/' + $scope.schoolTypeId;
                 var method = 'PUT';
             } else {
                 var url = baseUrl + '/adminapi/v1/schooltype';
@@ -405,7 +438,7 @@ angular.module('sbAdminApp')
                 $scope.alert.type = 'danger';
             })
         }
-
+        
     }])
         .controller('mediumController', ['$scope', '$http', '$state', '$stateParams', 'medium', function($scope, $http, $state, $stateParams, medium) {
         $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};

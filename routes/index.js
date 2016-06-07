@@ -85,6 +85,7 @@ router.get('/adminapi/v1/schooltypes',schoolController.getSchoolTypes);
 router.get('/adminapi/v1/schooltype/:schoolTypeId',schoolController.getSchoolType);
 router.post('/adminapi/v1/schooltype',schoolController.addSchoolType);
 router.put('/adminapi/v1/schooltype/:schoolTypeId',schoolController.updateSchoolType);
+router.patch('/adminapi/v1/schooltype/status/:schoolTypeId',schoolController.updateSchoolTypeStatus);
 
 router.get('/adminapi/v1/reviews',reviewController.getReviews);
 router.put('/adminapi/v1/review/:reviewId',reviewController.updateReview);

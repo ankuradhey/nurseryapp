@@ -7,6 +7,8 @@
 <!-- /.row -->
 <div class="row">
     <div class="col-lg-12">
+        <uib-alert id="alertMessage" ng-if="alert.show" type="{{alert.type}}" close="alert.show = false"
+                 ng-focus="alert.show"   tabindex="1">{{alert.message}}</uib-alert>
         <div class="panel panel-default">
             <div class="panel-heading">
                 List of school types

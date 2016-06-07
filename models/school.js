@@ -35,7 +35,7 @@ var schools = {
                 return done(err)
             return done(null, rows);
         })
-    }, 
+    },
     getOne: function(id, done) {
         db.get().query('SELECT s.*, board.board_id, board.board_name, c.country_id, c.country_name, st.state_id, st.state_name, city.city_id, city.city_name,  \n\
                         stype.school_type_id, stype.school_type_name, area.area_id, area.area_name, zone.zone_id, zone.zone_name, \n\
@@ -138,7 +138,7 @@ var schools = {
             return done(null, rows);
         });
     },
-    updateMediumStatus: function(mediumStatus, mediumId, done){
+    updateMediumStatus: function(mediumStatus, mediumId, done) {
         db.get().query('update school_medium set medium_status = ? where medium_id = ? ', [mediumStatus, mediumId], function(err, rows) {
             if (err)
                 return done(err)
@@ -165,10 +165,10 @@ var schools = {
                 return done(err)
             return done(null, rows);
         });
-    
+
     },
     deleteMedium: function(mediumId, done) {
-console.log(mediumId)
+        console.log(mediumId)
         db.get().query('update school_medium set medium_status = "2" where medium_id = ? ', mediumId, function(err, rows) {
             console.log(err, rows);
             if (err)
@@ -176,7 +176,7 @@ console.log(mediumId)
             return done(null, rows);
         });
     },
-    getSchoolTypes: function(status, done) {
+    getSchoolTypes: function(done) {
 
         db.get().query('select school_type_id, \n\
                         concat(\n\
@@ -186,7 +186,7 @@ console.log(mediumId)
                                 "->",\n\
                                 SUBSTRING_INDEX(school_type_classes,",",-1),\n\
                                 "]"\n\
-                            ) as school_type_name, school_type_classes from school_type where school_type_status = "' + status + '"  ', function(err, rows) {
+                            ) as school_type_name, school_type_classes, school_type_status from school_type where school_type_status != "2"  ', function(err, rows) {
             console.log(err);
             if (err)
                 return done(err);
@@ -214,7 +214,7 @@ console.log(mediumId)
     getSchoolByAffiliate: function(schoolAffiliateCode, schoolTypeId, done) {
         schoolTypeId = typeof schoolTypeId != 'undefined' ? schoolTypeId : 0;
 //        console.log('select * from school_type where school_type_status != "2" and school_type_name = ? and school_type_id != ? ', [schoolTypeName, schoolTypeId]);
-        db.get().query('select * from school_type where school_type_status != "2" and school_type_name = ? and school_type != ? ', [schoolTypeName, schoolTypeId], function(err, rows) {
+        db.get().query('select * from school_type where school_type_status != "2" and school_type_name = ? and school_type_id != ? ', [schoolTypeName, schoolTypeId], function(err, rows) {
             if (err)
                 return done(err);
             return done(null, rows);
@@ -223,7 +223,7 @@ console.log(mediumId)
     getSchoolTypeByName: function(schoolTypeName, schoolTypeId, done) {
         schoolTypeId = typeof schoolTypeId != 'undefined' ? schoolTypeId : 0;
 //        console.log('select * from school_type where school_type_status != "2" and school_type_name = ? and school_type_id != ? ', [schoolTypeName, schoolTypeId]);
-        db.get().query('select * from school_type where school_type_status != "2" and school_type_name = ? and school_type != ? ', [schoolTypeName, schoolTypeId], function(err, rows) {
+        db.get().query('select * from school_type where school_type_status != "2" and school_type_name = ? and school_type_id != ? ', [schoolTypeName, schoolTypeId], function(err, rows) {
             if (err)
                 return done(err);
             return done(null, rows);
@@ -237,9 +237,17 @@ console.log(mediumId)
             return done(null, rows);
         });
     },
-            updateSchoolType: function(schoolTypeParams, schoolTypeId, done) {
+    updateSchoolType: function(schoolTypeParams, schoolTypeId, done) {
         schoolTypeParams.school_type_classes = schoolTypeParams.school_type_classes.join(',');
-        db.get().query('update school_type set school_type_name = ?, school_type_classes = ? where school_type = ? ', [schoolTypeParams.school_type_name, schoolTypeParams.school_type_classes, schoolTypeId], function(err, rows) {
+        console.log([schoolTypeParams.school_type_name, schoolTypeParams.school_type_classes, schoolTypeId]);
+        db.get().query('update school_type set school_type_name = ?, school_type_classes = ? where school_type_id = ? ', [schoolTypeParams.school_type_name, schoolTypeParams.school_type_classes, schoolTypeId], function(err, rows) {
+            if (err)
+                return done(err)
+            return done(null, rows);
+        });
+    },
+    updateSchoolTypeStatus: function(status, schoolTypeId, done) {
+        db.get().query('update school_type set school_type_status = ? where school_type_id = ? ', [status, schoolTypeId], function(err, rows) {
             if (err)
                 return done(err)
             return done(null, rows);
