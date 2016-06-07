@@ -264,7 +264,7 @@ angular.module('sbAdminApp')
         }
 
     }])
-        .controller('cityController', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
+        .controller('cityController', ['$scope', '$http', '$timeout','$state', function($scope, $http, $timeout, $state) {
         $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
         $scope.states = {};
         $http.get(baseUrl + '/adminapi/v1/city', {'Content-Type': 'application/json'})
@@ -273,6 +273,61 @@ angular.module('sbAdminApp')
         }, function(data, status, headers, conf) {
             $scope.alert.show = true;
         });
+        
+        
+        $scope.updateStatus = function(status, cityId) {
+            var s = confirm("Are you sure you want to update status of this city?");
+            if (!s)
+                return;
+
+            $http({
+                method: 'PATCH',
+                url: baseUrl + '/adminapi/v1/city/' + cityId,
+                headers: {'Content-Type': 'application/json'},
+                data: {city_status: status}
+            }).success(function(data, status, headers, conf) {
+                if (data.success) {
+                    $scope.alert.message = 'City status changed successfully';
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'success';
+                    $state.reload();
+                } else {
+                    $scope.alert.message = data.message;
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'danger';
+                }
+            }).error(function(data, status, headers, conf) {
+                $scope.alert.show = true;
+                $scope.alert.type = 'danger';
+            })
+
+        }
+        
+        $scope.deleteCity = function(cityId) {
+            var s = confirm("Are you sure you want to delete this city?");
+            if (!s)
+                return;
+
+            $http({
+                method: 'DELETE',
+                url: baseUrl + '/adminapi/v1/city/' + cityId,
+                headers: {'Content-Type': 'application/json'}
+            }).success(function(data, status, headers, conf) {
+                if (data.success) {
+                    $scope.alert.message = data.message;
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'success';
+                    $state.reload();
+                } else {
+                    $scope.alert.message = data.message;
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'danger';
+                }
+            }).error(function(data, status, headers, conf) {
+                $scope.alert.show = true;
+                $scope.alert.type = 'danger';
+            })
+        }
 
     }])
     .controller('cityAddController', ['$scope', '$http', '$stateParams','states', '$state', function($scope, $http, $stateParams, states, $state) {

@@ -62,7 +62,9 @@ router.get('/adminapi/v1/city/:stateId',locationController.getCities);
 router.get('/adminapi/v1/city/cityid/:cityId',locationController.getCity);
 router.get('/adminapi/v1/city',locationController.getCities);
 router.put('/adminapi/v1/city/:cityId',locationController.updateCity);
+router.patch('/adminapi/v1/city/:cityId',locationController.updateCityStatus);
 router.post('/adminapi/v1/city',locationController.addCity);
+router.delete('/adminapi/v1/city/:cityId',locationController.deleteCity);
 
 
 router.get('/adminapi/v1/area/:cityId',locationController.getAreas);

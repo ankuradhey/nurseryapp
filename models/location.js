@@ -95,6 +95,20 @@ var locations = {
             return done(null, rows)
         })
     },
+    deleteCity: function(cityId, done){
+        db.get().query('update city set city_status = "2" where city_id = ?  ',[cityId] , function (err, rows) {
+            if (err) 
+                return done(err)
+            return done(null, rows)
+        })
+    },
+    updateCityStatus: function(status, cityId, done){
+        db.get().query('update city set city_status = ? where city_id = ?  ',[status, cityId] , function (err, rows) {
+            if (err) 
+                return done(err)
+            return done(null, rows)
+        })
+    },
     updateArea: function(reqParams, areaId, done){
         db.get().query('update location_area set area_name = ?, city_id = ? where area_id = ?  ',[reqParams.area_name, reqParams.area_city_id, areaId] , function (err, rows) {
             if (err) 
@@ -197,7 +211,7 @@ var locations = {
     },
             
     getCities: function(done){
-        db.get().query('SELECT * FROM city where city_status = "1"  ', function (err, rows) {
+        db.get().query('SELECT * FROM city where city_status != "2"  ', function (err, rows) {
             if (err) 
                 return done(err)
             return done(null, rows)
@@ -221,7 +235,7 @@ var locations = {
     },
             
     getAreas: function(done){
-        db.get().query('SELECT area_id, area_name FROM location_area where area_status = "1"  ', function (err, rows) {
+        db.get().query('SELECT area_id, area_name FROM location_area where area_status != "2"  ', function (err, rows) {
             if (err) 
                 return done(err)
             return done(null, rows)
@@ -246,7 +260,7 @@ var locations = {
     },
             
     getZones: function(done){
-        db.get().query('SELECT zone_id, zone_name FROM location_zone where zone_status = "1"  ', function (err, rows) {
+        db.get().query('SELECT zone_id, zone_name FROM location_zone where zone_status != "2"  ', function (err, rows) {
             if (err) 
                 return done(err)
             return done(null, rows)

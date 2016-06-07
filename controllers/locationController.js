@@ -355,7 +355,6 @@ module.exports = {
                 location.updateCity(req.body, req.params.cityId, function (err, rows) {
                     if (err) {
                         response.errors = err;
-                        res.send(response);
                     }
                     else {
                         response.success = true;
@@ -367,6 +366,33 @@ module.exports = {
             }
         }, req.params.cityId)
 
+    },
+    deleteCity: function (req, res) {
+                location.deleteCity(req.params.cityId, function (err, rows) {
+                    response = new responseClass;
+                    if (err) {
+                        response.errors = err;
+                    }
+                    else {
+                        response.success = true;
+                        response.error = false;
+                        response.message = 'success';
+                    }
+                    res.send(response);
+                })
+    },
+    updateCityStatus: function (req, res) {
+        location.updateCityStatus(req.body.city_status, req.params.cityId, function (err, rows) {
+            if (err) {
+                response.errors = err;
+            }
+            else {
+                response.success = true;
+                response.error = false;
+                response.message = 'success';
+            }
+            res.send(response);
+        })
     },
     updateArea: function (req, res) {
         location.getAreaByName(req.body.area_name, function (err, rows) {
