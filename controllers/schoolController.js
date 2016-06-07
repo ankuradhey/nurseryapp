@@ -440,5 +440,18 @@ module.exports = {
             }
             res.send(response);
         });
+    },
+    deleteSchoolType: function(req, res) {
+        school.deleteSchoolType(req.params.schoolTypeId, function(err, rows) { // passing status as active : 1 for getting all active school types
+            response = new responseClass;
+            if (err)
+                response.errors = err;
+            else {
+                response.message = 'Success';
+                response.success = true;
+                response.error = false;
+            }
+            res.send(response);
+        });
     }
 };
