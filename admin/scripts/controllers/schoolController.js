@@ -362,7 +362,33 @@ angular.module('sbAdminApp')
             })
 
         }
+        
+        $scope.deleteSchoolType = function(schoolTypeId) {
+            var s = confirm("Are you sure you want to delete this school type?");
+            if (!s)
+                return;
 
+            $http({
+                method: 'DELETE',
+                url: baseUrl + '/adminapi/v1/schooltype/' + schoolTypeId,
+                headers: {'Content-Type': 'application/json'}
+            }).success(function(data, status, headers, conf) {
+                if (data.success) {
+                    $scope.alert.message = data.message;
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'success';
+                    $state.reload();
+                } else {
+                    $scope.alert.message = data.message;
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'danger';
+                }
+            }).error(function(data, status, headers, conf) {
+                $scope.alert.show = true;
+                $scope.alert.type = 'danger';
+            })
+        }
+        
     }])
         .controller('SchoolTypeAddCtrl', ['$scope', '$http', 'classes', '$state', '$stateParams','$filter', function($scope, $http, classes, $state, $stateParams, $filter) {
         $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
@@ -472,7 +498,7 @@ angular.module('sbAdminApp')
         }
 
         $scope.updateStatus = function(status, mediumId) {
-            var s = confirm("Are you sure you want to "+(status?'activate':'deactivate')+" this medium?");
+            var s = confirm("Are you sure you want to "+(status?'deactivate':'activate')+" this medium?");
             if (!s)
                 return;
 
