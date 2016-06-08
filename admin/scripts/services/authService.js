@@ -32,7 +32,7 @@ angular.module('sbAdminApp')
                                         role:userRoles[result.data.user.user_type]
                                     };
                                     $rootScope.user = userInfo;
-                                    $window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
+                                    $window.localStorage["userInfo"] = JSON.stringify(userInfo);
                                     deferred.resolve(userInfo);
                                 }else{
                                     deferred.reject(result.message);
@@ -47,7 +47,7 @@ angular.module('sbAdminApp')
                 function logout() {
                     var deferred = $q.defer();
                         userInfo = null;
-                        $window.sessionStorage["userInfo"] = null;
+                        $window.localStorage["userInfo"] = null;
                         deferred.resolve();
                         $window.location.hash = '/login';
                     return deferred.promise;
@@ -65,8 +65,8 @@ angular.module('sbAdminApp')
                 }
                 
                 function init() {
-                    if ($window.sessionStorage["userInfo"]) {
-                        userInfo = JSON.parse($window.sessionStorage["userInfo"]);
+                    if ($window.localStorage["userInfo"]) {
+                        userInfo = JSON.parse($window.localStorage["userInfo"]);
                         $rootScope.user = userInfo;
                     }
                 }
