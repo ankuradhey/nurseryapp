@@ -22,6 +22,11 @@ angular.module('sbAdminApp')
         });
 
         $scope.deleteParent = function(userId) {
+            
+            var s = confirm("Are you sure you want to delete parent?");
+            if (!s)
+                return;
+            
             $http({
                 url: baseUrl + '/adminapi/v1/parent/' + userId,
                 method: 'DELETE',
@@ -45,7 +50,7 @@ angular.module('sbAdminApp')
         }
 
         $scope.updateStatus = function(status, userId) {
-            var s = confirm("Are you sure you want to " + (status ? 'activate' : 'deactivate') + " this parent?");
+            var s = confirm("Are you sure you want to " + (status ? 'deactivate' : 'activate') + " this parent?");
             if (!s)
                 return;
 

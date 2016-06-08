@@ -116,8 +116,36 @@ var locations = {
             return done(null, rows)
         })
     },
+    updateAreaStatus: function(areaStatus, areaId, done){
+        db.get().query('update location_area set area_status = ? where area_id = ?  ',[areaStatus, areaId] , function (err, rows) {
+            if (err) 
+                return done(err)
+            return done(null, rows)
+        })
+    },
+    deleteArea: function(areaId, done){
+        db.get().query('update location_area set area_status = "2" where area_id = ?  ',[areaId] , function (err, rows) {
+            if (err) 
+                return done(err)
+            return done(null, rows)
+        })
+    },
     updateZone: function(reqParams, zoneId, done){
         db.get().query('update location_zone set zone_name = ?, zone_area_id = ? where zone_id = ?  ',[reqParams.zone_name, reqParams.zone_area_id, zoneId] , function (err, rows) {
+            if (err) 
+                return done(err)
+            return done(null, rows)
+        })
+    },
+    updateZoneStatus: function(status, zoneId, done){
+        db.get().query('update location_zone set zone_status = ? where zone_id = ?  ',[status, zoneId] , function (err, rows) {
+            if (err) 
+                return done(err)
+            return done(null, rows)
+        })
+    },
+    deleteZone: function(zoneId, done){
+        db.get().query('update location_zone set zone_status = "2" where zone_id = ?  ',[zoneId] , function (err, rows) {
             if (err) 
                 return done(err)
             return done(null, rows)
@@ -235,7 +263,7 @@ var locations = {
     },
             
     getAreas: function(done){
-        db.get().query('SELECT area_id, area_name FROM location_area where area_status != "2"  ', function (err, rows) {
+        db.get().query('SELECT area_id, area_name, area_status FROM location_area where area_status != "2"  ', function (err, rows) {
             if (err) 
                 return done(err)
             return done(null, rows)
@@ -260,7 +288,7 @@ var locations = {
     },
             
     getZones: function(done){
-        db.get().query('SELECT zone_id, zone_name FROM location_zone where zone_status != "2"  ', function (err, rows) {
+        db.get().query('SELECT zone_id, zone_name, zone_status FROM location_zone where zone_status != "2"  ', function (err, rows) {
             if (err) 
                 return done(err)
             return done(null, rows)

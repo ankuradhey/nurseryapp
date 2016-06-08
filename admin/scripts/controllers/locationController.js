@@ -395,7 +395,7 @@ angular.module('sbAdminApp')
         }
 
     }])
-        .controller('areaController', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
+        .controller('areaController', ['$scope', '$http', '$timeout', '$state', function($scope, $http, $timeout, $state) {
         $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
         $scope.states = {};
         $http.get(baseUrl + '/adminapi/v1/area', {'Content-Type': 'application/json'})
@@ -404,6 +404,60 @@ angular.module('sbAdminApp')
         }, function(data, status, headers, conf) {
             $scope.alert.show = true;
         })
+        
+        $scope.updateStatus = function(status, areaId) {
+            var s = confirm("Are you sure you want to update status of this city?");
+            if (!s)
+                return;
+
+            $http({
+                method: 'PATCH',
+                url: baseUrl + '/adminapi/v1/area/' + areaId,
+                headers: {'Content-Type': 'application/json'},
+                data: {area_status: status}
+            }).success(function(data, status, headers, conf) {
+                if (data.success) {
+                    $scope.alert.message = 'Area status changed successfully';
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'success';
+                    $state.reload();
+                } else {
+                    $scope.alert.message = data.message;
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'danger';
+                }
+            }).error(function(data, status, headers, conf) {
+                $scope.alert.show = true;
+                $scope.alert.type = 'danger';
+            })
+
+        }
+        
+        $scope.deleteArea = function(areaId) {
+            var s = confirm("Are you sure you want to delete this area?");
+            if (!s)
+                return;
+
+            $http({
+                method: 'DELETE',
+                url: baseUrl + '/adminapi/v1/area/' + areaId,
+                headers: {'Content-Type': 'application/json'}
+            }).success(function(data, status, headers, conf) {
+                if (data.success) {
+                    $scope.alert.message = data.message;
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'success';
+                    $state.reload();
+                } else {
+                    $scope.alert.message = data.message;
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'danger';
+                }
+            }).error(function(data, status, headers, conf) {
+                $scope.alert.show = true;
+                $scope.alert.type = 'danger';
+            })
+        }
     }])
 .controller('areaAddController', ['$scope', '$http', '$stateParams','cities', '$state', function($scope, $http, $stateParams, cities, $state) {
         $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
@@ -470,7 +524,7 @@ angular.module('sbAdminApp')
         }
 
     }])
-        .controller('zoneController', ['$rootScope', '$scope', '$http', '$timeout', function($rootScope, $scope, $http, $timeout) {
+        .controller('zoneController', ['$rootScope', '$scope', '$http', '$timeout','$state', function($rootScope, $scope, $http, $timeout, $state) {
         $rootScope.collapseVar = 'location';
         $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
         $scope.states = {};
@@ -480,7 +534,62 @@ angular.module('sbAdminApp')
         }, function(data, status, headers, conf) {
             $scope.alert.show = true;
         });
+        
+        
+        $scope.updateStatus = function(status, zoneId) {
+            var s = confirm("Are you sure you want to update status of this zone?");
+            if (!s)
+                return;
 
+            $http({
+                method: 'PATCH',
+                url: baseUrl + '/adminapi/v1/zone/' + zoneId,
+                headers: {'Content-Type': 'application/json'},
+                data: {zone_status: status}
+            }).success(function(data, status, headers, conf) {
+                if (data.success) {
+                    $scope.alert.message = 'Zone status changed successfully';
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'success';
+                    $state.reload();
+                } else {
+                    $scope.alert.message = data.message;
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'danger';
+                }
+            }).error(function(data, status, headers, conf) {
+                $scope.alert.show = true;
+                $scope.alert.type = 'danger';
+            })
+
+        }
+        
+        $scope.deleteZone = function(zoneId) {
+            var s = confirm("Are you sure you want to delete this zone?");
+            if (!s)
+                return;
+
+            $http({
+                method: 'DELETE',
+                url: baseUrl + '/adminapi/v1/zone/' + zoneId,
+                headers: {'Content-Type': 'application/json'}
+            }).success(function(data, status, headers, conf) {
+                if (data.success) {
+                    $scope.alert.message = data.message;
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'success';
+                    $state.reload();
+                } else {
+                    $scope.alert.message = data.message;
+                    $scope.alert.show = true;
+                    $scope.alert.type = 'danger';
+                }
+            }).error(function(data, status, headers, conf) {
+                $scope.alert.show = true;
+                $scope.alert.type = 'danger';
+            })
+        }
+        
     }])
 .controller('zoneAddController', ['$scope', '$http', '$stateParams','areas', '$state', function($scope, $http, $stateParams, areas, $state) {
         $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};

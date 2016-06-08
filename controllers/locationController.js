@@ -7,21 +7,21 @@
 var location = require('../models/location.js'),
         response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []},
 validate = require('validate.js'),
-        responseClass = function () {
-            return {
-                error: true,
-                success: false,
-                code: 501,
-                message: 'Oops! Some error occurred',
-                errors: []
-            }
-        }
+        responseClass = function() {
+    return {
+        error: true,
+        success: false,
+        code: 501,
+        message: 'Oops! Some error occurred',
+        errors: []
+    }
+}
 ;
 
 
 module.exports = {
-    getCountries: function (req, res) {
-        location.getCountries(function (err, rows) {
+    getCountries: function(req, res) {
+        location.getCountries(function(err, rows) {
             response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
             if (err)
                 response.errors = err;
@@ -34,8 +34,8 @@ module.exports = {
             res.send(response);
         });
     },
-    getCountry: function (req, res) {
-        location.getCountry(req.params.countryId, function (err, rows) {
+    getCountry: function(req, res) {
+        location.getCountry(req.params.countryId, function(err, rows) {
             response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
             if (err)
                 response.errors = err;
@@ -48,9 +48,9 @@ module.exports = {
             res.send(response);
         });
     },
-    addCountry: function (req, res) {
+    addCountry: function(req, res) {
 
-        location.getCountryByName(req.body.country_name, function (err, rows) {
+        location.getCountryByName(req.body.country_name, 0, function(err, rows) {
             response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
             if (err) {
                 response.errors = err;
@@ -60,7 +60,7 @@ module.exports = {
                     response.error = 'Country already exist';
                     res.send(response);
                 } else {
-                    location.addCountry(req.body, function (err, rows) {
+                    location.addCountry(req.body, function(err, rows) {
 
                         if (err)
                             response.errors = err;
@@ -77,8 +77,8 @@ module.exports = {
         })
 
     },
-    updateCountry: function (req, res) {
-        location.getCountryByName(req.body.country_name, req.params.countryId, function (err, rows) {
+    updateCountry: function(req, res) {
+        location.getCountryByName(req.body.country_name, req.params.countryId, function(err, rows) {
             response = new responseClass;
             if (err) {
                 response.errors = err;
@@ -88,7 +88,7 @@ module.exports = {
                     response.message = 'Country name already exist';
                     res.send(response);
                 } else {
-                    location.updateCountry(req.body, req.params.countryId, function (err, rows) {
+                    location.updateCountry(req.body, req.params.countryId, function(err, rows) {
                         response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
                         if (err)
                             response.errors = err;
@@ -103,8 +103,8 @@ module.exports = {
             }
         });
     },
-    updateCountryStatus: function (req, res) {
-        location.updateCountryStatus(req.body.country_status, req.params.countryId, function (err, rows) {
+    updateCountryStatus: function(req, res) {
+        location.updateCountryStatus(req.body.country_status, req.params.countryId, function(err, rows) {
             response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
             if (err)
                 response.errors = err;
@@ -116,8 +116,8 @@ module.exports = {
             res.send(response);
         });
     },
-    deleteCountry: function (req, res) {
-        location.deleteCountry(req.params.countryId, function (err, rows) {
+    deleteCountry: function(req, res) {
+        location.deleteCountry(req.params.countryId, function(err, rows) {
             response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
             if (err)
                 response.errors = err;
@@ -129,14 +129,14 @@ module.exports = {
             res.send(response);
         });
     },
-    getStates: function (req, res) {
+    getStates: function(req, res) {
         var countryId = 0;
 
         if (req.params.hasOwnProperty('countryId'))
             countryId = req.params.countryId;
 
         if (countryId) {
-            location.getStatesByCountry(countryId, function (err, rows) {
+            location.getStatesByCountry(countryId, function(err, rows) {
                 response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
                 if (err)
                     response.errors = err;
@@ -149,7 +149,7 @@ module.exports = {
                 res.send(response);
             })
         } else {
-            location.getStates(function (err, rows) {
+            location.getStates(function(err, rows) {
                 response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
                 if (err)
                     response.errors = err;
@@ -163,9 +163,9 @@ module.exports = {
             })
         }
     },
-    getState: function (req, res) {
+    getState: function(req, res) {
         var stateId = req.params.stateId;
-        location.getState(stateId, function (err, rows) {
+        location.getState(stateId, function(err, rows) {
             response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
             if (err)
                 response.errors = err;
@@ -178,9 +178,9 @@ module.exports = {
             res.send(response);
         })
     },
-    updateState: function (req, res) {
+    updateState: function(req, res) {
         var stateId = req.params.stateId;
-        location.getStateByName(req.body, function (err, rows) {
+        location.getStateByName(req.body, function(err, rows) {
             response = new responseClass;
             if (err) {
                 response.errors = err;
@@ -190,7 +190,7 @@ module.exports = {
                 response.message = 'Record already exists';
                 res.send(response)
             } else {
-                location.updateState(req.body, stateId, function (err, rows) {
+                location.updateState(req.body, stateId, function(err, rows) {
                     response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
                     if (err)
                         response.errors = err;
@@ -204,9 +204,9 @@ module.exports = {
             }
         }, stateId);
     },
-    updateStateStatus: function (req, res) {
+    updateStateStatus: function(req, res) {
         var stateId = req.params.stateId;
-        location.updateStateStatus(req.body.state_status, stateId, function (err, rows) {
+        location.updateStateStatus(req.body.state_status, stateId, function(err, rows) {
             response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
             if (err)
                 response.errors = err;
@@ -218,8 +218,8 @@ module.exports = {
             res.send(response);
         })
     },
-    addState: function (req, res) {
-        location.getStateByName(req.body, function (err, rows) {
+    addState: function(req, res) {
+        location.getStateByName(req.body, function(err, rows) {
             response = new responseClass;
             if (err) {
                 response.errors = err;
@@ -229,7 +229,7 @@ module.exports = {
                 response.message = 'Record already exists';
                 res.send(response)
             } else {
-                location.addState(req.body, function (err, rows) {
+                location.addState(req.body, function(err, rows) {
                     if (err) {
                         response.errors = err;
                         res.send(response);
@@ -245,8 +245,8 @@ module.exports = {
         })
 
     },
-    deleteState: function (req, res) {
-        location.deleteState(req.params.stateId, function (err, rows) {
+    deleteState: function(req, res) {
+        location.deleteState(req.params.stateId, function(err, rows) {
             if (err) {
                 response.errors = err;
                 res.send(response);
@@ -260,8 +260,8 @@ module.exports = {
         })
 
     },
-    addCity: function (req, res) {
-        location.getCityByName(req.body, function (err, rows) {
+    addCity: function(req, res) {
+        location.getCityByName(req.body, function(err, rows) {
             response = new responseClass;
             if (err) {
                 response.errors = err;
@@ -271,7 +271,7 @@ module.exports = {
                 response.message = 'Record already exists';
                 res.send(response)
             } else {
-                location.addCity(req.body, function (err, rows) {
+                location.addCity(req.body, function(err, rows) {
                     if (err) {
                         response.errors = err;
                     }
@@ -287,8 +287,8 @@ module.exports = {
         })
 
     },
-    addArea: function (req, res) {
-        location.getAreaByName(req.body, function (err, rows) {
+    addArea: function(req, res) {
+        location.getAreaByName(req.body, function(err, rows) {
             response = new responseClass;
             if (err) {
                 response.errors = err;
@@ -298,7 +298,7 @@ module.exports = {
                 response.message = 'Record already exists';
                 res.send(response)
             } else {
-                location.addArea(req.body, function (err, rows) {
+                location.addArea(req.body, function(err, rows) {
                     if (err) {
                         response.errors = err;
                         res.send(response);
@@ -314,8 +314,8 @@ module.exports = {
         })
 
     },
-    addZone: function (req, res) {
-        location.getZoneByName(req.body, function (err, rows) {
+    addZone: function(req, res) {
+        location.getZoneByName(req.body, function(err, rows) {
             response = new responseClass;
             if (err) {
                 response.errors = err;
@@ -325,7 +325,7 @@ module.exports = {
                 response.message = 'Record already exists';
                 res.send(response)
             } else {
-                location.addZone(req.body, function (err, rows) {
+                location.addZone(req.body, function(err, rows) {
                     if (err) {
                         response.errors = err;
                         res.send(response);
@@ -341,8 +341,8 @@ module.exports = {
         })
 
     },
-    updateCity: function (req, res) {
-        location.getCityByName(req.body, function (err, rows) {
+    updateCity: function(req, res) {
+        location.getCityByName(req.body, function(err, rows) {
             response = new responseClass;
             if (err) {
                 response.errors = err;
@@ -352,7 +352,7 @@ module.exports = {
                 response.message = 'Record already exists';
                 res.send(response)
             } else {
-                location.updateCity(req.body, req.params.cityId, function (err, rows) {
+                location.updateCity(req.body, req.params.cityId, function(err, rows) {
                     if (err) {
                         response.errors = err;
                     }
@@ -367,22 +367,9 @@ module.exports = {
         }, req.params.cityId)
 
     },
-    deleteCity: function (req, res) {
-                location.deleteCity(req.params.cityId, function (err, rows) {
-                    response = new responseClass;
-                    if (err) {
-                        response.errors = err;
-                    }
-                    else {
-                        response.success = true;
-                        response.error = false;
-                        response.message = 'success';
-                    }
-                    res.send(response);
-                })
-    },
-    updateCityStatus: function (req, res) {
-        location.updateCityStatus(req.body.city_status, req.params.cityId, function (err, rows) {
+    deleteCity: function(req, res) {
+        location.deleteCity(req.params.cityId, function(err, rows) {
+            response = new responseClass;
             if (err) {
                 response.errors = err;
             }
@@ -394,8 +381,21 @@ module.exports = {
             res.send(response);
         })
     },
-    updateArea: function (req, res) {
-        location.getAreaByName(req.body.area_name, function (err, rows) {
+    updateCityStatus: function(req, res) {
+        location.updateCityStatus(req.body.city_status, req.params.cityId, function(err, rows) {
+            if (err) {
+                response.errors = err;
+            }
+            else {
+                response.success = true;
+                response.error = false;
+                response.message = 'success';
+            }
+            res.send(response);
+        })
+    },
+    updateArea: function(req, res) {
+        location.getAreaByName(req.body.area_name, function(err, rows) {
             response = new responseClass;
             if (err) {
                 response.errors = err;
@@ -405,10 +405,9 @@ module.exports = {
                 response.message = 'Record already exists';
                 res.send(response)
             } else {
-                location.updateArea(req.body, req.params.areaId, function (err, rows) {
+                location.updateArea(req.body, req.params.areaId, function(err, rows) {
                     if (err) {
                         response.errors = err;
-                        res.send(response);
                     }
                     else {
                         response.success = true;
@@ -421,8 +420,64 @@ module.exports = {
         }, req.params.cityId)
 
     },
-    updateZone: function (req, res) {
-        location.getZoneByName(req.body.zone_name, function (err, rows) {
+    updateAreaStatus: function(req, res) {
+        location.updateAreaStatus(req.body.area_status, req.params.areaId, function(err, rows) {
+            response = new responseClass;
+            if (err) {
+                response.errors = err;
+            }
+            else {
+                response.success = true;
+                response.error = false;
+                response.message = 'success';
+            }
+            res.send(response);
+        })
+    },
+    updateZoneStatus: function(req, res) {
+        location.updateZoneStatus(req.body.zone_status, req.params.zoneId, function(err, rows) {
+            response = new responseClass;
+            if (err) {
+                response.errors = err;
+            }
+            else {
+                response.success = true;
+                response.error = false;
+                response.message = 'success';
+            }
+            res.send(response);
+        })
+    },
+    deleteArea: function(req, res) {
+        location.deleteArea(req.params.areaId, function(err, rows) {
+            response = new responseClass;
+            if (err) {
+                response.errors = err;
+            }
+            else {
+                response.success = true;
+                response.error = false;
+                response.message = 'success';
+            }
+            res.send(response);
+        })
+    },
+    deleteZone: function(req, res) {
+        location.deleteZone(req.params.zoneId, function(err, rows) {
+            response = new responseClass;
+            if (err) {
+                response.errors = err;
+            }
+            else {
+                response.success = true;
+                response.error = false;
+                response.message = 'success';
+            }
+            res.send(response);
+        })
+    },
+    updateZone: function(req, res) {
+        location.getZoneByName(req.body.zone_name, function(err, rows) {
             response = new responseClass;
             if (err) {
                 response.errors = err;
@@ -432,7 +487,7 @@ module.exports = {
                 response.message = 'Record already exists';
                 res.send(response)
             } else {
-                location.updateZone(req.body, req.params.zoneId, function (err, rows) {
+                location.updateZone(req.body, req.params.zoneId, function(err, rows) {
                     if (err) {
                         response.errors = err;
                         res.send(response);
@@ -450,14 +505,14 @@ module.exports = {
         }, req.params.cityId)
 
     },
-    getCities: function (req, res) {
+    getCities: function(req, res) {
         var stateId = 0;
 
         if (req.params.hasOwnProperty('stateId'))
             stateId = req.params.stateId;
 
         if (stateId) {
-            location.getCitiesByState(stateId, function (err, rows) {
+            location.getCitiesByState(stateId, function(err, rows) {
                 response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
                 if (err)
                     response.errors = err;
@@ -470,7 +525,7 @@ module.exports = {
                 res.send(response);
             })
         } else {
-            location.getCities(function (err, rows) {
+            location.getCities(function(err, rows) {
                 response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
                 if (err)
                     response.errors = err;
@@ -484,9 +539,9 @@ module.exports = {
             })
         }
     },
-    getCity: function (req, res) {
+    getCity: function(req, res) {
 
-        location.getCity(req.params.cityId, function (err, rows) {
+        location.getCity(req.params.cityId, function(err, rows) {
             response = new responseClass;
             if (err)
                 response.errors = err;
@@ -499,14 +554,14 @@ module.exports = {
             res.send(response);
         })
     },
-    getAreas: function (req, res) {
+    getAreas: function(req, res) {
         var cityId = 0;
 
         if (req.params.hasOwnProperty('cityId'))
             cityId = req.params.cityId;
 
         if (cityId) {
-            location.getAreaByCity(cityId, function (err, rows) {
+            location.getAreaByCity(cityId, function(err, rows) {
                 response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
                 if (err)
                     response.errors = err;
@@ -519,7 +574,7 @@ module.exports = {
                 res.send(response);
             })
         } else {
-            location.getAreas(function (err, rows) {
+            location.getAreas(function(err, rows) {
                 response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
                 if (err)
                     response.errors = err;
@@ -533,8 +588,8 @@ module.exports = {
             })
         }
     },
-    getArea: function (req, res) {
-        location.getArea(req.params.areaId, function (err, rows) {
+    getArea: function(req, res) {
+        location.getArea(req.params.areaId, function(err, rows) {
             response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
             if (err)
                 response.errors = err;
@@ -547,14 +602,14 @@ module.exports = {
             res.send(response);
         })
     },
-    getZones: function (req, res) {
+    getZones: function(req, res) {
         var areaId = 0;
 
         if (req.params.hasOwnProperty('areaId'))
             areaId = req.params.areaId;
 
         if (areaId) {
-            location.getZonesByArea(areaId, function (err, rows) {
+            location.getZonesByArea(areaId, function(err, rows) {
                 response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
                 if (err)
                     response.errors = err;
@@ -567,7 +622,7 @@ module.exports = {
                 res.send(response);
             })
         } else {
-            location.getZones(function (err, rows) {
+            location.getZones(function(err, rows) {
                 response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
                 if (err)
                     response.errors = err;
@@ -581,8 +636,8 @@ module.exports = {
             })
         }
     },
-    getZone: function (req, res) {
-        location.getZone(req.params.zoneId, function (err, rows) {
+    getZone: function(req, res) {
+        location.getZone(req.params.zoneId, function(err, rows) {
             response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
             if (err)
                 response.errors = err;

@@ -71,14 +71,18 @@ router.get('/adminapi/v1/area/:cityId',locationController.getAreas);
 router.get('/adminapi/v1/area/areaid/:areaId',locationController.getArea);
 router.get('/adminapi/v1/area',locationController.getAreas);
 router.put('/adminapi/v1/area/:areaId',locationController.updateArea);
+router.patch('/adminapi/v1/area/:areaId',locationController.updateAreaStatus);
 router.post('/adminapi/v1/area',locationController.addArea);
+router.delete('/adminapi/v1/area/:areaId',locationController.deleteArea);
 
 
 router.get('/adminapi/v1/zone/:areaId',locationController.getZones);
 router.get('/adminapi/v1/zone',locationController.getZones);
 router.get('/adminapi/v1/zone/zoneid/:zoneId',locationController.getZone);
 router.put('/adminapi/v1/zone/:zoneId',locationController.updateZone);
+router.patch('/adminapi/v1/zone/:zoneId',locationController.updateZoneStatus);
 router.post('/adminapi/v1/zone',locationController.addZone);
+router.delete('/adminapi/v1/zone/:zoneId',locationController.deleteZone);
 
 
 router.get('/adminapi/v1/parents',userController.getParents);

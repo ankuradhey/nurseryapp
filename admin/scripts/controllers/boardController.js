@@ -16,6 +16,11 @@ angular.module('sbAdminApp')
         $scope.boards = boards.data.boards;
 
         $scope.deleteSchool = function(boardId) {
+            
+            var s = confirm("Are you sure you want to delete this board?");
+            if (!s)
+                return;
+            
             $http({
                 method: 'DELETE',
                 url: baseUrl + '/adminapi/v1/board/' + boardId,
@@ -40,7 +45,7 @@ angular.module('sbAdminApp')
             })
         }
 
-    }]).controller('boardAddController', ['$rootScope', '$scope', '$http', '$stateParams', function($rootScope, $scope, $http, $stateParams) {
+    }]).controller('boardAddController', ['$rootScope', '$scope', '$http', '$stateParams','$state', function($rootScope, $scope, $http, $stateParams, $state) {
         $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
         $scope.boardId = $stateParams.boardId;
         $scope.board = {name:''};
@@ -85,6 +90,7 @@ angular.module('sbAdminApp')
                     $scope.alert.show = true;
                     $scope.alert.type = 'success';
                     $scope.$broadcast('show-errors-reset');
+                    $state.go('dashboard.boards');
                 } else {
                     $scope.alert.message = data.message;
                     $scope.alert.show = true;
