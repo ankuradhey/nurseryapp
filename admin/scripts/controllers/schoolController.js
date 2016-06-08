@@ -74,8 +74,8 @@ angular.module('sbAdminApp')
         }
 
     }])
-        .controller('SchoolAddCtrl', ['$rootScope', '$scope', '$http', '$stateParams', 'boards', 'countries', 'schoolType', 'medium', 'Upload', '$state',
-    function($rootScope, $scope, $http, $stateParams, boards, countries, schoolType, medium, Upload, $state) {
+        .controller('SchoolAddCtrl', ['$rootScope', '$scope', '$http', '$stateParams', 'boards', 'countries', 'schoolType', 'medium', 'Upload', '$state','$timeout',
+    function($rootScope, $scope, $http, $stateParams, boards, countries, schoolType, medium, Upload, $state, $timeout) {
         $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
         $scope.mediums = medium.data.mediums;
         $scope.boards = boards.data.boards;
@@ -115,16 +115,21 @@ angular.module('sbAdminApp')
                     $scope.location.city = {city_id: school.city_id, city_name: school.city_id};
                     $scope.location.area = {area_id: school.area_id, area_name: school.area_name};
                     $scope.location.zone = {zone_id: school.zone_id, zone_name: school.zone_name};
-
+                    
+                    var additionalNumber;
                     //additional number
-                    var additionalNumber = school.school_phone_secondary.split(',');
+                    if(school.school_phone_secondary){
+                        additionalNumber = school.school_phone_secondary.split(',');
+                        $scope.school.phone_secondary = additionalNumber;
+                    }else{
+                    }
                     
                     if(!additionalNumber){
                         additionalNumber = [0];
                     }
                     
                     $scope.additionalNumberArr = additionalNumber;
-                    $scope.school.phone_secondary = additionalNumber;
+                    
 
                 } else {
                     $scope.alert.show = true;
@@ -282,6 +287,10 @@ angular.module('sbAdminApp')
                     $scope.alert.message = data.message;
                     $scope.alert.show = true;
                     $scope.alert.type = 'danger';
+                    $timeout(function () {
+                        angular.element('#alertMessage').focus();
+                    });
+//                    $scope.$broadcast('show-error-alert');
                 }
             }).error(function(data, status, headers, conf) {
                 $scope.alert.show = true;
