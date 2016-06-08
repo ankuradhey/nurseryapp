@@ -262,6 +262,7 @@ var app = angular
                                         name: 'sbAdminApp',
                                         files: [
                                             'scripts/controllers/schoolController.js',
+                                            'scripts/directives/formvalidation.js'
 //              'scripts/services/schoolService.js',
                                         ]
                                     })
@@ -304,6 +305,7 @@ var app = angular
                                         files: [
                                             'scripts/controllers/boardController.js',
                                             'scripts/services/schoolService.js',
+                                            'scripts/directives/formvalidation.js'
                                         ]
                                     })
                                 }
@@ -327,6 +329,7 @@ var app = angular
                                 name: 'sbAdminApp',
                                 files: [
                                     'scripts/controllers/boardController.js',
+                                    'scripts/directives/formvalidation.js'
                                 ]
                             })
                         },
@@ -350,6 +353,7 @@ var app = angular
                                 name: 'sbAdminApp',
                                 files: [
                                     'scripts/controllers/boardController.js',
+                                    'scripts/directives/formvalidation.js'
                                 ]
                             })
                         },
@@ -399,6 +403,7 @@ var app = angular
                                 name: 'sbAdminApp',
                                 files: [
                                     'scripts/controllers/locationController.js',
+                                    'scripts/directives/formvalidation.js'
                                 ]
                             })
                         }
@@ -451,6 +456,7 @@ var app = angular
                                 name: 'sbAdminApp',
                                 files: [
                                     'scripts/controllers/locationController.js',
+                                    'scripts/directives/formvalidation.js'
                                 ]
                             })
                         }
@@ -474,6 +480,7 @@ var app = angular
                                 name: 'sbAdminApp',
                                 files: [
                                     'scripts/controllers/locationController.js',
+                                    'scripts/directives/formvalidation.js'
                                 ]
                             })
                         }
@@ -815,6 +822,7 @@ var app = angular
                                         name: 'sbAdminApp',
                                         files: [
                                             'scripts/controllers/parentController.js',
+                                            'scripts/directives/formvalidation.js'
                                         ]
                                     })
                                 }
@@ -840,6 +848,7 @@ var app = angular
                                         name: 'sbAdminApp',
                                         files: [
                                             'scripts/controllers/parentController.js',
+                                            'scripts/directives/formvalidation.js'
                                         ]
                                     })
                                 }
@@ -888,6 +897,7 @@ var app = angular
                                         name: 'sbAdminApp',
                                         files: [
                                             'scripts/controllers/schoolController.js',
+                                            'scripts/directives/formvalidation.js'
 //              'scripts/services/schoolService.js',
                                         ]
                                     })
@@ -950,6 +960,7 @@ var app = angular
                                         name: 'sbAdminApp',
                                         files: [
                                             'scripts/controllers/subscriptionController.js',
+                                            'scripts/directives/formvalidation.js'
                                         ]
                                     })
                                 },
@@ -1059,6 +1070,7 @@ var app = angular
                                         name: 'sbAdminApp',
                                         files: [
                                             'scripts/controllers/schoolController.js',
+                                            'scripts/directives/formvalidation.js'
                                         ]
                                     })
                                 }
@@ -1084,6 +1096,7 @@ var app = angular
                                         name: 'sbAdminApp',
                                         files: [
                                             'scripts/controllers/schoolController.js',
+                                            'scripts/directives/formvalidation.js'
                                         ]
                                     })
                                 }
@@ -1109,6 +1122,7 @@ var app = angular
                                         name: 'sbAdminApp',
                                         files: [
                                             'scripts/controllers/schoolController.js',
+                                            'scripts/directives/formvalidation.js'
                                         ]
                                     })
                                 },
@@ -1137,6 +1151,7 @@ var app = angular
                                         name: 'sbAdminApp',
                                         files: [
                                             'scripts/controllers/schoolController.js',
+                                            'scripts/directives/formvalidation.js'
                                         ]
                                     })
                                 },
