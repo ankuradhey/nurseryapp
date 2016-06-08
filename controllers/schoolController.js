@@ -198,7 +198,7 @@ module.exports = {
         var schoolId = req.params.schoolId
 
         school.getSchoolAvailability(req.body, schoolId, function(err, rows) {
-            console.log(err);
+            response = new responseClass;
             if (err) {
                 response.errors = err;
                 res.send(response);
