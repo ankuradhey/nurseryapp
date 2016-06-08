@@ -99,7 +99,9 @@ router.patch('/adminapi/v1/schooltype/status/:schoolTypeId',schoolController.upd
 router.delete('/adminapi/v1/schooltype/:schoolTypeId',schoolController.deleteSchoolType);
 
 router.get('/adminapi/v1/reviews',reviewController.getReviews);
+router.get('/adminapi/v1/review/:reviewId',reviewController.getReview);
 router.put('/adminapi/v1/review/:reviewId',reviewController.updateReview);
+router.post('/adminapi/v1/review',reviewController.addReview);
 router.delete('/adminapi/v1/review/:reviewId',reviewController.deleteReview);
 
 router.get('/adminapi/v1/subscriptions',subscriptionController.getAll);
