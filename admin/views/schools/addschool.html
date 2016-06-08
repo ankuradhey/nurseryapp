@@ -37,7 +37,7 @@
                                      ng-repeat='addnumber in additionalNumberArr track by $index'
                                      form-validate show-errors 
                                      ng-class="{'has-error':schoolForm.school_phone_secondary[$index].$invalid && schoolForm.school_phone_secondary[$index].$dirty}">
-                                    <label>Additional Phone Number*</label>
+                                    <label>Additional Phone Number</label>
                                     <input type="tel" class="form-control" 
                                            pattern="^\d{10}$" 
                                            name="school_phone_secondary[$index]" 
