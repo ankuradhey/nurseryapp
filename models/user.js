@@ -91,7 +91,6 @@ exports.getAll = function(done) {
 
 exports.validateUser = function(userEmail, phone, done){
     db.get().query('SELECT * FROM user WHERE user_email = ? or user_phone = ? ', [userEmail,phone], function (err, rows) {
-        console.log('errror: '+err, rows);
         if (err)
             return done(err);
         
@@ -167,4 +166,13 @@ exports.deleteParent = function(parentId, done){
           return done(err);
       done(null, rows);
   })
+}
+
+exports.getPayments = function(userId, userType,done){
+  db.get().query('select trnx_type, trnx_user_type, trnx_payment_method, trnx_amount, trnx_status, trnx_added_time from user_transaction \n\
+                 where trnx_user_id = ? and trnx_user_type = ?',[userId, userType], function(err, rows){
+                    if(err)
+                        return done(err);
+                    done(null, rows)
+                 })
 }

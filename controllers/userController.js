@@ -16,8 +16,8 @@ responseClass = function () {
     }
 }
 validate = require('validate.js'),
-        config = require('../config'),
-        jwt = require("jsonwebtoken")
+    config = require('../config'),
+    jwt = require("jsonwebtoken")
         ;
 
 //defining schema for user
@@ -163,6 +163,58 @@ module.exports = {
 
             });
         }
+    },
+    getProfile: function(req, res){
+        user.validateUser(req.body.x_key, req.body.x_key, function (err, rows) {
+            response = new responseClass();
+            if (err) {
+                response.code = 501;
+                response.errors = err;
+                res.json(response);
+            } else {
+                //user already exists
+                if (rows && rows.length) {
+                    response.success = true;
+                    response.error = false;
+                    response.user = rows[0];
+                    res.json(response);
+                } else {
+                    response.message = 'No user found';
+                    res.json(response);
+                }
+            }
+        });
+        
+    },
+    getPaymentsList: function(req, res){
+        console.log('second request');
+        //TO DO
+        // validation user requested with and getting for user id payment list is same or not  - exception for admin user
+        response = new responseClass();
+        if(typeof req.params.userType == 'undefined')
+        {
+            response.message = 'User type is required';
+            response.code = 502;
+            res.json(response);
+            res.end();
+        }else{
+            user.getPayments(req.params.userId, req.params.userType, function (err, rows) {
+                if (err) {
+                    response.code = 501;
+                    response.errors = err;
+                    res.json(response);
+                } else {
+                    //user already exists
+                    response.success = true;
+                    response.error = false;
+                    response.message = 'Success';
+                    response.code = 200;
+                    response.payments = rows;
+                    res.json(response);
+                }
+            });
+        }
+        
     },
     getParents: function (req, res) {
         user.getAllParents(function (err, rows) {

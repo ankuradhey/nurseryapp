@@ -48,7 +48,7 @@ var auth = {
                     response.message = 'Success';
                     response.success = true;
                     response.error = false;
-                    var userDetails = {user_email: result[0].user_email, user_type: result[0].user_type};
+                    var userDetails = {user_email: result[0].user_email, user_type: result[0].user_type, user_id:result[0].user_id};
                     generateToken(userDetails, function (_token) {
                         response.token = _token.token;
                         response.user = _token.user;
@@ -149,7 +149,8 @@ var auth = {
                     response.message = 'Success';
                     response.success = true;
                     response.error = false;
-                    generateToken(req.body, function (_token) {
+                    var userDetails = {user_email: result[0].user_email, user_type: result[0].user_type, user_id:result[0].user_id};
+                    generateToken(userDetails, function (_token) {
                         response.token = _token.token;
                         response.user = _token.user;
                         res.json(response);
@@ -183,7 +184,9 @@ var auth = {
                                             response.message = 'Success';
                                             response.success = true;
                                             response.error = false;
-                                            generateToken(req.body, function (_token) {
+                                            var userDetails = req.body;
+                                            userDetails.user_id = rows[0].user_id;
+                                            generateToken(userDetails, function (_token) {
                                                 response.token = _token.token;
                                                 response.user = _token.user;
                                                 res.json(response);

@@ -62,7 +62,6 @@ module.exports = {
         })
     },
     addReview: function(req, res) {
-        var reviewId = req.params.reviewId
         review.addReview(req.body, function(err, rows) {
             if (err)
                 response.errors = err;
