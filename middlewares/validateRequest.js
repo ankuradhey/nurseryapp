@@ -15,12 +15,13 @@ module.exports = function(req, res, next) {
     console.log('validating request with token...', token, key);
     if (token && key) {
         try {
-
+            
             var decoded = jwt.verify(token, config.secret, function(err, decoded) {
                 var tmpToken = jwt.sign({userId: key}, config.secret, {
                     expiresIn: config.loginExpirySeconds // expires in 24 hours
                 });
                 if (err) {
+                    console.log('verifying token',tmpToken,token,tmpToken == token);
                     res.status(400);
                     response.message = err.message;
 //                    response.tempToken = tmpToken;

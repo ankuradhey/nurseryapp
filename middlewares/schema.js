@@ -80,6 +80,20 @@ module.exports = function() {
                     maximum:5
                 }
             }
+        },
+        'enquirySchema':{
+            enquiry_parent_id: {
+                presence:true
+            },
+            enquiry_school_id:{
+                presence:true
+            },
+            enquiry_message:{
+                presence:true,
+                length:{
+                    minimum:2
+                }
+            }
         }
     }
 
