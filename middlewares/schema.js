@@ -93,6 +93,22 @@ module.exports = function() {
                 length:{
                     minimum:2
                 }
+            },
+            enquiry_parent_name:{
+                presence:true
+            },
+            enquiry_phone:{
+                presence:true
+            },
+            enquiry_email:{
+                presence:true
+            },
+            enquiry_child_age:{
+                length:{
+                    minimum:3,
+                    maximum:25,
+                    message:'Child Age is not valid'
+                }
             }
         },
         'favSchema':{
