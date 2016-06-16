@@ -94,6 +94,14 @@ module.exports = function() {
                     minimum:2
                 }
             }
+        },
+        'favSchema':{
+            fav_parent_id: {
+                presence:true
+            },
+            fav_school_id:{
+                presence:true
+            }
         }
     }
 

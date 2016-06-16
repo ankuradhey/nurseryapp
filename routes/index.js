@@ -11,6 +11,7 @@ var locationController = require('../controllers/locationController.js');
 var reviewController = require('../controllers/reviewController.js');
 var subscriptionController = require('../controllers/subscriptionController.js');
 var enquiryController = require('../controllers/enquiryController.js');
+var favoriteController = require('../controllers/favoriteController.js');
 //var user = require('./users.js');
 
 /*
@@ -36,7 +37,9 @@ router.get('/api/v1/payments/parent/:userId', function(req, res, next) {
 //router.post('/api/v1/review', userControll)
 
 router.post('/api/v1/review', schemaValidate, reviewController.addReview);
-router.post('/api/v1/enquiry', schemaValidate, enquiryController.addReview);
+router.post('/api/v1/enquiry', schemaValidate, enquiryController.addEnquiry);
+router.get('/api/v1/favorite/:parentId',favoriteController.getFavorite)
+router.post('/api/v1/favorite',schemaValidate, favoriteController.addFavorite)
 /*
  * Routes that can be accessed by admin
  */

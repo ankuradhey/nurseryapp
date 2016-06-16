@@ -32,6 +32,15 @@ module.exports = function(req, res, next){
                                     next();
                                 }
                                 break;
+        case '/api/v1/favorite':    var $invalid = validate(req.body, schema.favSchema);
+                                    if($invalid){
+                                        response.setError(505, 'Validation error', $invalid);
+                                        res.json(response);
+                                    }else{
+                                        console.log('inside fav schema validation');
+                                        next();
+                                    }
+                                    break;
        default: var err = new Error('validation path or schema not found');
                 response.setError(501,'Validation Schema not found');
                 res.json(response);
