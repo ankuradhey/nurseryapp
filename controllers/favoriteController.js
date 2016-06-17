@@ -13,15 +13,12 @@ module.exports = {
                 res.send(response);
             }else{
                 favorite.addFavorite(req.body, function (err, rows) {
-                    response = new responseClass;
                     if (err) {
                         console.log(err);
                         response.setError(501,null,err);
                         res.send(response);
                     } else {
-                        response.success = true;
-                        response.error = false;
-                        response.message = 'Success';
+                        response.setSuccess();
                         res.send(response);
                     }
                 });
