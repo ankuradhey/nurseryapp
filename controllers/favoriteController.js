@@ -1,24 +1,40 @@
 var favorite = require('../models/favorite.js');
-var response = require('../middlewares/jsonResponse.js');
+//var response = require('../middlewares/jsonResponse.js');
+var responseClass = function() {
+    return {
+        error: true,
+        success: false,
+        code: 501,
+        message: 'Oops! Some error occurred',
+        errors: []
+    }
+};
 
 module.exports = {
     addFavorite: function (req, res) {
         favorite.getFavorite(req.body.fav_parent_id, function (err, rows) {
+            response = new responseClass();
             if (err) {
                 console.log(err);
-                response.setError(501,null,err);
+                //response.setError(501,null,err);
+                response.errors = err;
                 res.send(response);
             } else if(rows && rows.length){
-                response.setError(502, 'Duplicate record found error', err);
+                response.errors = err;
+//                response.setError(502, 'Duplicate record found error', err);
                 res.send(response);
             }else{
                 favorite.addFavorite(req.body, function (err, rows) {
+                    response = new responseClass;
                     if (err) {
                         console.log(err);
-                        response.setError(501,null,err);
+                        response.errors = err;
+//                        response.setError(501,null,err);
                         res.send(response);
                     } else {
-                        response.setSuccess();
+                        response.success = true;
+                        response.error = false;
+                        response.message = 'Success';
                         res.send(response);
                     }
                 });
@@ -31,10 +47,14 @@ module.exports = {
             response = new responseClass;
             if (err) {
                 console.log(err);
-                response.setError(501,null,err);
+                response.errors = err;
+//                response.setError(501,null,err);
                 res.send(response);
             } else {
-                response.setSuccess('Success',rows);
+                //response.setSuccess('Success',rows);
+                response.success = true;
+                response.error = false;
+                response.message = 'Success';
                 response.favorites = rows;
                 res.send(response);
             }
