@@ -117,6 +117,14 @@ module.exports = function() {
             },
             fav_school_id:{
                 presence:true
+            },
+            fav_status:{
+                presence:true,
+                length:{
+                    minimum:0,
+                    maximum:1,
+                    message:'Pass valid values for fav status - 1 or 0'
+                }
             }
         }
     }

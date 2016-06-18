@@ -20,9 +20,26 @@ module.exports = {
                 response.errors = err;
                 res.send(response);
             } else if(rows && rows.length){
-                response.errors = err;
-//                response.setError(502, 'Duplicate record found error', err);
-                res.send(response);
+                 
+                if(req.body.fav_status == 0){ //remove favourite from favorite list
+                    favorite.removeFavorite(req.body, function(err, rows){
+                        if(err){
+                            console.log(err);
+                            response.errors = err;
+                            res.send(response);
+                        }else{
+                            response.success = true;
+                            response.error = false;
+                            response.message = 'Success';
+                            res.send(response);
+                        }
+                    });
+                    
+                }else{
+                    response.message = 'Duplicate record found error';
+                    response.code = 501;
+                    res.send(response);
+                }
             }else{
                 favorite.addFavorite(req.body, function (err, rows) {
                     response = new responseClass;

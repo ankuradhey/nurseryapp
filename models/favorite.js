@@ -19,7 +19,14 @@ exports.addFavorite = function(favParams, done){
         });
     }
     
-    
+exports.removeFavorite = function(favParams, done){
+    db.get().query('delete from favorite_list where fav_parent_id = ? and fav_school_id = ? ',[favParams.fav_parent_id, favParams.fav_school_id], function(err, rows) {
+            if (err)
+                return done(err)
+            return done(null, rows);
+        });
+}
+
 exports.getFavorite = function(userId, done){
     db.get().query('select fav_id, fav_parent_id, fav_school_id, s.school_name, s.school_affiliation_code, s.school_phone, s.school_address   from favorite_list f\n\
                     join school s on s.school_id = f.fav_school_id and s.school_status = "1" \n\
