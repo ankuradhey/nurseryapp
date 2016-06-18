@@ -29,8 +29,9 @@ module.exports = {
                             res.send(response);
                         }else{
                             response.success = true;
-                            response.error = false;
+                            response.error = false; 
                             response.message = 'Success';
+                            response.fav_status = req.body.fav_status;
                             res.send(response);
                         }
                     });
@@ -52,6 +53,7 @@ module.exports = {
                         response.success = true;
                         response.error = false;
                         response.message = 'Success';
+                        response.fav_status = req.body.fav_status;
                         res.send(response);
                     }
                 });
