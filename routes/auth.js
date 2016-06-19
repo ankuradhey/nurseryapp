@@ -53,6 +53,8 @@ var auth = {
                                         user_type: result[0].user_type, 
                                         user_id:result[0].user_id,
                                         full_name:result[0].user_full_name,
+                                        first_name:result[0].first_name,
+                                        last_name:result[0].last_name,
                                         phone:result[0].user_phone,
                                     };
                     generateToken(userDetails, function (_token) {
@@ -160,6 +162,8 @@ var auth = {
                                         user_type: result[0].user_type, 
                                         user_id:result[0].user_id,
                                         full_name:result[0].user_full_name,
+                                        first_name:result[0].first_name,
+                                        last_name:result[0].last_name,
                                         phone:result[0].user_phone,
                                     };
                     generateToken(userDetails, function (_token) {
