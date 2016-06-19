@@ -25,6 +25,7 @@ router.post('/register', schemaValidate,userController.register);
 /*
  * Routes that can be accessed only by authenticated users
  */
+// DEPRECATED
 router.get('/api/v1/schools', schoolController.getAllActive);
 router.get('/api/v1/schools/:userId', schoolController.getAllActive);
 router.get('/api/v1/user/:userId', userController.getOne);
@@ -39,6 +40,7 @@ router.get('/api/v1/payments/parent/:userId', function(req, res, next) {
 
 router.post('/api/v1/review', schemaValidate, reviewController.addReview);
 router.post('/api/v1/enquiry', schemaValidate, enquiryController.addEnquiry);
+router.get('/api/v1/review/:schoolId', enquiryController.getEnquiry);
 router.get('/api/v1/favorite/:parentId',favoriteController.getFavorite)
 router.post('/api/v1/favorite',schemaValidate, favoriteController.addFavorite)
 /*

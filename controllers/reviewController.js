@@ -31,6 +31,22 @@ module.exports = {
             }
         });
     },
+    getReviewsBySchool: function(req, res){
+        review.getReviewsBySchool(req.params.schoolId, function(err, rows){
+            response = new responseClass;
+            if(err){
+                console.log(err);
+                response.errors = err;
+                res.send(response);
+            }else{
+                response.reviews = rows;
+                response.error = false;
+                response.success = true;
+                response.message = 'Success';
+                res.send(response);
+            }
+        });
+    },
     getReview: function(req, res){
         review.getReview(req.params.reviewId, function(err, rows){
             response = new responseClass;
