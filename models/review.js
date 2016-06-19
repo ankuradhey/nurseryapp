@@ -89,7 +89,7 @@ exports.getReviewsBySchool = function(schoolId, done){
                  s.school_name from reviews r \n\
                  join user u on u.user_id = r.review_user_id and u.user_status != "2" and u.user_type = "parent" \n\
                  join school s on r.review_school_id = s.school_id and s.school_status != "2"\n\
-                 where review_status != "2" and s.school_id = ?  ',schoolId,
+                 where review_status = "1" and s.school_id = ?  ',schoolId,
                 function(err, rows){
                       if (err) 
                         return done(err);
