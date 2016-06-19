@@ -32,7 +32,7 @@ var schools = {
                      join board_master board on board.board_id = s.school_board and board.board_status = "1" where school_status = "1" \n\
                      join reviews r on r.review_school_id = s.school_id and r.review_status = "1" \n\
                      left join favorite_list fav on s.school_id = fav.fav_school_id and fav.fav_parent_id = ? ';
-        db.get().query(query,[parentId || 0] function(err, rows) {
+        db.get().query(query,[parentId || 0], function(err, rows) {
             console.log('select query');
             if (err)
                 return done(err)
