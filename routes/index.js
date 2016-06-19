@@ -40,7 +40,7 @@ router.get('/api/v1/payments/parent/:userId', function(req, res, next) {
 
 router.post('/api/v1/review', schemaValidate, reviewController.addReview);
 router.post('/api/v1/enquiry', schemaValidate, enquiryController.addEnquiry);
-router.get('/api/v1/review/:schoolId', enquiryController.getEnquiry);
+router.get('/api/v1/review/:schoolId', reviewController.getReviewsBySchool);
 router.get('/api/v1/favorite/:parentId',favoriteController.getFavorite)
 router.post('/api/v1/favorite',schemaValidate, favoriteController.addFavorite)
 /*
