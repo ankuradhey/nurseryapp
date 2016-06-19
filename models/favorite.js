@@ -27,10 +27,10 @@ exports.removeFavorite = function(favParams, done){
         });
 }
 
-exports.getFavorite = function(userId, done){
+exports.getFavorite = function(userId, schoolId,done){
     db.get().query('select fav_id, fav_parent_id, fav_school_id, s.school_name, s.school_affiliation_code, s.school_phone, s.school_address   from favorite_list f\n\
                     join school s on s.school_id = f.fav_school_id and s.school_status = "1" \n\
-                    where f.fav_status = "1" and fav_parent_id = ? ',userId, function(err, rows) {
+                    where f.fav_status = "1" and fav_parent_id = ? and fav_school_id = ? ',[userId, schoolId], function(err, rows) {
             console.log(err);
             if (err)
                 return done(err)

@@ -12,7 +12,7 @@ var responseClass = function() {
 
 module.exports = {
     addFavorite: function (req, res) {
-        favorite.getFavorite(req.body.fav_parent_id, function (err, rows) {
+        favorite.getFavorite(req.body.fav_parent_id, req.body.fav_school_id, function (err, rows) {
             response = new responseClass();
             if (err) {
                 console.log(err);
