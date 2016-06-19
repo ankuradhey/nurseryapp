@@ -26,6 +26,7 @@ router.post('/register', schemaValidate,userController.register);
  * Routes that can be accessed only by authenticated users
  */
 router.get('/api/v1/schools', schoolController.getAllActive);
+router.get('/api/v1/schools/:userId', schoolController.getAllActive);
 router.get('/api/v1/user/:userId', userController.getOne);
 //use x_key
 router.post('/api/v1/profile', userController.getProfile);
