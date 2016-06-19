@@ -38,7 +38,7 @@ module.exports = {
         });
     },
     getAllActive: function(req, res) {
-        school.getAllActive(function(err, rows) {
+        school.getAllActive(req.params.userId, function(err, rows) {
             if (err)
                 response.errors = err;
             else {
