@@ -48,7 +48,13 @@ var auth = {
                     response.message = 'Success';
                     response.success = true;
                     response.error = false;
-                    var userDetails = {user_email: result[0].user_email, user_type: result[0].user_type, user_id:result[0].user_id};
+                    var userDetails = { 
+                                        user_email: result[0].user_email, 
+                                        user_type: result[0].user_type, 
+                                        user_id:result[0].user_id,
+                                        full_name:result[0].user_full_name,
+                                        phone:result[0].user_phone,
+                                    };
                     generateToken(userDetails, function (_token) {
                         response.token = _token.token;
                         response.user = _token.user;
@@ -149,7 +155,13 @@ var auth = {
                     response.message = 'Success';
                     response.success = true;
                     response.error = false;
-                    var userDetails = {user_email: result[0].user_email, user_type: result[0].user_type, user_id:result[0].user_id};
+                    var userDetails = { 
+                                        user_email: result[0].user_email, 
+                                        user_type: result[0].user_type, 
+                                        user_id:result[0].user_id,
+                                        full_name:result[0].user_full_name,
+                                        phone:result[0].user_phone,
+                                    };
                     generateToken(userDetails, function (_token) {
                         response.token = _token.token;
                         response.user = _token.user;
