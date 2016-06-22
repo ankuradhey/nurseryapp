@@ -12,6 +12,7 @@ var reviewController = require('../controllers/reviewController.js');
 var subscriptionController = require('../controllers/subscriptionController.js');
 var enquiryController = require('../controllers/enquiryController.js');
 var favoriteController = require('../controllers/favoriteController.js');
+var searchController = require('../controllers/searchController.js');
 //var user = require('./users.js');
 
 /*
@@ -43,6 +44,7 @@ router.post('/api/v1/enquiry', schemaValidate, enquiryController.addEnquiry);
 router.get('/api/v1/review/:schoolId', reviewController.getReviewsBySchool);
 router.get('/api/v1/favorite/:parentId',favoriteController.getFavorite);
 router.post('/api/v1/favorite',schemaValidate, favoriteController.addFavorite);
+router.post('/api/v1/search',searchController.getSchools);
 /*
  * Routes that can be accessed by admin
  */

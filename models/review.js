@@ -87,8 +87,8 @@ exports.getReviewsBySchool = function(schoolId, done){
     db.get().query(
                 'select r.review_id, r.review_desc, r.review_rating, r.review_status, r.review_title, concat(u.user_first_name, " ",u.user_last_name) as user_full_name, \n\
                  s.school_name from reviews r \n\
-                 join user u on u.user_id = r.review_user_id and u.user_status != "2" and u.user_type = "parent" \n\
-                 join school s on r.review_school_id = s.school_id and s.school_status != "2"\n\
+                 join user u on u.user_id = r.review_user_id and u.user_status = "1" and u.user_type = "parent" \n\
+                 join school s on r.review_school_id = s.school_id and s.school_status = "1"\n\
                  where review_status = "1" and s.school_id = ?  ',schoolId,
                 function(err, rows){
                       if (err) 
