@@ -18,6 +18,7 @@ exports.getSchools = function(schoolParams, done) {
                      where school_status = "1" and ( lower(s.school_name) like "%?%" and review_rating in (?) ) \n\
                      group by s.school_id  ',[(schoolParams.school_name || '' ).toLowerCase(), (schoolParams.review_rating || [0,1,2,3,4,5].toString())],
             function(err, rows) {
+                console.log(err);
                 if (err)
                     return done(err);
                 done(null, rows);
