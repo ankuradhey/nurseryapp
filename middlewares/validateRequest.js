@@ -12,7 +12,7 @@ module.exports = function(req, res, next) {
     //if(req.method == 'OPTIONS') next();
     var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'];
     var key = (req.body && req.body.x_key) || (req.query && req.query.x_key) || req.headers['x-key'];
-    console.log('validating request with token...', token, key);
+//    console.log('validating request with token...', token, key);
     if (token && key) {
         try {
             
@@ -21,7 +21,7 @@ module.exports = function(req, res, next) {
                     expiresIn: config.loginExpirySeconds // expires in 24 hours
                 });
                 if (err) {
-                    console.log('verifying token',tmpToken,token,tmpToken == token);
+                    console.log('verifying token',tmpToken);
                     res.status(400);
                     response.message = err.message;
 //                    response.tempToken = tmpToken;
