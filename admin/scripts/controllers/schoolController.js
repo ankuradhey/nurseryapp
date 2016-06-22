@@ -226,9 +226,17 @@ angular.module('sbAdminApp')
             
             if(additionalNumber){
                 console.log(additionalNumber);
-                additionalNumber = additionalNumber.filter(function(elem, pos, arr) {
-                    return arr[pos] && arr.indexOf(elem) == pos;
-                });
+//                additionalNumber = additionalNumber.filter(function(elem, pos, arr) {
+//                    return arr[pos] && arr.indexOf(elem) == pos;
+//                });
+                additionalNumber = $.map(additionalNumber, function(val, key){
+                    return val;
+                })
+                
+                
+//                additionalNumber.filter(function(elem, pos, arr) {
+//                    return arr[pos] && arr.indexOf(elem) == pos;
+//                });
                 additionalNumber = additionalNumber.join(',');
             }
             
