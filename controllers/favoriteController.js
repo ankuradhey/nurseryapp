@@ -62,7 +62,7 @@ module.exports = {
 
     },
     getFavorite: function (req, res) {
-        favorite.getFavorite(req.params.parentId, function (err, rows) {
+        favorite.getFavoriteByUser(req.params.parentId, function (err, rows) {
             response = new responseClass;
             if (err) {
                 console.log(err);
