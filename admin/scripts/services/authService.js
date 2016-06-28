@@ -65,7 +65,7 @@ angular.module('sbAdminApp')
                 }
                 
                 function init() {
-                    if ($window.localStorage["userInfo"]) {
+                    if ($window.localStorage && "userInfo" in $window.localStorage && $window.localStorage["userInfo"] && $window.localStorage["userInfo"] != "null") {
                         userInfo = JSON.parse($window.localStorage["userInfo"]);
                         $rootScope.user = userInfo;
                     }
