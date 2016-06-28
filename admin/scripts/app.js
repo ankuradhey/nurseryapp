@@ -240,6 +240,9 @@ var app = angular
                 },
                 medium: function(schoolService) {
                     return schoolService.getMediums();
+                },
+                facilities: function(schoolService){
+                    return schoolService.getFacilities();
                 }
             }
         })
@@ -278,6 +281,9 @@ var app = angular
                 },
                 medium: function(schoolService) {
                     return schoolService.getMediums();
+                },
+                facilities: function(schoolService){
+                    return schoolService.getFacilities();
                 }
             }
         })

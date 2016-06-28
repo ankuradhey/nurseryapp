@@ -118,6 +118,16 @@ angular.module('sbAdminApp')
                 return data;
             });
             return promise;
+        },
+        getFacilities: function(){
+            var url = baseUrl+'/adminapi/v1/facilities';
+            var promise = $http({
+               method:'GET',
+               url:url
+            }).success(function(data,status, headers, conf){
+                return data;
+            });
+            return promise;
         }
     }
 }])

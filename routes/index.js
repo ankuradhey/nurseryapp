@@ -13,6 +13,7 @@ var subscriptionController = require('../controllers/subscriptionController.js')
 var enquiryController = require('../controllers/enquiryController.js');
 var favoriteController = require('../controllers/favoriteController.js');
 var searchController = require('../controllers/searchController.js');
+var facilityController = require('../controllers/facilityController.js');
 //var user = require('./users.js');
 
 /*
@@ -55,6 +56,7 @@ router.post('/adminapi/v1/school', schoolController.addSchool);
 router.put('/adminapi/v1/school/:schoolId', schoolController.updateSchool);
 router.delete('/adminapi/v1/school/:schoolId', schoolController.deleteSchool);
 router.get('/adminapi/v1/dashboard', dashboardController.getCount);
+router.get('/adminapi/v1/facilities',facilityController.getFacilities);
 
 router.get('/adminapi/v1/boards', schoolController.getBoards);
 router.post('/adminapi/v1/board', schoolController.addBoard);

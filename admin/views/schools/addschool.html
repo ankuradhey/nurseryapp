@@ -178,6 +178,20 @@
                                     File too large {{school.logo.size / 1000000|number:1}}MB: max 20M
                                 </p>
                             </div>
+                            <div class="form-group">
+                                <label>Choose Facilities</label>
+                                <label class="checkbox-inline" ng-repeat="facility in facilities track by facility.facility_id">
+                                    <input type="checkbox" value="facility.facility_id" name="facility[]" ng-model="school.facility[$index]"> {{facility.facility_name}}
+                                </label>
+                            </div>
+                            <div class="form-group form-validate">
+                                <label>New Facility</label>
+                                <input type="text" ng-model="school.newfacility" name="facility" class="mws-form" ng-click="saveFacility()">
+                                <p class="help-block" ng-show="schoolForm.newfacility.$error">
+                                    Facility already added
+                                </p>
+                                <input type="button" value="Add Facility" ng-click="saveFacility();">
+                            </div>
                             <button type="submit" class="btn btn-default" ng-click="saveSchool()" >Submit</button>
                             <!--ng-disabled="schoolForm.$invalid"-->
                         </form>

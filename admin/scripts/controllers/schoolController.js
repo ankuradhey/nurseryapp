@@ -74,13 +74,14 @@ angular.module('sbAdminApp')
         }
 
     }])
-        .controller('SchoolAddCtrl', ['$rootScope', '$scope', '$http', '$stateParams', 'boards', 'countries', 'schoolType', 'medium', 'Upload', '$state','$timeout',
-    function($rootScope, $scope, $http, $stateParams, boards, countries, schoolType, medium, Upload, $state, $timeout) {
+        .controller('SchoolAddCtrl', ['$rootScope', '$scope', '$http', '$stateParams', 'boards', 'countries', 'schoolType', 'medium', 'Upload', '$state','$timeout','facilities',
+    function($rootScope, $scope, $http, $stateParams, boards, countries, schoolType, medium, Upload, $state, $timeout, facilities) {
         $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
         $scope.mediums = medium.data.mediums;
         $scope.boards = boards.data.boards;
         $scope.countries = countries.data.countries;
         $scope.schoolId = $stateParams.schoolId;
+        $scope.facilities = facilities.data.facilities;
         $scope.school = {name: '', affiliation: '', phone: '', address: '', board: '', medium: '', year: '', password: 123456};
         $scope.location = {country: {country_id: '', country_name: '-- Select --'}, state: '', city: '', area: '', zone: ''};
         $scope.types = schoolType.data.types;
@@ -214,7 +215,15 @@ angular.module('sbAdminApp')
 
             return arr;
         }
-
+        $scope.saveFacility = function(){
+            if(!$scope.school.newfacility in facilities.data.facilities){
+                
+            }else{
+                $scope.schoolForm.$setValidity('facility', true, $scope.schoolForm);
+//                serverMessage.assign($scope, undefined);
+            }
+        }
+        
         $scope.saveSchool = function() {
             $scope.$broadcast('show-errors-check-validity');
             if ($scope.schoolForm.$invalid) {
