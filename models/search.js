@@ -6,7 +6,7 @@ exports.getSchools = function(schoolParams, done) {
                     s.school_desc as school_description, avg(if(review_rating,review_rating,0)) as review_rating  FROM school s \n\
                      join board_master board on board.board_id = s.school_board and board.board_status = "1"  \n\
                      left join reviews r on r.review_school_id = s.school_id and r.review_status = "1" \n\
-                     where school_status = "1" and ( lower(s.school_name) like "%?%" and review_rating in (?) ) \n\
+                     where school_status = "1" and ( lower(s.school_name) like "%?%" or review_rating in (?) ) \n\
                      group by s.school_id  ',[(schoolParams.school_name || '' ).toLowerCase(), (schoolParams.review_rating || [0,1,2,3,4,5].toString())]);
     
     db.get().query(
@@ -14,7 +14,7 @@ exports.getSchools = function(schoolParams, done) {
                     s.school_desc as school_description, sum(if(review_id,1,0)) as review_count ,avg(if(review_rating,review_rating,0)) as review_rating  FROM school s \n\
                      join board_master board on board.board_id = s.school_board and board.board_status = "1"  \n\
                      left join reviews r on r.review_school_id = s.school_id and r.review_status = "1" \n\
-                     where school_status = "1" and ( lower(s.school_name) like "%?%" and review_rating in (?) ) \n\
+                     where school_status = "1" and ( lower(s.school_name) like "%?%" or review_rating in (?) ) \n\
                      group by s.school_id  ',[(schoolParams.school_name || '' ).toLowerCase(), (schoolParams.review_rating || [0,1,2,3,4,5].toString())],
             function(err, rows) {
                 console.log(err)
