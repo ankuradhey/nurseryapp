@@ -231,7 +231,7 @@ angular.module('sbAdminApp')
 
                         $http({
                             method: 'POST',
-                            url: baseUrl+'/adminapi/facilities',
+                            url: baseUrl+'/adminapi/v1/facilities',
                             headers: {'Content-Type': 'application/json'},
                             data: {facility_name:$scope.school.newfacility.trim().toLowerCase()}
                         }).success(function (data, status, headers, conf) {
