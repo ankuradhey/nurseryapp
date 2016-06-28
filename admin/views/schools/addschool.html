@@ -184,9 +184,9 @@
                                     <input type="checkbox" value="facility.facility_id" name="facility[]" ng-model="school.facility[$index]"> {{facility.facility_name}}
                                 </label>
                             </div>
-                            <div class="form-group form-validate">
+                            <div class="form-group form-validate" ng-class="{'has-error':schoolForm.newfacility.$invalid && schoolForm.newfacility.$dirty}">
                                 <label>New Facility</label>
-                                <input type="text" ng-model="school.newfacility" name="facility" class="mws-form" ng-click="saveFacility()">
+                                <input type="text" ng-model="school.newfacility" name="facility" class="form-control" >
                                 <p class="help-block" ng-show="schoolForm.newfacility.$error">
                                     Facility already added
                                 </p>
