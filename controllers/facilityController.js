@@ -12,8 +12,8 @@ module.exports = {
         facility.getFacilities(function(err, rows){
             if(err){
                 console.log(err);
-                res.errors = err;
-                res.status = response.code;
+                response.errors = err;
+                response.status = response.code;
                 res.send(response);
             }else{
                 response.facilities = rows;
@@ -21,6 +21,37 @@ module.exports = {
                 response.success = true;
                 response.message = 'Success';
                 res.send(response);
+            }
+        });
+    },
+    addFacility: function(req, res){
+        console.log('adding facility - controller');
+        facility.getFacilityByName(req.body.facility_name, function(err, rows){
+            if(err){
+                console.log(err);
+                response.errors = err;
+                response.status = 501;
+                response.message = 'Server error';
+                res.send(response);
+            }else if(rows && rows.length){
+                response.message = 'Facility already present';
+                res.send(response);
+            }else{
+                facility.addFacility(req.body ,function(err, result){
+                    if(err){
+                        console.log(err);
+                        response.errors = err;
+                        response.status = 501;
+                        response.message = 'Server error';
+                        res.send(response);
+                    }else{
+                        response.error = false;
+                        response.success = true;
+                        response.message = 'Success';
+                        response.facility = {facility_id:result.insertId,facility_name:req.body.facility_name}
+                        res.send(response);
+                    }
+                })
             }
         });
     }
