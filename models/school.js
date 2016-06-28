@@ -104,7 +104,7 @@ var schools = {
 
         query += ' where school_id = ' + schoolId;
 
-        db.get().query(query, function(err, rows) {
+        db.get().query('update school set ? where school_id = ? ',[schoolParams, schoolId], function(err, rows) {
             if (err)
                 return done(err)
             return done(null, rows);
