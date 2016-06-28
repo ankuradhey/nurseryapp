@@ -236,7 +236,8 @@ angular.module('sbAdminApp')
                             data: {facility_name:$scope.school.newfacility.trim().toLowerCase()}
                         }).success(function (data, status, headers, conf) {
                             if (data.success) {
-                                facilities.data.facilities.push()
+                                facilities.data.facilities.push(data.facility);
+                                $scope.school.newfacility = '';
                             } else {
                                 alert(data.message || 'Oops! Some error occurred');
 //                    $scope.$broadcast('show-error-alert');
