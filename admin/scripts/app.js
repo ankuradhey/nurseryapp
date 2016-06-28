@@ -15,7 +15,7 @@ var app = angular
     'angular-loading-bar',
     'ngFileUpload'
 ])
-        .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, schoolService) {
+        .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, schoolService, authService) {
 
         $ocLazyLoadProvider.config({
             debug: false,
