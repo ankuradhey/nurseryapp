@@ -363,9 +363,14 @@ angular.module('sbAdminApp')
                         url: baseUrl + '/upload',
                         data: {file: file}
                     }).then(function (resp) {
-                        console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data, resp);
-                        $scope.school.logo = resp.data.filename;
-                        var s = resp.data.filename;
+                        if(resp.data.success){
+                            console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data, resp);
+                            $scope.school.logo = resp.data.filename;
+                            var s = resp.data.filename;
+                        }else{
+                            console.error(resp.data.errors);
+                            alert("Oops! Some error occurred while uploading");
+                        }
                     }, function (resp) {
                         console.log('Error status: ' + resp.status);
                     }, function (evt) {
