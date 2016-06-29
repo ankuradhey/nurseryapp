@@ -126,7 +126,13 @@ angular.module('sbAdminApp')
                             
                             //facilities
                             if(school.school_facilities){
-                                $scope.school.facility = school.school_facilities.split(',');
+//                                $scope.school.facility = 
+                                school.school_facilities =  school.school_facilities.split(',');
+                                
+                                for(var i in $scope.facilities){
+                                    if($scope.facilities[i].facility_id == school.school_facilities)
+                                    $scope.school.facility[$scope.facilities.school.school_facilities[i].facility_id] = school.school_facilities[i].facility_id;
+                                }
                             }
                             
                             if (!additionalNumber) {
@@ -272,15 +278,16 @@ angular.module('sbAdminApp')
                         additionalNumber = additionalNumber.join(',');
                     }
                     
-                    if($scope.school.facility && $scope.school.facility.every(function(element){
-                        return element === true;
-                    })){
+                    var _facilities = [];
+                    
+                    for(var i in $scope.school.facility){
                         
-                        var _facilities = $scope.school.facility.filter(function(value){
-                            return value==true?value:false;
-                        });
-                        _facilities = Object.keys(_facilities).join(',');
+                        if($scope.school.facility[i]){
+                            _facilities.push(i);
+                        }
                     }
+                    
+                    _facilities = _facilities.join(',');
 
                     var data = {
                         school_name: $scope.school.name,
