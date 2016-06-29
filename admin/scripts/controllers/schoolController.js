@@ -84,6 +84,7 @@ angular.module('sbAdminApp')
                 $scope.facilities = facilities.data.facilities;
                 $scope.school = {name: '', affiliation: '', phone: '', address: '', board: '', medium: '', year: '', password: 123456};
                 $scope.location = {country: {country_id: '', country_name: '-- Select --'}, state: '', city: '', area: '', zone: ''};
+                $scope.school.facility = {};
                 $scope.types = schoolType.data.types;
                 $scope.additionalNumberArr = ['0'];
                 console.log($scope.additionalNumberArr);
@@ -130,8 +131,9 @@ angular.module('sbAdminApp')
                                 school.school_facilities =  school.school_facilities.split(',');
                                 
                                 for(var i in $scope.facilities){
-                                    if($scope.facilities[i].facility_id == school.school_facilities)
-                                    $scope.school.facility[$scope.facilities.school.school_facilities[i].facility_id] = school.school_facilities[i].facility_id;
+                                        if(school.school_facilities.indexOf($scope.facilities[i].facility_id.toString()) !== -1){
+                                            $scope.school.facility[$scope.facilities[i].facility_id] = $scope.facilities[i].facility_id;
+                                        }
                                 }
                             }
                             
@@ -364,9 +366,6 @@ angular.module('sbAdminApp')
                         console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data, resp);
                         $scope.school.logo = resp.data.filename;
                         var s = resp.data.filename;
-
-                        console.log(type, s, $scope.school.img, resp.data.filename);
-
                     }, function (resp) {
                         console.log('Error status: ' + resp.status);
                     }, function (evt) {
