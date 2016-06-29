@@ -122,9 +122,13 @@ angular.module('sbAdminApp')
                             if (school.school_phone_secondary) {
                                 additionalNumber = school.school_phone_secondary.split(',');
                                 $scope.school.phone_secondary = additionalNumber;
-                            } else {
                             }
-
+                            
+                            //facilities
+                            if(school.school_facilities){
+                                $scope.school.facility = school.school_facilities.split(',');
+                            }
+                            
                             if (!additionalNumber) {
                                 additionalNumber = [0];
                             }
@@ -262,18 +266,20 @@ angular.module('sbAdminApp')
 
                     if (additionalNumber) {
                         console.log(additionalNumber);
-//                additionalNumber = additionalNumber.filter(function(elem, pos, arr) {
-//                    return arr[pos] && arr.indexOf(elem) == pos;
-//                });
                         additionalNumber = $.map(additionalNumber, function (val, key) {
                             return val;
                         })
-
-
-//                additionalNumber.filter(function(elem, pos, arr) {
-//                    return arr[pos] && arr.indexOf(elem) == pos;
-//                });
                         additionalNumber = additionalNumber.join(',');
+                    }
+                    
+                    if($scope.school.facility && $scope.school.facility.every(function(element){
+                        return element === true;
+                    })){
+                        
+                        var _facilities = $scope.school.facility.filter(function(value){
+                            return value==true?value:false;
+                        });
+                        _facilities = Object.keys(_facilities).join(',');
                     }
 
                     var data = {
@@ -283,6 +289,7 @@ angular.module('sbAdminApp')
                         school_phone: $scope.school.phone,
                         school_phone_secondary: additionalNumber,
                         school_helpline_number: $scope.school.helpline_number,
+                        school_facilities: _facilities,
                         school_contact_person: $scope.school.contact_person,
                         school_address: $scope.school.address,
                         school_board: $scope.school.board.board_id,
