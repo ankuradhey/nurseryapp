@@ -181,7 +181,7 @@
                             <div class="form-group">
                                 <label>Choose Facilities</label>
                                 <label class="checkbox-inline" ng-repeat="facility in facilities track by facility.facility_id">
-                                    <input type="checkbox" value="facility.facility_id" name="facility[]" ng-checked="school.facility[facility.facility_id]" ng-model="school.facility[facility.facility_id]"> {{facility.facility_name}}
+                                    <input type="checkbox" value="facility.facility_id" ng-true-value="{{facility.facility_id}}" ng-false-value="false" name="facility[]" ng-model="school.facility[facility.facility_id]"> {{facility.facility_name}}
                                 </label>
                             </div>
                             <div class="form-group form-validate" ng-class="{'has-error':schoolForm.newfacility.$invalid && schoolForm.newfacility.$dirty}">
