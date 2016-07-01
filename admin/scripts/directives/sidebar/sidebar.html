@@ -8,6 +8,19 @@
 <!--            <li ui-sref-active="active" access-level="school">
                 <a ui-sref="dashboard.subscription"><i class="fa fa-dashboard fa-fw"></i> Subscriptions</a>
             </li>-->
+            <li ng-class="{active:collapseVar=='advertisement'}" access-level="school">{{dropDown}}
+                <a href="javascript:;" ng-click="check('advertisement')">
+                    <i class="fa fa-wrench fa-fw"></i> Advertisement<span class="fa arrow"></span>
+                </a>
+                <ul class='nav nav-second-level' uib-collapse="collapseVar != 'advertisement'">
+                    <li ui-sref-active='active'>
+                        <a ui-sref="dashboard.fullpagebanner">Full page banner</a>
+                    </li>
+                    <li ui-sref-active='active'>
+                        <a ui-sref="dashboard.schools">Short banner</a>
+                    </li>
+                </ul>
+            </li>
             <li ng-class="{active:collapseVar=='school'}" access-level="admin">{{dropDown}}
                 <a href="" ng-click="check('school')">
                     <i class="fa fa-wrench fa-fw"></i> Manage Schools<span class="fa arrow"></span>

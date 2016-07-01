@@ -87,7 +87,6 @@ angular.module('sbAdminApp')
                 $scope.school.facility = {};
                 $scope.types = schoolType.data.types;
                 $scope.additionalNumberArr = ['0'];
-                console.log($scope.additionalNumberArr);
                 $scope.numberCount = 0;
                 //check if its an edit case
 
