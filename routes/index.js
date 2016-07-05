@@ -128,6 +128,7 @@ router.post('/adminapi/v1/review', reviewController.addReview);
 router.delete('/adminapi/v1/review/:reviewId', reviewController.deleteReview);
 
 router.get('/adminapi/v1/subscriptions', subscriptionController.getAll);
+router.post('/adminapi/v1/subscription', schemaValidate, subscriptionController.addSubscription);
 router.get('/adminapi/v1/subscription/:subscriptionId', subscriptionController.getOne);
 
 router.get('/adminapi/v1/mediums', schoolController.getMediums);

@@ -126,6 +126,22 @@ module.exports = function() {
                     message:'Pass valid values for fav status - 1 or 0'
                 }
             }
+        },
+        'subscriptionSchema':{
+            plan_name: {
+                presence:true
+            },
+            plan_duration:{
+                presence:true,
+                length:{
+                    minimum:1,
+                    maximum:12,
+                    message:'Please enter correct value'
+                }
+            },
+            plan_amount:{
+                presenece:true
+            }
         }
     }
 

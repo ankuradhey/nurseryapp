@@ -41,7 +41,7 @@ angular.module('sbAdminApp')
 
                 $scope.changeSubscription = function () {
                     var subscriptionId = $scope.plan.plan_id;
-                    $state.go('dashboard.addsubscription',{subscriptionId:subscriptionId})
+                    $state.go('dashboard.addsubscription', {subscriptionId: subscriptionId})
                 }
 
 
@@ -106,11 +106,35 @@ angular.module('sbAdminApp')
 
                     return '';
                 }
-                
-                $scope.setDateTo = function(){
+
+                $scope.setDateTo = function () {
                     var dateFrom = $scope.dt;
                     var dateTo = new Date(new Date(dateFrom).setMonth(dateFrom.getMonth() + $scope.plan.plan_duration + 1));
-                    $scope.dateTo = dateTo.getDate()+'-'+dateTo.getMonth()+'-'+dateTo.getFullYear();
+                    $scope.dateTo = dateTo.getDate() + '-' + dateTo.getMonth() + '-' + dateTo.getFullYear();
                 }
-                
-            }]);
+
+            }])
+        .controller('addSubscriptionController', ['$scope', '$http', '$state', '$stateParams', function ($scope, $http, $state, $stateParams) {
+
+            
+                $scope.saveSubscription = function () {
+                    $http({
+                        method: 'POST',
+                        url: baseUrl + '/adminapi/v1/subscription',
+                        headers: {'Content-Type': 'application/json'},
+                        data: $scope.plan
+                    }).success(function (data, status, headers, conf) {
+                        if (data.success) {
+                            $state.go('dashboard.subscriptions');
+                        } else {
+                            alert(data.message || 'Oops! Some error occurred');
+//                    $scope.$broadcast('show-error-alert');
+                        }
+                    }).error(function (data, status, headers, conf) {
+                        $scope.alert.show = true;
+                        $scope.alert.type = 'danger';
+                    })
+                }
+            }
+        ]);
+;

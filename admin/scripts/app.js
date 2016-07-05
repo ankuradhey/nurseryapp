@@ -1314,6 +1314,32 @@ var app = angular
                 }
             }
         })
+                .state('dashboard.addsubscriptionmaster', {
+            url: '/addsubscriptions',
+            access: access.admin,
+            data: {collapseVar: 'school'},
+            controller: 'addSubscriptionController',
+            templateUrl: 'views/subscription/addsubscriptionmaster.html',
+            resolve: {
+                auth: function($q, authService) {
+                    var userInfo = authService.getUserInfo();
+                    if (userInfo && authService.authorize(access.admin)) {
+                        return $q.when(userInfo);
+                    } else {
+                        return $q.reject({authenticated: false});
+                    }
+                },
+                loadMyFiles: function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'sbAdminApp',
+                        files: [
+                            'scripts/controllers/subscriptionController.js',
+                            'scripts/directives/formvalidation.js'
+                        ]
+                    })
+                }
+            }
+        })
                 ;
 
         //when api denies requested resources then redirect to login - reason may be unauthorized access or session timeout

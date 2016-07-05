@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Add Subscription</h1>
+    </div>  
+    <!-- /.col-lg-12 -->
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <uib-alert ng-if="alert.show" type="{{alert.type}}" close="alert.show = false">{{alert.message}}</uib-alert>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Fill school details
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form role="form" novalidate name="subscriptionForm">
+                            <div class="form-group" show-errors ng-class="{'has-error':subscriptionForm.country_name.$invalid && subscriptionForm.country_name.$dirty}">
+                                <label>Subscription Name</label>
+                                <input class="form-control" name="plan_name" ng-model="plan.plan_name" required>
+                                <p class="help-block" ng-if="subscriptionForm.plan_name.$error.required && subscriptionForm.plan_name.$dirty">Subscription name is required</p>
+                            </div>
+                            <div class="form-group" show-errors ng-class="{'has-error':subscriptionForm.plan_amount.$invalid && subscriptionForm.plan_amount.$dirty}">
+                                <label>Price</label>
+                                <input type="text" required
+                                       class="form-control"
+                                       name="plan_amount" ng-model="plan.plan_amount">
+                                <p class="help-block" ng-if="subscriptionForm.plan_amount.$invalid && subscriptionForm.plan_amount.$dirty">Subscription amount is required</p>
+                            </div>
+                            <div class="form-group" show-errors ng-class="{'has-error':subscriptionForm.plan_duration.$invalid && subscriptionForm.plan_duration.$dirty}">
+                                <label>Duration (in months)</label>
+                                <select name="plan_duration" class="form-control" ng-model="plan.plan_duration"
+                                        ng-options="duration as duration for duration in [1,2,3,4,5,6,7,8,9,10]"
+                                        required
+                                        >
+                                </select>
+                                <p class="help-block" ng-if="subscriptionForm.plan_duration.$invalid && subscriptionForm.plan_duration.$dirty">Subscription duration is required</p>
+                            </div>
+                            <button type="submit" class="btn btn-default" ng-click="saveSubscription()" ng-disabled="subscriptionForm.$invalid">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

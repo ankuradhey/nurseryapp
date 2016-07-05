@@ -4,7 +4,7 @@
  */
 var response = {'error': true, 'success': false, 'code': 501, 'message': 'Oops! some error occurred', errors: []};
 var subscription = require('../models/subscription.js');
-var responseClass = function() {
+var responseClass = function () {
     return {
         error: true,
         success: false,
@@ -17,16 +17,15 @@ var responseClass = function() {
 
 
 module.exports = {
-    
-    getAll: function(req, res){
+    getAll: function (req, res) {
         console.log('getting list of subscriptions');
-        subscription.getAll("1", function(err, rows){
+        subscription.getAll("1", function (err, rows) {
             response = new responseClass;
-            if(err){
+            if (err) {
                 console.log(err);
                 response.errors = err;
                 res.send(response);
-            }else{
+            } else {
                 response.plans = rows;
                 response.error = false;
                 response.success = true;
@@ -35,15 +34,15 @@ module.exports = {
             }
         });
     },
-    getOne: function(req, res){
+    getOne: function (req, res) {
         console.log('getting one of subscription ');
-        subscription.getOne(req.params.subscriptionId, function(err, rows){
+        subscription.getOne(req.params.subscriptionId, function (err, rows) {
             response = new responseClass;
-            if(err){
+            if (err) {
                 console.log(err);
                 response.errors = err;
                 res.send(response);
-            }else{
+            } else {
                 response.plan = rows[0];
                 response.error = false;
                 response.success = true;
@@ -51,5 +50,34 @@ module.exports = {
                 res.send(response);
             }
         });
+    },
+    addSubscription: function (req, res) {
+        console.log('adding subscription',req.body.plan_name);
+        subscription.getSubscriptionByName(req.body.plan_name, function (err, rows) {
+            response = new responseClass;
+            console.log(rows);
+            if (err) {
+                console.log(err);
+                response.errors = err;
+                res.send(response);
+            } else if (rows && rows.length) {
+                console.log('duplicate plan name required');
+                response.message = 'Duplicate record found';
+                res.send(response);
+            } else {
+                subscription.addSubscription(req.body, function (err, rows) {
+                    if (err) {
+                        console.log(err);
+                        response.errors = err;
+                        res.send(response);
+                    } else {
+                        response.error = false;
+                        response.success = true;
+                        response.message = 'Success';
+                        res.send(response);
+                    }
+                })
+            }
+        })
     }
 };

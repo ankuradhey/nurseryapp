@@ -41,6 +41,15 @@ module.exports = function(req, res, next){
                                         next();
                                     }
                                     break;
+        case '/adminapi/v1/subscription':    var $invalid = validate(req.body, schema.subscriptionSchema);
+                                    if($invalid){
+                                        response.setError(505, 'Validation error', $invalid);
+                                        res.json(response);
+                                    }else{
+                                        console.log('inside subscription schema validation');
+                                        next();
+                                    }
+                                    break;
        default: var err = new Error('validation path or schema not found');
                 response.setError(501,'Validation Schema not found');
                 res.json(response);
