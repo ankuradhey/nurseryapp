@@ -5,9 +5,10 @@
             <li ui-sref-active="active" access-level="public">
                 <a ui-sref="dashboard.home"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
-<!--            <li ui-sref-active="active" access-level="school">
-                <a ui-sref="dashboard.subscription"><i class="fa fa-dashboard fa-fw"></i> Subscriptions</a>
-            </li>-->
+            <li ui-sref-active="active" access-level="admin">
+                <!--<a ui-sref="dashboard.subscription"><i class="fa fa-dashboard fa-fw"></i> Subscriptions</a>-->
+                <a ui-sref="dashboard.subscriptions"><i class="fa fa-dashboard fa-fw"></i> Subscriptions Master</a>
+            </li>
             <li ng-class="{active:collapseVar=='advertisement'}" access-level="school">{{dropDown}}
                 <a href="javascript:;" ng-click="check('advertisement')">
                     <i class="fa fa-wrench fa-fw"></i> Advertisement<span class="fa arrow"></span>

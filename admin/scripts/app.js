@@ -241,7 +241,7 @@ var app = angular
                 medium: function(schoolService) {
                     return schoolService.getMediums();
                 },
-                facilities: function(schoolService){
+                facilities: function(schoolService) {
                     return schoolService.getFacilities();
                 }
             }
@@ -282,7 +282,7 @@ var app = angular
                 medium: function(schoolService) {
                     return schoolService.getMediums();
                 },
-                facilities: function(schoolService){
+                facilities: function(schoolService) {
                     return schoolService.getFacilities();
                 }
             }
@@ -1253,6 +1253,64 @@ var app = angular
                             'scripts/directives/formvalidation.js'
                         ]
                     })
+                }
+            }
+        })
+                .state('dashboard.subscriptions', {
+            url: '/subscriptions',
+            access: access.admin,
+            data: {collapseVar: 'school'},
+            controller: 'subscriptionController',
+            templateUrl: 'views/subscription/subscriptionlist.html',
+            resolve: {
+                auth: function($q, authService) {
+                    var userInfo = authService.getUserInfo();
+                    if (userInfo && authService.authorize(access.admin)) {
+                        return $q.when(userInfo);
+                    } else {
+                        return $q.reject({authenticated: false});
+                    }
+                },
+                loadMyFiles: function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'sbAdminApp',
+                        files: [
+                            'scripts/controllers/subscriptionController.js',
+                            'scripts/directives/formvalidation.js'
+                        ]
+                    })
+                },
+                subscription: function(schoolService) {
+                    return schoolService.getSubscriptions();
+                }
+            }
+        })
+                .state('dashboard.editsubscription', {
+            url: '/subscriptions',
+            access: access.admin,
+            data: {collapseVar: 'school'},
+            controller: 'subscriptionController',
+            templateUrl: 'views/subscription/subscriptionlist.html',
+            resolve: {
+                auth: function($q, authService) {
+                    var userInfo = authService.getUserInfo();
+                    if (userInfo && authService.authorize(access.admin)) {
+                        return $q.when(userInfo);
+                    } else {
+                        return $q.reject({authenticated: false});
+                    }
+                },
+                loadMyFiles: function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'sbAdminApp',
+                        files: [
+                            'scripts/controllers/subscriptionController.js',
+                            'scripts/directives/formvalidation.js'
+                        ]
+                    })
+                },
+                subscription: function(schoolService) {
+                    return schoolService.getSubscriptions();
                 }
             }
         })
