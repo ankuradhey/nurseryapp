@@ -1286,11 +1286,11 @@ var app = angular
             }
         })
                 .state('dashboard.editsubscription', {
-            url: '/subscriptions',
+            url: '/editsubscriptions/:subscriptionId',
             access: access.admin,
             data: {collapseVar: 'school'},
-            controller: 'subscriptionController',
-            templateUrl: 'views/subscription/subscriptionlist.html',
+            controller: 'addSubscriptionController',
+            templateUrl: 'views/subscription/addsubscriptionmaster.html',
             resolve: {
                 auth: function($q, authService) {
                     var userInfo = authService.getUserInfo();

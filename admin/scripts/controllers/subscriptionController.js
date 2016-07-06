@@ -115,12 +115,40 @@ angular.module('sbAdminApp')
 
             }])
         .controller('addSubscriptionController', ['$scope', '$http', '$state', '$stateParams', function ($scope, $http, $state, $stateParams) {
-
-            
-                $scope.saveSubscription = function () {
+                $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
+                $scope.subscriptionId = $stateParams.subscriptionId;
+                if ($scope.subscriptionId) {
                     $http({
-                        method: 'POST',
-                        url: baseUrl + '/adminapi/v1/subscription',
+                        method: 'GET',
+                        url: baseUrl + '/adminapi/v1/subscription/' + $scope.subscriptionId,
+                        headers: {'Content-Type': 'application/json'}
+                    }).success(function (data, status, headers, conf) {
+                        if (data.success) {
+                            $scope.plan = data.plan;
+                        }
+                        else {
+                            $scope.alert.message = data.message;
+                            $scope.alert.show = true;
+                            $scope.alert.type = 'danger';
+                        }
+                    }).error(function (data, status, headers, conf) {
+                        $scope.alert.show = true;
+                        $scope.alert.type = 'danger';
+                    })
+                }
+                
+                
+                $scope.saveSubscription = function () {
+                    
+                    if($scope.subscriptionId){
+                        var url = baseUrl + '/adminapi/v1/subscription/'+$scope.subscriptionId;
+                    }else{
+                        var url = baseUrl + '/adminapi/v1/subscription/';
+                    }
+                    
+                    $http({
+                        method: $scope.subscriptionId?'PUT':'POST',
+                        url: url,
                         headers: {'Content-Type': 'application/json'},
                         data: $scope.plan
                     }).success(function (data, status, headers, conf) {

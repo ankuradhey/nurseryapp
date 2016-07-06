@@ -53,7 +53,7 @@ module.exports = {
     },
     addSubscription: function (req, res) {
         console.log('adding subscription',req.body.plan_name);
-        subscription.getSubscriptionByName(req.body.plan_name, function (err, rows) {
+        subscription.getSubscriptionByName(req.body.plan_name, '', function (err, rows) {
             response = new responseClass;
             console.log(rows);
             if (err) {
@@ -66,6 +66,35 @@ module.exports = {
                 res.send(response);
             } else {
                 subscription.addSubscription(req.body, function (err, rows) {
+                    if (err) {
+                        console.log(err);
+                        response.errors = err;
+                        res.send(response);
+                    } else {
+                        response.error = false;
+                        response.success = true;
+                        response.message = 'Success';
+                        res.send(response);
+                    }
+                })
+            }
+        })
+    },
+    updateSubscription: function (req, res) {
+        console.log('updating subscription',req.body.plan_name);
+        subscription.getSubscriptionByName(req.body.plan_name, req.params.subscriptionId, function (err, rows) {
+            response = new responseClass;
+            console.log(rows);
+            if (err) {
+                console.log(err);
+                response.errors = err;
+                res.send(response);
+            } else if (rows && rows.length) {
+                console.log('duplicate plan name found');
+                response.message = 'Duplicate record found';
+                res.send(response);
+            } else {
+                subscription.updateSubscription(req.body, req.params.subscriptionId,function (err, rows) {
                     if (err) {
                         console.log(err);
                         response.errors = err;

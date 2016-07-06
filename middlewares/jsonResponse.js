@@ -1,7 +1,7 @@
 'use strict';
 
 
-var response = function(){
+var response = function(req, res){
     var error = true,
         success = false,
         code = 501,
@@ -32,6 +32,6 @@ var response = function(){
         setError: setError,
         setSuccess: setSuccess
     }
-}
+}();
 
 module.exports = response;

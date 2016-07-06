@@ -2,7 +2,11 @@ var schema = require('./schema.js'),
     validate = require('validate.js'),
     response = require('./jsonResponse.js');
 ;
+
 module.exports = function(req, res, next){
+
+console.log(req.path, req.path.match('/adminapi/v1/subscription'));
+
 
    switch(req.path){
        case '/register':    var $invalid = validate(req.body, schema.userSchema)
@@ -41,7 +45,7 @@ module.exports = function(req, res, next){
                                         next();
                                     }
                                     break;
-        case '/adminapi/v1/subscription':    var $invalid = validate(req.body, schema.subscriptionSchema);
+        case (req.path.match('/adminapi/v1/subscription') || {}).input:    var $invalid = validate(req.body, schema.subscriptionSchema);
                                     if($invalid){
                                         response.setError(505, 'Validation error', $invalid);
                                         res.json(response);
