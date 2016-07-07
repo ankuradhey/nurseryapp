@@ -663,4 +663,54 @@ angular.module('sbAdminApp')
                     })
                 }
             }])
+        .controller('SchoolRegisterCtrl', ['$rootScope', '$scope', '$http', '$stateParams', '$state', '$timeout', 
+            function ($rootScope, $scope, $http, $stateParams, $state, $timeout) {
+                $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
+                $scope.school = {name: '', email: '', phone: '', password: 123456};
+                //check if its an edit case
+
+                
+                $scope.saveSchool = function () {
+                    $scope.$broadcast('show-errors-check-validity');
+                    if ($scope.schoolForm.$invalid) {
+                        return;
+                    }
+                    var data = {
+                        school_name: $scope.school.name,
+                        school_email: $scope.school.email,
+                        school_phone: $scope.school.phone,
+                    }
+
+                    if ($scope.school.password)
+                        data.school_password = $scope.school.password;
+
+
+                    $http({
+                        method: 'POST',
+                        url: baseUrl + '/adminapi/v1/school',
+                        headers: {'Content-Type': 'application/json'},
+                        data: data
+                    }).success(function (data, status, headers, conf) {
+                        if (data.success) {
+                            $scope.alert.message = data.message;
+                            $scope.alert.show = true;
+                            $scope.alert.type = 'success';
+                            $state.go('dashboard.schools');
+                            $scope.$broadcast('show-errors-reset');
+                        } else {
+                            $scope.alert.message = data.message;
+                            $scope.alert.show = true;
+                            $scope.alert.type = 'danger';
+                            $timeout(function () {
+                                angular.element('#alertMessage').focus();
+                            });
+//                    $scope.$broadcast('show-error-alert');
+                        }
+                    }).error(function (data, status, headers, conf) {
+                        $scope.alert.show = true;
+                        $scope.alert.type = 'danger';
+                    })
+                }
+
+            }])
         ;

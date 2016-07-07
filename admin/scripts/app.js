@@ -886,7 +886,7 @@ var app = angular
         })
                 .state('register', {
             url: '/register',
-            controller: 'SchoolAddCtrl',
+            controller: 'SchoolRegisterCtrl',
             access: access.anon,
             templateUrl: 'views/pages/register.html',
             resolve: {
@@ -908,15 +908,6 @@ var app = angular
                         ]
                     })
                 },
-                boards: function(schoolService) {
-                    return  schoolService.getBoards()
-                },
-                countries: function(schoolService) {
-                    return schoolService.getCountries();
-                },
-                schoolType: function(schoolService) {
-                    return schoolService.getSchoolTypes();
-                }
             }
         })
                 .state('dashboard.subscription', {

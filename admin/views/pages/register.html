@@ -9,135 +9,27 @@
                 <div class="panel-body">
                     <form role="form" novalidate name="schoolForm" enctype="multipart/form-data">
                         <fieldset>
-                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_name.$invalid && schoolForm.school_name.$dirty}">
+                            <div class="form-group" form-validate show-errors ng-class="{'has-error':schoolForm.school_name.$invalid && schoolForm.school_name.$dirty}">
                                 <label>School Name</label>
                                 <input class="form-control" name="school_name" ng-model="school.name" required>
                                 <p class="help-block" ng-if="schoolForm.school_name.$error.required && schoolForm.school_name.$dirty">School name is required</p>
                             </div>
-                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_affiliation_code.$invalid && schoolForm.school_affiliation_code.$dirty}">
-                                <label>Affilication Code</label>
-                                <input type="text" class="form-control" name="school_affiliation_code" ng-model='school.affiliation' required>
-                                <p class="help-block" ng-if="schoolForm.school_affiliation_code.$error.required && schoolForm.school_affiliation_code.$dirty">Affiliation code is required</p>
-                            </div>
-                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_affiliation_code.$invalid && schoolForm.school_affiliation_code.$dirty}">
+                            <div class="form-group" form-validate show-errors ng-class="{'has-error':schoolForm.school_affiliation_code.$invalid && schoolForm.school_affiliation_code.$dirty}">
                                 <label>Phone</label>
                                 <input type="tel" class="form-control" name="school_phone" ng-model='school.phone' required>
                                 <p class="help-block" ng-if="schoolForm.school_phone.$error.required && schoolForm.school_phone.$dirty">Phone number is required</p>
                             </div>
-                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_address.$invalid && schoolForm.school_address.$dirty}">
-                                <label>Address</label>
-                                <textarea class="form-control" name="school_address" ng-model="school.address" required></textarea>
-                                <p class="help-block" ng-if="schoolForm.school_address.$error.required && schoolForm.school_address.$dirty">Address is required</p>
-                            </div>
-                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_email.$invalid && schoolForm.school_email.$dirty}">
-                                <label>Email/Username</label>
+                            <div class="form-group" form-validate show-errors ng-class="{'has-error':schoolForm.school_email.$invalid && schoolForm.school_email.$dirty}">
+                                <label>Email/Username*</label>
                                 <input type="email" class="form-control" name="school_email" ng-model='school.email' required>
                                 <p class="help-block" ng-if="schoolForm.school_email.$error.required && schoolForm.school_email.$dirty">School Email is required</p>
                                 <p class="help-block" ng-if="schoolForm.school_email.$error.email && schoolForm.school_email.$dirty">School Email is not valid</p>
                             </div>
-                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_password.$invalid && schoolForm.school_password.$dirty}">
+                            <div class="form-group" form-validate show-errors ng-class="{'has-error':schoolForm.school_password.$invalid && schoolForm.school_password.$dirty}">
                                 <label>Password</label>
                                 <input type="password" class="form-control" name="school_password" ng-model='school.password'>
                                 <p class="help-block" ng-if="schoolForm.school_password.$error.required && schoolForm.school_password.$dirty">School Password is required</p>
                                 <p class="help-block">If you do not enter password, old password is used in edit case and for new user default password is chosen as - 123456</p>
-                            </div>
-                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_website.$invalid && schoolForm.school_website.$dirty}">
-                                <label>Website</label>
-                                <input type="url" class="form-control" name="school_website" ng-model='school.website'>
-                                <p class="help-block" ng-if="schoolForm.school_website.$invalid && schoolForm.school_website.$dirty">School Url not valid</p>
-                            </div>
-                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_desc.$invalid && schoolForm.school_desc.$dirty}">
-                                <label>School Description</label>
-                                <textarea rows="10" class="form-control" name="school_desc" ng-model="school.description"></textarea>
-                            </div>
-                            <div class="form-group" ng-class="{'has-error':school.board.$invalid}">
-                                <label>Choose Board</label>
-                                <select name="school_board" class="form-control" ng-model='school.board' required
-                                        ng-options="board as board.board_name for board in boards track by board.board_id"
-                                        >
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Choose Medium</label>
-                                <select name="school_medium" class="form-control" ng-model="school.medium">
-                                    <option value="">-- Select --</option>
-                                    <option value="english">English</option>
-                                    <option value="hindi">Hindi</option>
-                                </select>
-                            </div>
-                            <div class="form-group" show-errors ng-class="{'has-error':schoolForm.school_type.$invalid && schoolForm.school_type.$dirty}">
-                                <label>School Type</label>
-                                <select name="school_type" class="form-control" ng-model="school.type"
-                                        ng-options="typeVal as typeVal.school_type_name for typeVal in types track by typeVal.school_type_id"
-                                        required>
-                                    <option value="">-- Select --</option>
-                                </select>
-                                <p class="help-block" ng-if="schoolForm.school_type.$invalid && schoolForm.school_type.$dirty">School Type is required</p>
-                            </div>
-                            <div class="form-group">
-                                <label>Established Year</label>
-                                <select name="school_establish_year" class="form-control" ng-model = "school.year" >
-                                    <option ng-repeat="year in getYears() track by $index" ng-value="year" >{{year}}</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Choose Country</label>
-                                <select name="school_country" class="form-control" ng-model = "location.country" 
-                                        ng-options='country as country.country_name for country in countries track by country.country_id' 
-                                        >
-                                    <option value="" selected="selected">-- Select --</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Choose State</label>
-                                <select name="school_state" class="form-control" ng-model="location.state" 
-                                        ng-options='state as state.state_name for state in states track by state.state_id' ng-change="getCities()">
-                                    <option value="" selected="selected">-- Select --</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Choose City</label>
-                                <select name="school_city" class="form-control" ng-model="location.city" ng-options='city as city.city_name for city in cities track by city.city_id' ng-change="getAreas()">
-                                    <option value="" selected="selected">-- Select --</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Choose Area</label>
-                                <select name="school_area" class="form-control" ng-model="location.area" ng-options='area as area.area_name for area in areas track by area.area_id' ng-change="getZones()">
-                                    <option value="" selected="selected">-- Select --</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Choose Zone</label>
-                                <select name="school_zone" ng-model="location.zone" ng-options='zone as zone.zone_name for zone in zones track by zone.zone_id' class="form-control">
-                                    <option value="" selected="selected">-- Select --</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>School Logo</label>
-                                <input type="file" ngf-select
-                                       ng-model="school.logo"
-                                       name="school_logo"
-                                       accept='image/*'
-                                       ng-change='uploadLogo(school.logo)'
-                                       />
-                                <p>{{progress}}</p>
-                                <p class='help-block' ng-show="schoolForm.school_logo.$error.maxSize">
-                                    File too large {{school.logo.size / 1000000|number:1}}MB: max 20M
-                                </p>
-                            </div>
-                            <div class="form-group">
-                                <label>School Image</label>
-                                <input type="file" ngf-select
-                                       ng-model="school.img"
-                                       name="school_img"
-                                       accept='image/*'
-                                       ng-change='uploadImage(school.img)'
-                                       />
-                                <p>{{progress}}</p>
-                                <p class='help-block' ng-show="schoolForm.school_img.$error.maxSize">
-                                    File too large {{school.logo.size / 1000000|number:1}}MB: max 20M
-                                </p>
                             </div>
                             <button type="submit" class="btn btn-default" ng-click="saveSchool()" ng-disabled="schoolForm.$invalid">Submit</button>
                         </fieldset>
