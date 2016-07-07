@@ -3,7 +3,7 @@ var db = require('../db.js');
 module.exports = {
     getAll: function(status, done){
         status = typeof status != 'undefined'?status:"1";
-        db.get().query('select * from subscription_plans where plan_status = ? ',status, function(err, rows){
+        db.get().query('select * from subscription_plans where plan_status != "2" ',status, function(err, rows){
             if(err)
                 return done(err);
             else
@@ -38,10 +38,10 @@ module.exports = {
         });
     },
     updateSubscription: function(subscriptionParams, subscriptionId, done){
-        
+        console.log(subscriptionParams, subscriptionId)
         db.get().query('update subscription_plans set ? where plan_id = ?  ',[subscriptionParams, parseInt(subscriptionId)], function(err, rows) {
             
-            console.log('inside insert query');
+            console.log('inside update query', rows);
             
             if (err)
                 return done(err)

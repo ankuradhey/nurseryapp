@@ -112,6 +112,27 @@ angular.module('sbAdminApp')
                     var dateTo = new Date(new Date(dateFrom).setMonth(dateFrom.getMonth() + $scope.plan.plan_duration + 1));
                     $scope.dateTo = dateTo.getDate() + '-' + dateTo.getMonth() + '-' + dateTo.getFullYear();
                 }
+                
+                $scope.updateStatus = function(status, planId){
+                    $http({
+                        method: 'PATCH',
+                        url: baseUrl + '/adminapi/v1/subscription/' + planId,
+                        data:{plan_status:status},
+                        headers: {'Content-Type': 'application/json'}
+                    }).success(function (data, status, headers, conf) {
+                        if (data.success) {
+                            $state.reload();
+                        }
+                        else {
+                            $scope.alert.message = data.message;
+                            $scope.alert.show = true;
+                            $scope.alert.type = 'danger';
+                        }
+                    }).error(function (data, status, headers, conf) {
+                        $scope.alert.show = true;
+                        $scope.alert.type = 'danger';
+                    })
+                }
 
             }])
         .controller('addSubscriptionController', ['$scope', '$http', '$state', '$stateParams', function ($scope, $http, $state, $stateParams) {
