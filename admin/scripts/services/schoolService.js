@@ -131,6 +131,16 @@ angular.module('sbAdminApp')
         },
         getSubscriptionTypes: function(){
             return ['membership','listing','advertisement'];
+        },
+        getAdvertisementTypes: function(){
+            var url = baseUrl+'/adminapi/v1/advertisements';
+            var promise = $http({
+               method:'GET',
+               url:url
+            }).success(function(data,status, headers, conf){
+                return data;
+            });
+            return promise;
         }
     }
 }])

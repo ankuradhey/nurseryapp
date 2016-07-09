@@ -50,11 +50,20 @@ router.post('/api/v1/search',searchController.getSchools);
  * Routes that can be accessed by admin
  */
 
+console.log('inside routing');
+router.get('/adminapi/v1/school/advertisements/:schoolSubscriptionId', subscriptionController.getSchoolAdvertisement);
+router.get('/adminapi/v1/school/advertisements', subscriptionController.getSchoolAdvertisements);
+router.post('/adminapi/v1/school/advertisement', subscriptionController.addSchoolAdvertisement);
+router.put('/adminapi/v1/school/advertisement/:schoolSubscriptionId', subscriptionController.updateSchoolAdvertisement);
+router.get('/adminapi/v1/advertisements', subscriptionController.getAdvertisements);
+
 router.get('/adminapi/v1/schools', schoolController.getAll);
 router.get('/adminapi/v1/school/:schoolId', schoolController.getOne);
 router.post('/adminapi/v1/school', schoolController.addSchool);
 router.put('/adminapi/v1/school/:schoolId', schoolController.updateSchool);
 router.delete('/adminapi/v1/school/:schoolId', schoolController.deleteSchool);
+
+
 router.get('/adminapi/v1/dashboard', dashboardController.getCount);
 router.get('/adminapi/v1/facilities',facilityController.getFacilities);
 router.post('/adminapi/v1/facilities',facilityController.addFacility);

@@ -1337,6 +1337,99 @@ var app = angular
                 }
             }
         })
+                .state('dashboard.schooladvertisements', {
+            url: '/schooladvertisements',
+            access: access.admin,
+            data: {collapseVar: 'school'},
+            controller: 'schoolAdvertisementController',
+            templateUrl: 'views/advertisements/schooladvertisementlist.html',
+            resolve: {
+                auth: function($q, authService) {
+                    var userInfo = authService.getUserInfo();
+                    if (userInfo && authService.authorize(access.admin)) {
+                        return $q.when(userInfo);
+                    } else {
+                        return $q.reject({authenticated: false});
+                    }
+                },
+                loadMyFiles: function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'sbAdminApp',
+                        files: [
+                            'scripts/controllers/advertisementController.js',
+                            'scripts/directives/formvalidation.js'
+                        ]
+                    })
+                },
+                subscriptionTypes: function(schoolService){
+                    return schoolService.getSubscriptionTypes();
+                }
+            }
+        })
+                .state('dashboard.addschooladvertisement', {
+            url: '/addschooladvertisement',
+            access: access.admin,
+            data: {collapseVar: 'school'},
+            controller: 'addSchoolAdvertisementController',
+            templateUrl: 'views/advertisements/addschooladvertisement.html',
+            resolve: {
+                auth: function($q, authService) {
+                    var userInfo = authService.getUserInfo();
+                    if (userInfo && authService.authorize(access.admin)) {
+                        return $q.when(userInfo);
+                    } else {
+                        return $q.reject({authenticated: false});
+                    }
+                },
+                loadMyFiles: function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'sbAdminApp',
+                        files: [
+                            'scripts/controllers/advertisementController.js',
+                            'scripts/directives/formvalidation.js'
+                        ]
+                    })
+                },
+                schools: function(schoolService){
+                    return schoolService.getSchools();
+                },
+                advertisements:function(schoolService){
+                    return schoolService.getAdvertisementTypes();
+                }
+            }
+        })
+                .state('dashboard.updateschooladvertisement', {
+            url: '/updateschooladvertisement/:schoolSubscriptionId',
+            access: access.admin,
+            data: {collapseVar: 'school'},
+            controller: 'addSchoolAdvertisementController',
+            templateUrl: 'views/advertisements/addschooladvertisement.html',
+            resolve: {
+                auth: function($q, authService) {
+                    var userInfo = authService.getUserInfo();
+                    if (userInfo && authService.authorize(access.admin)) {
+                        return $q.when(userInfo);
+                    } else {
+                        return $q.reject({authenticated: false});
+                    }
+                },
+                loadMyFiles: function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'sbAdminApp',
+                        files: [
+                            'scripts/controllers/advertisementController.js',
+                            'scripts/directives/formvalidation.js'
+                        ]
+                    })
+                },
+                schools: function(schoolService){
+                    return schoolService.getSchools();
+                },
+                advertisements:function(schoolService){
+                    return schoolService.getAdvertisementTypes();
+                }
+            }
+        })
                 ;
 
         //when api denies requested resources then redirect to login - reason may be unauthorized access or session timeout
