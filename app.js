@@ -28,11 +28,27 @@ app.use(bodyParser.urlencoded({
             console.log('filename uploaded - ',file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1]);
             cb(null, updatedFileName);
         }
+    }),
+    advertiseStorage = multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, './uploads/advertisements/')
+        },
+        filename: function (req, file, cb) {
+            var datetimestamp = Date.now();
+            var updatedFileName = file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1];
+            req.updatedFileName = updatedFileName;
+            console.log('filename uploaded - ',file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1]);
+            cb(null, updatedFileName);
+        }
     });
     
 
 var upload = multer({ //multer settings
                     storage: storage
+                }).single('file');
+
+var advertiseUpload = multer({ //multer settings
+                    storage: advertiseStorage
                 }).single('file');
 
 
@@ -58,6 +74,16 @@ app.all('/*', function(req, res, next) {
  */
 app.post('/upload',function(req, res){
     upload(req, res, function(err){
+        if(err){
+            res.json({error:true,success:false,message:'Some error occurred',errors:err,code:500});
+            return;
+        }
+            res.json({error:false,success:true,message:'Success',filename:req.updatedFileName})
+    })
+})
+
+app.post('/upload/advertisements',function(req, res){
+    advertiseUpload(req, res, function(err){
         if(err){
             res.json({error:true,success:false,message:'Some error occurred',errors:err,code:500});
             return;
