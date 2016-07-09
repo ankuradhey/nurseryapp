@@ -28,7 +28,7 @@ module.exports = {
     },
     addSubscription: function(subscriptionParams, done){
         
-        db.get().query('insert into subscription_plans set plan_name = ?, plan_amount = ?, plan_duration = ?, plan_status = "1"  ',[subscriptionParams.plan_name, subscriptionParams.plan_amount, subscriptionParams.plan_duration], function(err, rows) {
+        db.get().query('insert into subscription_plans set plan_name = ?, plan_amount = ?, plan_duration = ?, plan_type = ?, plan_status = "1"  ',[subscriptionParams.plan_name, subscriptionParams.plan_amount, subscriptionParams.plan_duration, subscriptionParams.plan_type], function(err, rows) {
             
             console.log('inside insert query');
             

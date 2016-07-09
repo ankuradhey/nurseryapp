@@ -128,6 +128,9 @@ angular.module('sbAdminApp')
                 return data;
             });
             return promise;
+        },
+        getSubscriptionTypes: function(){
+            return ['membership','listing','advertisement'];
         }
     }
 }])

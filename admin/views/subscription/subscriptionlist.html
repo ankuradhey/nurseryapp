@@ -21,6 +21,7 @@
                             <tr>
                                 <th>S.No</th>
                                 <th>Subscription Name</th>
+                                <th>Subscription Type</th>
                                 <th>Validity</th>
                                 <th>Price</th>
                                 <th>Action</th>
@@ -30,6 +31,7 @@
                             <tr class="odd gradeX"  ng-class-even="'even gradeC'" ng-class-odd="'odd gradeX'" ng-repeat="subscription in subscriptions">
                                 <td>{{$index + 1}}</td>
                                 <td>{{subscription.plan_name}}</td>
+                                <td>{{subscription.plan_type}}</td>
                                 <td>{{subscription.plan_duration}}</td>
                                 <td>{{subscription.plan_amount}}</td>
                                 <td class="center">

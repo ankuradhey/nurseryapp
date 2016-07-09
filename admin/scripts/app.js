@@ -1302,6 +1302,9 @@ var app = angular
                 },
                 subscription: function(schoolService) {
                     return schoolService.getSubscriptions();
+                },
+                subscriptionTypes: function(schoolService){
+                    return schoolService.getSubscriptionTypes();
                 }
             }
         })
@@ -1328,6 +1331,9 @@ var app = angular
                             'scripts/directives/formvalidation.js'
                         ]
                     })
+                },
+                subscriptionTypes: function(schoolService){
+                    return schoolService.getSubscriptionTypes();
                 }
             }
         })

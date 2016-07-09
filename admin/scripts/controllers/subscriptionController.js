@@ -135,9 +135,11 @@ angular.module('sbAdminApp')
                 }
 
             }])
-        .controller('addSubscriptionController', ['$scope', '$http', '$state', '$stateParams', function ($scope, $http, $state, $stateParams) {
+        .controller('addSubscriptionController', ['$scope', '$http', '$state', '$stateParams', 'subscriptionTypes', function ($scope, $http, $state, $stateParams, subscriptionTypes) {
                 $scope.alert = {type: 'danger', show: false, message: 'Oops! Some error occurred.'};
                 $scope.subscriptionId = $stateParams.subscriptionId;
+                $scope.subscriptionTypes = subscriptionTypes;
+                
                 if ($scope.subscriptionId) {
                     $http({
                         method: 'GET',

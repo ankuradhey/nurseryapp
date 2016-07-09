@@ -27,6 +27,16 @@
                                        name="plan_amount" ng-model="plan.plan_amount">
                                 <p class="help-block" ng-if="subscriptionForm.plan_amount.$invalid && subscriptionForm.plan_amount.$dirty">Subscription amount is required</p>
                             </div>
+                            <div class="form-group" show-errors ng-class="{'has-error':subscriptionForm.plan_type.$invalid && subscriptionForm.plan_type.$dirty}">
+                                <label>Subscription Type</label>
+                                <select name="plan_type" class="form-control" ng-model="plan.plan_type"
+                                        ng-options="type as type for type in subscriptionTypes"
+                                        required
+                                        >
+                                    <option>--SELECT--</option>
+                                </select>
+                                <p class="help-block" ng-if="subscriptionForm.plan_type.$invalid && subscriptionForm.plan_type.$dirty">Subscription type is required</p>
+                            </div>
                             <div class="form-group" show-errors ng-class="{'has-error':subscriptionForm.plan_duration.$invalid && subscriptionForm.plan_duration.$dirty}">
                                 <label>Duration (in months)</label>
                                 <select name="plan_duration" class="form-control" ng-model="plan.plan_duration"
