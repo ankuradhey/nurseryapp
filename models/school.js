@@ -16,8 +16,8 @@ var school = {
 var schools = {
     getAll: function(done) {
         var query = 'SELECT s.school_id, s.school_name, board.board_name, medium.medium_name, s.school_affiliation_code, s.school_address, s.school_img, s.school_desc as school_description, s.school_status FROM school s \n\
-                     join school_medium medium on medium.medium_id = s.school_medium and medium.medium_status != "2"\n\
-                    join board_master board on board.board_id = s.school_board and board.board_status != "2" \n\
+                     left join school_medium medium on medium.medium_id = s.school_medium and medium.medium_status != "2"\n\
+                     left join board_master board on board.board_id = s.school_board and board.board_status != "2" \n\
                       where school_status != "2"';
         db.get().query(query, function(err, rows) {
             console.log(err);
