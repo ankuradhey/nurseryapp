@@ -9,7 +9,7 @@
                 <!--<a ui-sref="dashboard.subscription"><i class="fa fa-dashboard fa-fw"></i> Subscriptions</a>-->
                 <a ui-sref="dashboard.subscriptions"><i class="fa fa-dashboard fa-fw"></i> Subscriptions Master</a>
             </li>
-            <li ng-class="{active:collapseVar=='advertisement'}" access-level="school">{{dropDown}}
+            <li ng-class="{active:collapseVar=='advertisement'}" access-level="admin">{{dropDown}}
                 <a href="javascript:;" ng-click="check('advertisement')">
                     <i class="fa fa-wrench fa-fw"></i> Advertisement<span class="fa arrow"></span>
                 </a>
@@ -21,6 +21,11 @@
                         <a ui-sref="dashboard.addschooladvertisement">Add School Advertisement</a>
                     </li>
                 </ul>
+            </li>
+            <li ui-sref-active="active" access-level="school">
+                <a ui-sref="dashboard.paysubscription">
+                    <i class="fa fa-wrench fa-fw"></i>Subscribe<span class="fa arrow"></span>
+                </a>
             </li>
             <li ng-class="{active:collapseVar=='school'}" access-level="admin">{{dropDown}}
                 <a href="" ng-click="check('school')">

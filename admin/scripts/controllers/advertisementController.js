@@ -60,7 +60,7 @@ angular.module('sbAdminApp')
                 $scope.advertisementTypes = advertisements.data.advertisements;
                 $scope.schoolSubscriptionId = $stateParams.schoolSubscriptionId;
                 $scope.plan = {};
-                $scope.subscriptions = {};
+                $scope.subscriptions = [];
                 $scope.getSubscriptions = function () {
 
                     return $http.get(baseUrl + '/adminapi/v1/school/advertisements', {'Content-Type': 'application/json'});
@@ -79,16 +79,15 @@ angular.module('sbAdminApp')
                                     
                                     $scope.subscriptions = _data.data.subscriptions;
                                     $scope.schools = schools.data.schools;
-                                    $scope.alert.message = data.message;
-                                    $scope.alert.show = true;
-                                    $scope.alert.type = 'success';
                                     $scope.plan = data.subscription;
                                     $scope.plan.school = {school_name: data.subscription.school_name, school_id: data.subscription.school_id};
                                     $scope.plan.plan_type = {plan_id: data.subscription.plan_id, school_id: data.subscription.plan_name, plan_duration: data.subscription.plan_duration};
-                                    if (data.subscription.subscription_start_date && Object.prototype.toString.call(new Date(data.subscription.subscription_start_date)) == '[object Date]') {
+                                    if (data.subscription.subscription_start_date && Object.prototype.toString.call(new Date(data.subscription.subscription_start_date)) == '[object Date]' && !isNaN((new Date(data.subscription.subscription_start_date)).getTime())) {
                                         $scope.plan.subscription_start_date = new Date(data.subscription.subscription_start_date);
                                         $scope.plan.subscription_end_date = new Date(data.subscription.subscription_end_date);
                                     } else {
+                                        $scope.plan.subscription_end_date = $scope.plan.subscription_start_date = null;
+                                        console.log('subscription start date - ', $scope.plan.subscription_start_date);
                                         console.warn("either date not valid or empty");
                                     }
                                 } else {
@@ -101,7 +100,6 @@ angular.module('sbAdminApp')
                                 $scope.alert.show = true;
                                 $scope.alert.type = 'danger';
                             });
-
                             console.log($scope.plan.subscription_end_date);
                         } else {
                             $scope.alert.message = data.message;
@@ -131,8 +129,10 @@ angular.module('sbAdminApp')
                         subscription_school_id: $scope.plan.school.school_id,
                         subscription_status: "1",
                         subscription_start_date: $filter('date')($scope.plan.subscription_start_date, 'yyyy-MM-dd'),
-                        subscription_end_date: $filter('date')($scope.plan.subscription_end_date, 'yyyy-MM-dd')
+                        subscription_end_date: $filter('date')($scope.plan.subscription_end_date, 'yyyy-MM-dd'),
+                        subscription_link: $scope.plan.subscription_link
                     };
+                    console.log(data);
                     if ($scope.schoolSubscriptionId) {
                         var url = baseUrl + '/adminapi/v1/school/advertisement/' + $scope.schoolSubscriptionId;
                         var method = 'PUT';
@@ -211,12 +211,10 @@ angular.module('sbAdminApp')
                 }
 
                 function setSubscriptionEndDate(newValue, oldValue) {
-                    if (newValue != oldValue && oldValue) {
-                        if ($scope.plan.plan_type && Object.prototype.toString.call($scope.plan.subscription_start_date) == "[object Date]") {
+                    if (newValue != oldValue) {
+                        if ($scope.plan.plan_type && Object.prototype.toString.call($scope.plan.subscription_start_date) == "[object Date]" && !isNaN((new Date($scope.plan.subscription_start_date)).getTime())) {
                             $scope.plan.subscription_end_date = new Date($scope.plan.subscription_start_date.getTime());
-                            console.log($scope.plan.subscription_end_date)
                             $scope.plan.subscription_end_date.setMonth($scope.plan.subscription_end_date.getMonth() + $scope.plan.plan_type.plan_duration);
-                            console.log($scope.plan.subscription_end_date, $scope.plan.subscription_end_date.getMonth(), $scope.plan.plan_type);
                         }
                     }
                 }
@@ -226,7 +224,6 @@ angular.module('sbAdminApp')
                 $scope.filterSubscribedSchools = function (item1) {
                     var retFlag = true;
                     $scope.subscriptions.forEach(function (value, item) {
-                        console.log($scope.schoolSubscriptionId, item1.school_id, value.school_id, value.school_id == item1.school_id && item1.school_id != $scope.plan.school.school_id)
                         if (value.school_id == item1.school_id && item1.school_id != $scope.plan.school.school_id) {
                             retFlag = false;
                         }

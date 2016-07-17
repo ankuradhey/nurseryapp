@@ -56,7 +56,6 @@ module.exports = {
         console.log('adding subscription', req.body.plan_name);
         subscription.getSubscriptionByName(req.body.plan_name, '', function(err, rows) {
             response = new responseClass;
-            console.log(rows);
             if (err) {
                 console.log(err);
                 response.errors = err;
@@ -85,7 +84,6 @@ module.exports = {
         console.log('updating subscription', req.body.plan_name);
         subscription.getSubscriptionByName(req.body.plan_name, req.params.subscriptionId, function(err, rows) {
             response = new responseClass;
-            console.log(rows);
             if (err) {
                 console.log(err);
                 response.errors = err;

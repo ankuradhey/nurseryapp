@@ -13,7 +13,8 @@ var app = angular
     'ui.router',
     'ui.bootstrap',
     'angular-loading-bar',
-    'ngFileUpload'
+    'ngFileUpload',
+    'angular-toArrayFilter'
 ])
         .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, schoolService, authService) {
 
@@ -1427,6 +1428,34 @@ var app = angular
                 },
                 advertisements:function(schoolService){
                     return schoolService.getAdvertisementTypes();
+                }
+            }
+        })
+        .state('dashboard.paysubscription', {
+            url: '/paysubscription',
+            data: {collapseVar: 'school'},
+            controller: 'subscriptionController',
+            templateUrl: 'views/subscription/addsubscription.html',
+            resolve: {
+                auth: function($q, authService) {
+                    var userInfo = authService.getUserInfo();
+                    if (userInfo && authService.authorize(access.school)) {
+                        return $q.when(userInfo);
+                    } else {
+                        return $q.reject({authenticated: false});
+                    }
+                },
+                loadMyFiles: function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'sbAdminApp',
+                        files: [
+                            'scripts/controllers/subscriptionController.js',
+                            'scripts/directives/formvalidation.js'
+                        ]
+                    })
+                },
+                subscription: function(schoolService) {
+                    return schoolService.getSubscriptions();
                 }
             }
         })

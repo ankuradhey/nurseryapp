@@ -24,6 +24,11 @@
                                 </select>
                                 <p class="help-block" ng-if="bannerForm.subscription_school_id.$invalid && bannerForm.subscription_school_id.$dirty">School is required</p>
                             </div>
+                            <div class="form-group" form-validate show-errors ng-class="{'has-error':bannerForm.subscription_link.$invalid && bannerForm.subscription_link.$dirty}">
+                                <label>Url*</label>
+                                <input type="url" class="form-control" name="subscription_link"  ng-model="plan.subscription_link" ng-required="true" />
+                                <p class="help-block" ng-if="bannerForm.subscription_link.$invalid && bannerForm.subscription_link.$dirty">Link is required</p>
+                            </div>
                             <div class="form-group" show-errors ng-class="{'has-error':bannerForm.subscription_start_date.$invalid && bannerForm.subscription_start_date.$dirty}">
                                 <label>Validation from</label>
                                 <p class="input-group">
@@ -64,7 +69,7 @@
                                     File too large {{school.logo.size / 1000000|number:1}}MB: max 20M
                                 </p>
                             </div>
-                            <button type="submit" class="btn btn-default" ng-click="saveSchoolAdvertisement()" >Submit</button>
+                            <button type="submit" class="btn btn-default" ng-disabled="bannerForm.$invalid" ng-click="saveSchoolAdvertisement()" >Submit</button>
                         </form>
                     </div>
                 </div>

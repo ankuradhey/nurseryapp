@@ -46,7 +46,7 @@ module.exports = {
         });
     },
     updateSchoolAdvertisement: function(schoolSubscriptionId, subscriptionParams, done) {
-        db.get().query('update subscription_plans set ? where subscription_id = ? ', [subscriptionParams, schoolSubscriptionId], function(err, rows) {
+        db.get().query('update school_subscription set ? where subscription_id = ? ', [subscriptionParams, schoolSubscriptionId], function(err, rows) {
             console.log('inside insert school advertisement query');
             if (err)
                 return done(err)
@@ -69,8 +69,6 @@ module.exports = {
                         join subscription_plans plan on plan.plan_id = subscription.subscription_plan_id and plan.plan_status = "1" and plan.plan_type="advertisement" \n\
                         join school  on school.school_id = subscription.subscription_school_id and school.school_status = "1"  \n\
                         where subscription_status = "1" ', function(err, rows) {
-            
-            console.log(rows);
             
             if (err)
                 return done(err);
