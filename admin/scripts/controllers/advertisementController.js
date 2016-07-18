@@ -1,7 +1,7 @@
 'use strict';
 /**
  * @ngdoc function
- * @name sbAdminApp.controller:SchoolCtrl
+ * @name sbAdminApp.controller:advertisementController
  * @author AnkitS
  * @description
  * # SchoolCtrl

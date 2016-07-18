@@ -1277,6 +1277,90 @@ var app = angular
                 }
             }
         })
+                .state('dashboard.facilities', {
+            url: '/facilities',
+            access: access.admin,
+            data: {collapseVar: 'school'},
+            controller: 'facilitiesController',
+            templateUrl: 'views/facilities/list.html',
+            resolve: {
+                auth: function($q, authService) {
+                    var userInfo = authService.getUserInfo();
+                    if (userInfo && authService.authorize(access.admin)) {
+                        return $q.when(userInfo);
+                    } else {
+                        return $q.reject({authenticated: false});
+                    }
+                },
+                loadMyFiles: function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'sbAdminApp',
+                        files: [
+                            'scripts/controllers/facilitiesController.js'
+                        ]
+                    })
+                },
+                facilities: function(schoolService) {
+                    return schoolService.getFacilities();
+                }
+            }
+        })
+                .state('dashboard.addfacility', {
+            url: '/facilities',
+            access: access.admin,
+            data: {collapseVar: 'school'},
+            controller: 'facilitiesController',
+            templateUrl: 'views/facilities/addfacility.html',
+            resolve: {
+                auth: function($q, authService) {
+                    var userInfo = authService.getUserInfo();
+                    if (userInfo && authService.authorize(access.admin)) {
+                        return $q.when(userInfo);
+                    } else {
+                        return $q.reject({authenticated: false});
+                    }
+                },
+                loadMyFiles: function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'sbAdminApp',
+                        files: [
+                            'scripts/controllers/facilitiesController.js'
+                        ]
+                    })
+                },
+                facilities: function(schoolService) {
+                    return schoolService.getFacilities();
+                }
+            }
+        })
+                .state('dashboard.editfacility', {
+            url: '/facility/:facilityId',
+            access: access.admin,
+            data: {collapseVar: 'school'},
+            controller: 'facilitiesController',
+            templateUrl: 'views/facilities/addfacility.html',
+            resolve: {
+                auth: function($q, authService) {
+                    var userInfo = authService.getUserInfo();
+                    if (userInfo && authService.authorize(access.admin)) {
+                        return $q.when(userInfo);
+                    } else {
+                        return $q.reject({authenticated: false});
+                    }
+                },
+                loadMyFiles: function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'sbAdminApp',
+                        files: [
+                            'scripts/controllers/facilitiesController.js'
+                        ]
+                    })
+                },
+                facilities: function(schoolService) {
+                    return schoolService.getFacilities();
+                }
+            }
+        })
                 .state('dashboard.editsubscription', {
             url: '/editsubscriptions/:subscriptionId',
             access: access.admin,
