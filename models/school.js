@@ -63,21 +63,23 @@ var schools = {
     create: function(schoolParams, done) {
 
         if (schoolParams.hasOwnProperty("school_password")) {
-            schoolParams.school_password = md5(schoolParams.school_password);
+            var password = schoolParams.school_password;
+            delete schoolParams.school_password;
+//             = md5(schoolParams.school_password);
         }
-
-        var query = 'insert into school set'
-        var arr = [];
-        var _count = 0;
-        for (var i in schoolParams) {
-            if (_count + 1 == Object.keys(schoolParams).length)
-                query += '  ' + i + ' = ' + '"' + schoolParams[i] + '"';
-            else
-                query += ' ' + i + ' = ' + '"' + schoolParams[i] + '",';
-            _count++;
-        }
-
-        db.get().query(query, function(err, rows) {
+        
+        
+//        var query = 'insert into school set'
+//        var arr = [];
+//        var _count = 0;
+//        for (var i in schoolParams) {
+//            if (_count + 1 == Object.keys(schoolParams).length)
+//                query += '  ' + i + ' = ' + '"' + schoolParams[i] + '"';
+//            else
+//                query += ' ' + i + ' = ' + '"' + schoolParams[i] + '",';
+//            _count++;
+//        }
+        db.get().query('insert into school set ?, school_password = md5(?)',[schoolParams, password], function(err, rows) {
             if (err)
                 return done(err)
             return done(null, rows);
