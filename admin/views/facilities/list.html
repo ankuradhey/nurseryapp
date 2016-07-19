@@ -29,8 +29,8 @@
                                 <td>{{$index+1}}</td>
                                 <td>{{facility.facility_name}}</td>
                                 <td class="center">
-                                    <button type='button' class='btn-primary btn-xs' ui-sref="dashboard.editboard({boardId:board.board_id})">Edit</button>
-                                    <button type='button' class='btn-warning btn-xs' ng-click="deleteSchool(board.board_id)">Delete</button>
+                                    <button type='button' class='btn-primary btn-xs' ui-sref="dashboard.editfacility({facilityId:facility.facility_id})">Edit</button>
+                                    <button type='button' class='btn-warning btn-xs' ng-click="deleteFacility(facility.facility_id)">Delete</button>
                                 </td>
                             </tr>
                             
