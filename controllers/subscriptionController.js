@@ -145,7 +145,7 @@ module.exports = {
     getSchoolAdvertisement: function(req, res) {
         subscription.getSchoolAdvertisement(req.params.schoolSubscriptionId, function(err, rows) {
             response = new responseClass;
-            console.log('inside school subscription',rows);
+            console.log('inside school subscription', rows);
             if (err) {
                 console.log(err);
                 response.errors = err;
@@ -176,40 +176,64 @@ module.exports = {
         })
     },
     addSchoolAdvertisement: function(req, res) {
-        subscription.getAdvertisementBySchool(req.body.subscription_school_id, function(err, rows) {
-            response = new responseClass;
-            if (err) {
-                console.log(err);
-                response.errors = err;
-                res.send(response);
-            } else if (rows && Object.keys(rows).length) {
-                console.log('duplicate record found');
-                response.message = 'School is already added with advertisement';
-                res.send(response);
-            }
-            else {
-                subscription.addSchoolAdvertisement(req.body, function(err, rows) {
-                    response = new responseClass;
-                    if (err) {
-                        console.log(err);
-                        response.errors = err;
-                        res.send(response);
-                    } else {
-                        if (rows && rows.affectedRows) {
-                            response.error = false;
-                            response.success = true;
-                            response.message = 'Success';
-                            response.advertisements = rows;
-                            res.send(response);
-                        } else {
+        if (req.body.subscription_school_id) {
+            subscription.getAdvertisementBySchool(req.body.subscription_school_id, function(err, rows) {
+                response = new responseClass;
+                if (err) {
+                    console.log(err);
+                    response.errors = err;
+                    res.send(response);
+                } else if (rows && Object.keys(rows).length) {
+                    console.log('duplicate record found');
+                    response.message = 'School is already added with advertisement';
+                    res.send(response);
+                }
+                else {
+                    subscription.addSchoolAdvertisement(req.body, function(err, rows) {
+                        response = new responseClass;
+                        if (err) {
                             console.log(err);
                             response.errors = err;
                             res.send(response);
+                        } else {
+                            if (rows && rows.affectedRows) {
+                                response.error = false;
+                                response.success = true;
+                                response.message = 'Success';
+                                response.advertisements = rows;
+                                res.send(response);
+                            } else {
+                                console.log(err);
+                                response.errors = err;
+                                res.send(response);
+                            }
                         }
+                    })
+                }
+            });
+        } else {
+
+            subscription.addSchoolAdvertisement(req.body, function(err, rows) {
+                response = new responseClass;
+                if (err) {
+                    console.log(err);
+                    response.errors = err;
+                    res.send(response);
+                } else {
+                    if (rows && rows.affectedRows) {
+                        response.error = false;
+                        response.success = true;
+                        response.message = 'Success';
+                        response.advertisements = rows;
+                        res.send(response);
+                    } else {
+                        console.log(err);
+                        response.errors = err;
+                        res.send(response);
                     }
-                })
-            }
-        });
+                }
+            })
+        }
 
     },
     updateSchoolAdvertisement: function(req, res) {

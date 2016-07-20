@@ -20,7 +20,7 @@
                         <thead>
                             <tr>
                                 <th>S.No</th>
-                                <th>School Name</th>
+                                <th>School Name/Third Party</th>
                                 <th>Advertisement Type</th>
                                 <th>Action</th>
                             </tr>
@@ -28,10 +28,12 @@
                         <tbody>
                             <tr class="odd gradeX"  ng-class-even="'even gradeC'" ng-class-odd="'odd gradeX'" ng-repeat="subscription in subscriptions">
                                 <td>{{$index+1}}</td>
-                                <td>{{subscription.school_name}}</td>
+                                <td ng-if="subscription.subscription_school_id">{{subscription.school_name}}</td>
+                                <td ng-if="subscription.subscription_thirdparty_name">{{subscription.subscription_thirdparty_name}}</td>
                                 <td>{{subscription.plan_name}}</td>
                                 <td class="center">
-                                    <button type='button' class='btn-primary btn-xs' ui-sref="dashboard.updateschooladvertisement({schoolSubscriptionId:subscription.subscription_id})">Edit</button>
+                                    <button type='button' class='btn-primary btn-xs' ng-if="subscription.subscription_school_id" ui-sref="dashboard.updateschooladvertisement({schoolSubscriptionId:subscription.subscription_id})">Edit</button>
+                                    <button type='button' class='btn-primary btn-xs' ng-if="subscription.subscription_thirdparty_name" ui-sref="dashboard.updatethirdpartyadvertisement({schoolSubscriptionId:subscription.subscription_id})">Edit</button>
                                     <!--<button type='button' class='btn-warning btn-xs' ng-click="deleteSchool(subscription.subscription_id)">Delete</button>-->
                                 </td>
                             </tr>

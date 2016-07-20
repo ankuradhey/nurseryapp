@@ -1483,12 +1483,76 @@ var app = angular
                 }
             }
         })
+                .state('dashboard.addthirdpartyadvertisement', {
+            url: '/addthirdpartyadvertisement',
+            access: access.admin,
+            data: {collapseVar: 'school'},
+            controller: 'addSchoolAdvertisementController',
+            templateUrl: 'views/advertisements/addthirdpartyadvertisement.html',
+            resolve: {
+                auth: function($q, authService) {
+                    var userInfo = authService.getUserInfo();
+                    if (userInfo && authService.authorize(access.admin)) {
+                        return $q.when(userInfo);
+                    } else {
+                        return $q.reject({authenticated: false});
+                    }
+                },
+                loadMyFiles: function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'sbAdminApp',
+                        files: [
+                            'scripts/controllers/advertisementController.js',
+                            'scripts/directives/formvalidation.js'
+                        ]
+                    })
+                },
+                schools: function(schoolService){
+                    return schoolService.getSchools();
+                },
+                advertisements:function(schoolService){
+                    return schoolService.getAdvertisementTypes();
+                }
+            }
+        })
                 .state('dashboard.updateschooladvertisement', {
             url: '/updateschooladvertisement/:schoolSubscriptionId',
             access: access.admin,
             data: {collapseVar: 'school'},
             controller: 'addSchoolAdvertisementController',
             templateUrl: 'views/advertisements/addschooladvertisement.html',
+            resolve: {
+                auth: function($q, authService) {
+                    var userInfo = authService.getUserInfo();
+                    if (userInfo && authService.authorize(access.admin)) {
+                        return $q.when(userInfo);
+                    } else {
+                        return $q.reject({authenticated: false});
+                    }
+                },
+                loadMyFiles: function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'sbAdminApp',
+                        files: [
+                            'scripts/controllers/advertisementController.js',
+                            'scripts/directives/formvalidation.js'
+                        ]
+                    })
+                },
+                schools: function(schoolService){
+                    return schoolService.getSchools();
+                },
+                advertisements:function(schoolService){
+                    return schoolService.getAdvertisementTypes();
+                }
+            }
+        })
+                .state('dashboard.updatethirdpartyadvertisement', {
+            url: '/updatethirdpartyadvertisement/:schoolSubscriptionId',
+            access: access.admin,
+            data: {collapseVar: 'school'},
+            controller: 'addSchoolAdvertisementController',
+            templateUrl: 'views/advertisements/addthirdpartyadvertisement.html',
             resolve: {
                 auth: function($q, authService) {
                     var userInfo = authService.getUserInfo();

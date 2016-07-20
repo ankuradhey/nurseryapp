@@ -80,7 +80,12 @@ angular.module('sbAdminApp')
                                     $scope.subscriptions = _data.data.subscriptions;
                                     $scope.schools = schools.data.schools;
                                     $scope.plan = data.subscription;
-                                    $scope.plan.school = {school_name: data.subscription.school_name, school_id: data.subscription.school_id};
+                                    
+                                    if(data.subscription.subscription_school_id)
+                                        $scope.plan.school = {school_name: data.subscription.school_name, school_id: data.subscription.school_id};
+                                    else
+                                        $scope.plan.thirdparty_name = data.subscription.subscription_thirdparty_name;
+                                    
                                     $scope.plan.plan_type = {plan_id: data.subscription.plan_id, school_id: data.subscription.plan_name, plan_duration: data.subscription.plan_duration};
                                     if (data.subscription.subscription_start_date && Object.prototype.toString.call(new Date(data.subscription.subscription_start_date)) == '[object Date]' && !isNaN((new Date(data.subscription.subscription_start_date)).getTime())) {
                                         $scope.plan.subscription_start_date = new Date(data.subscription.subscription_start_date);
@@ -126,13 +131,17 @@ angular.module('sbAdminApp')
                     }
                     var data = {
                         subscription_plan_id: $scope.plan.plan_type.plan_id,
-                        subscription_school_id: $scope.plan.school.school_id,
                         subscription_status: "1",
                         subscription_start_date: $filter('date')($scope.plan.subscription_start_date, 'yyyy-MM-dd'),
                         subscription_end_date: $filter('date')($scope.plan.subscription_end_date, 'yyyy-MM-dd'),
                         subscription_link: $scope.plan.subscription_link
                     };
-                    console.log(data);
+                    
+                    if($scope.plan.thirdparty_name)
+                        data.subscription_thirdparty_name = $scope.plan.thirdparty_name;
+                    else
+                        data.subscription_school_id = $scope.plan.school.school_id;
+                            
                     if ($scope.schoolSubscriptionId) {
                         var url = baseUrl + '/adminapi/v1/school/advertisement/' + $scope.schoolSubscriptionId;
                         var method = 'PUT';

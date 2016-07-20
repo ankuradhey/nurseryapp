@@ -67,7 +67,7 @@ module.exports = {
     getSchoolAdvertisements: function(done) {
         db.get().query('select * from school_subscription subscription\n\
                         join subscription_plans plan on plan.plan_id = subscription.subscription_plan_id and plan.plan_status = "1" and plan.plan_type="advertisement" \n\
-                        join school  on school.school_id = subscription.subscription_school_id and school.school_status = "1"  \n\
+                        left join school  on school.school_id = subscription.subscription_school_id and school.school_status = "1"  \n\
                         where subscription_status = "1" ', function(err, rows) {
             
             if (err)
@@ -79,7 +79,7 @@ module.exports = {
     getSchoolAdvertisement: function(schoolSubscriptionId, done) {
         db.get().query('select * from school_subscription subscription\n\
                         join subscription_plans plan on plan.plan_id = subscription.subscription_plan_id and plan.plan_status = "1" and plan.plan_type="advertisement" \n\
-                        join school  on school.school_id = subscription.subscription_school_id and school.school_status = "1"  \n\
+                        left join school  on school.school_id = subscription.subscription_school_id and school.school_status = "1"  \n\
                         where subscription_id = ? ',  schoolSubscriptionId,function(err, rows) {
             if (err)
                 return done(err);
