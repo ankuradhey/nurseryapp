@@ -15,7 +15,7 @@ var school = {
 
 var schools = {
     getAll: function(done) {
-        var query = 'SELECT s.school_id, s.school_name, board.board_name, medium.medium_name, s.school_affiliation_code, s.school_address, s.school_img, s.school_desc as school_description, s.school_status FROM school s \n\
+        var query = 'SELECT s.school_id, s.school_name, board.board_name, medium.medium_name, s.school_affiliation_code, s.school_address, s.school_img, s.school_desc as school_description, s.school_status, s.school_register_status FROM school s \n\
                      left join school_medium medium on medium.medium_id = s.school_medium and medium.medium_status != "2"\n\
                      left join board_master board on board.board_id = s.school_board and board.board_status != "2" \n\
                       where school_status != "2"';
@@ -27,7 +27,7 @@ var schools = {
         })
     },
     getAllActive: function(parentId, done) {
-        var query = 'SELECT s.school_id, s.school_name, board.board_name, s.school_medium, s.school_affiliation_code, s.school_address, s.school_img, \n\
+        var query = 'SELECT s.school_id, s.school_name, board.board_name, s.school_medium, s.school_affiliation_code, s.school_address, s.school_img, s.school_register_status, \n\
                     s.school_desc as school_description, if(fav.fav_id,"1","0") as fav_status, sum(if(review_id,1,0)) as review_count ,avg(if(review_rating,review_rating,0)) as review_rating  FROM school s \n\
                      join board_master board on board.board_id = s.school_board and board.board_status = "1"  \n\
                      left join reviews r on r.review_school_id = s.school_id and r.review_status = "1" \n\

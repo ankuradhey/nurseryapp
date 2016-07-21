@@ -63,6 +63,7 @@ router.post('/adminapi/v1/school', schoolController.addSchool);
 router.put('/adminapi/v1/school/:schoolId', schoolController.updateSchool);
 router.delete('/adminapi/v1/school/:schoolId', schoolController.deleteSchool);
 
+router.put('/adminapi/v1/school/moderateregister/:schoolId', schoolController.updateSchool);
 
 router.get('/adminapi/v1/dashboard', dashboardController.getCount);
 router.get('/adminapi/v1/facilities',facilityController.getFacilities);

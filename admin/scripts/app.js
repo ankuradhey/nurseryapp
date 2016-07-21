@@ -205,6 +205,37 @@ var app = angular
                 }
             }
         })
+                .state('dashboard.regschools', {
+            url: '/registerschools',
+            access: access.admin,
+            controller: 'SchoolCtrl',
+            templateUrl: 'views/schools/reglist.html',
+            resolve: {
+                auth: function($q, authService) {
+                    var userInfo = authService.getUserInfo();
+                    console.log(authService, userInfo);
+                    if (userInfo && authService.authorize(access.admin)) {
+                        return $q.when(userInfo);
+                    } else {
+                        return $q.reject({authenticated: false});
+                    }
+                },
+                schools: function(schoolService) {
+                    console.log('inside schools');
+                    return schoolService.getSchools();
+                },
+                loadMyFiles: function($ocLazyLoad) {
+
+                    return $ocLazyLoad.load({
+                        name: 'sbAdminApp',
+                        files: [
+                            'scripts/controllers/schoolController.js',
+                            'scripts/services/schoolService.js',
+                        ]
+                    })
+                }
+            }
+        })
                 .state('dashboard.addschool', {
             url: '/addschool',
             access: access.admin,

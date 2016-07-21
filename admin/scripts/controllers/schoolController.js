@@ -72,6 +72,35 @@ angular.module('sbAdminApp')
                     })
 
                 }
+                
+                $scope.updateRegStatus = function (status, schoolId) {
+                    var s = confirm("Are you sure you want to update this school?");
+                    if (!s)
+                        return;
+
+
+                    $http({
+                        method: 'PUT',
+                        url: baseUrl + '/adminapi/v1/school/moderateregister/' + schoolId,
+                        headers: {'Content-Type': 'application/json'},
+                        data: {school_register_status: status}
+                    }).success(function (data, status, headers, conf) {
+                        if (data.success) {
+                            $scope.alert.message = 'School status changed successfully';
+                            $scope.alert.show = true;
+                            $scope.alert.type = 'success';
+                            $state.reload();
+                        } else {
+                            $scope.alert.message = data.message;
+                            $scope.alert.show = true;
+                            $scope.alert.type = 'danger';
+                        }
+                    }).error(function (data, status, headers, conf) {
+                        $scope.alert.show = true;
+                        $scope.alert.type = 'danger';
+                    })
+
+                }
 
             }])
         .controller('SchoolAddCtrl', ['$rootScope', '$scope', '$http', '$stateParams', 'boards', 'countries', 'schoolType', 'medium', 'Upload', '$state', '$timeout', 'facilities',
