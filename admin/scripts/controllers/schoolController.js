@@ -340,6 +340,7 @@ angular.module('sbAdminApp')
                         school_city: $scope.location.city.city_id,
                         school_area: $scope.location.area.area_id,
                         school_zone: $scope.location.zone.zone_id,
+                        school_register_status:'1'
                     }
 
                     if ($scope.schoolId) {
