@@ -49,6 +49,12 @@
                                             >
                                         Active
                                     </button>
+                                    <button type='button' 
+                                            class='btn-warning btn-xs' 
+                                            ng-click="deleteSubscription(subscription.plan_id)"
+                                            >
+                                        Delete
+                                    </button>
                                     <button type='button' class='btn-primary btn-xs' ui-sref="dashboard.editsubscription({subscriptionId:subscription.plan_id})">Edit</button>
                                     <!--<button type='button' class='btn-warning btn-xs' ng-click="deleteSubscription(subscription.subscription_id)">Delete</button>-->
                                 </td>

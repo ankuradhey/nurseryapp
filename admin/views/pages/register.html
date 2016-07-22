@@ -26,12 +26,18 @@
                                 <p class="help-block" ng-if="schoolForm.school_email.$error.email && schoolForm.school_email.$dirty">School Email is not valid</p>
                             </div>
                             <div class="form-group" form-validate show-errors ng-class="{'has-error':schoolForm.school_password.$invalid && schoolForm.school_password.$dirty}">
-                                <label>Password</label>
+                                <label>Password*</label>
                                 <input type="password" class="form-control" name="school_password" ng-model='school.password'>
                                 <p class="help-block" ng-if="schoolForm.school_password.$error.required && schoolForm.school_password.$dirty">School Password is required</p>
                                 <p class="help-block">If you do not enter password, old password is used in edit case and for new user default password is chosen as - 123456</p>
                             </div>
-                            <button type="submit" class="btn btn-default" ng-click="saveSchool()" ng-disabled="schoolForm.$invalid">Submit</button>
+                            <div class="form-group" form-validate show-errors ng-class="{'has-error':(schoolForm.school_password.$invalid || schoolForm.school_cpassword != schoolForm.school_password) && schoolForm.school_password.$dirty}">
+                                <label>Confirm Password*</label>
+                                <input type="password" class="form-control" name="school_cpassword" ng-model='school.cpassword'>
+                                <p class="help-block" ng-if="schoolForm.school_cpassword.$error.required && schoolForm.school_cpassword.$dirty">Confirm Password is required</p>
+                                <p class="help-block" ng-if="school.cpassword != school.password && schoolForm.school_password.$dirty">Confirm Password does not matches</p>
+                            </div>
+                            <button type="submit" class="btn btn-default" ng-click="saveSchool()" ng-disabled="schoolForm.$invalid || school.cpassword != school.password">Submit</button>
                         </fieldset>
                     </form>
                 </div>

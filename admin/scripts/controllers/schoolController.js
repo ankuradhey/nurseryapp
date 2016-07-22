@@ -702,7 +702,7 @@ angular.module('sbAdminApp')
                 
                 $scope.saveSchool = function () {
                     $scope.$broadcast('show-errors-check-validity');
-                    if ($scope.schoolForm.$invalid) {
+                    if ($scope.schoolForm.$invalid || $scope.school.cpassword != $scope.school.password) {
                         return;
                     }
                     var data = {

@@ -256,5 +256,27 @@ module.exports = {
             }
         });
 
+    },
+    deleteSubscription: function(req, res) {
+console.log(req.params.subscriptionId);
+        subscription.updateSubscription({plan_status:'2'},req.params.subscriptionId, function(err, rows) {
+            response = new responseClass;
+            if (err) {
+                console.log(err);
+                response.errors = err;
+                res.send(response);
+            } else {
+                if (rows && rows.affectedRows) {
+                    response.error = false;
+                    response.success = true;
+                    response.message = 'Success';
+                    res.send(response);
+                } else {
+                    response.errors = err;
+                    res.send(response);
+                }
+            }
+        });
+
     }
 };

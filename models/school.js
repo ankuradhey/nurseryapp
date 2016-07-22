@@ -68,7 +68,7 @@ var schools = {
 //             = md5(schoolParams.school_password);
         }
         
-        
+        console.log(schoolParams, password);
 //        var query = 'insert into school set'
 //        var arr = [];
 //        var _count = 0;
@@ -209,14 +209,26 @@ var schools = {
     },
     getSchoolAvailability: function(schoolParams, schoolId, done) {
         schoolId = typeof schoolId != 'undefined' ? schoolId : 0;
-        console.log('getSchoolAvailability - ', [schoolId, schoolParams.school_email, schoolParams.school_affiliation_code, schoolParams.school_phone]);
-        db.get().query('select school_email, school_affiliation_code, school_phone  from school \n\
-                        where school_status != "2" and school_id != ? and (school_email = ? or school_affiliation_code = ? or school_phone = ?) ',
-                [schoolId, schoolParams.school_email, schoolParams.school_affiliation_code, schoolParams.school_phone], function(err, rows) {
-            if (err)
-                return done(err);
-            return done(null, rows);
-        })
+        console.log('getSchoolAvailability - ', [schoolId, schoolParams.school_email, (schoolParams.school_affiliation_code || 0), schoolParams.school_phone]);
+        if(schoolParams.school_affiliation_code){
+            db.get().query('select school_email, school_affiliation_code, school_phone  from school \n\
+                            where school_status != "2" and school_id != ? and (school_email = ? or school_affiliation_code = ? or school_phone = ?) ',
+                    [schoolId, schoolParams.school_email, (schoolParams.school_affiliation_code || 0), schoolParams.school_phone], function(err, rows) {
+                        console.log('school found - ', rows);
+                if (err)
+                    return done(err);
+                return done(null, rows);
+            });
+        }else{
+            db.get().query('select school_email, school_affiliation_code, school_phone  from school \n\
+                            where school_status != "2" and school_id != ? and (school_email = ? or school_phone = ?) ',
+                    [schoolId, schoolParams.school_email, schoolParams.school_phone], function(err, rows) {
+                        console.log('school found - ', rows);
+                if (err)
+                    return done(err);
+                return done(null, rows);
+            });
+        }
     },
     getSchoolByAffiliate: function(schoolAffiliateCode, schoolTypeId, done) {
         schoolTypeId = typeof schoolTypeId != 'undefined' ? schoolTypeId : 0;

@@ -114,8 +114,41 @@ angular.module('sbAdminApp')
                 }
                 
                 $scope.updateStatus = function(status, planId){
+                    
+                    var s = confirm("Are you sure you want to " + (status ? 'activate' : 'deactivate') + " this subscription?");
+                    if (!s)
+                        return;
+
+                    
                     $http({
                         method: 'PATCH',
+                        url: baseUrl + '/adminapi/v1/subscription/' + planId,
+                        data:{plan_status:status},
+                        headers: {'Content-Type': 'application/json'}
+                    }).success(function (data, status, headers, conf) {
+                        if (data.success) {
+                            $state.reload();
+                        }
+                        else {
+                            $scope.alert.message = data.message;
+                            $scope.alert.show = true;
+                            $scope.alert.type = 'danger';
+                        }
+                    }).error(function (data, status, headers, conf) {
+                        $scope.alert.show = true;
+                        $scope.alert.type = 'danger';
+                    })
+                }
+                
+                $scope.deleteSubscription = function(planId){
+                    
+                    
+                    var s = confirm("Are you sure you want to delete this subscription?");
+                    if (!s)
+                        return;
+                    
+                    $http({
+                        method: 'DELETE',
                         url: baseUrl + '/adminapi/v1/subscription/' + planId,
                         data:{plan_status:status},
                         headers: {'Content-Type': 'application/json'}

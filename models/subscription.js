@@ -19,7 +19,7 @@ module.exports = {
         })
     },
     getSubscriptionByName: function(subscriptionName, subscriptionId, done) {
-        db.get().query('select * from subscription_plans where lower(plan_name) = ? and plan_id != ? ', [(subscriptionName || '').toLowerCase().trim(), subscriptionId], function(err, rows) {
+        db.get().query('select * from subscription_plans where lower(plan_name) = ? and plan_id != ? and plan_status != "2" ', [(subscriptionName || '').toLowerCase().trim(), subscriptionId], function(err, rows) {
             if (err)
                 return done(err);
             else
@@ -54,7 +54,7 @@ module.exports = {
         });
     },
     updateSubscription: function(subscriptionParams, subscriptionId, done) {
-        console.log(subscriptionParams, subscriptionId)
+            console.log(subscriptionParams, subscriptionId)
         db.get().query('update subscription_plans set ? where plan_id = ?  ', [subscriptionParams, parseInt(subscriptionId)], function(err, rows) {
 
             console.log('inside update query', rows);

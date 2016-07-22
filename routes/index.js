@@ -143,6 +143,7 @@ router.post('/adminapi/v1/subscription', schemaValidate, subscriptionController.
 router.put('/adminapi/v1/subscription/:subscriptionId', schemaValidate, subscriptionController.updateSubscription);
 router.patch('/adminapi/v1/subscription/:subscriptionId', subscriptionController.updateSubscriptionStatus);
 router.get('/adminapi/v1/subscription/:subscriptionId', subscriptionController.getOne);
+router.delete('/adminapi/v1/subscription/:subscriptionId', subscriptionController.deleteSubscription);
 
 router.get('/adminapi/v1/mediums', schoolController.getMediums);
 router.get('/adminapi/v1/medium/:mediumId', schoolController.getMedium);
