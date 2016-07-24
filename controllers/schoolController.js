@@ -16,10 +16,11 @@ responseClass = function() {
         message: 'Oops! Some error occurred',
         errors: []
     }
-
-}
-validate = require('validate.js'),
-        config = require('../config') //get our config file
+},
+        validate = require('validate.js'),
+        config = require('../config'), //get our config file
+        nodemailer = require('nodemailer'),
+        transporter = nodemailer.createTransport('smtps://ankuradhey%40gmail.com:alldayilovesports@smtp.gmail.com')
         ;
 
 
@@ -171,16 +172,40 @@ module.exports = {
                 }
                 res.json(response);
             } else {
+                
+                req.body.school_activation_code =  Math.round(Math.random()*10000);
+                
                 school.create(req.body, function(err, rows) {
                     if (err)
                         response.errors = err;
                     else {
+
+                        //check if school registered himself then send mail
+                        //======= MAIL CODE ====
+                        if (req.body && typeof req.body.school_register_status == 'undefined') {
+                            
+                            var mailOptions = {
+                                from: '"Ankit Sharma" <ankuradhey@gmail.com>', // sender address 
+                                to: req.body.school_email, // list of receivers 
+                                subject: 'Verify Email Address', // Subject line 
+                                text: 'Your account has been made, <br /> please verify it by clicking here <br /> <a href="'+config.baseUrl+'/verify/user/'+req.body.school_activation_code+'">click here</a>.', // plaintext body 
+                                html: 'Your account has been made, <br /> please verify it by clicking here <br /> <a href="'+config.baseUrl+'/verify/user/'+req.body.school_activation_code+'">click here</a>. ' // html body
+                            };
+                            
+                            // send mail with defined transport object 
+                            transporter.sendMail(mailOptions, function(error, info) {
+                                if (error) {
+                                    return console.log(error);
+                                }
+                                console.log('Message sent: ' + info.response);
+                            });
+                        }
                         response.message = 'School Successfully added';
                         response.success = true;
                         response.error = false;
                     }
                     res.send(response);
-                })
+                });
             }
         });
         ;
