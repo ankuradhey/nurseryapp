@@ -100,6 +100,20 @@ app.all('/api/v1/*', [require('./middlewares/validateRequest')]);
 
 app.use('/',require('./routes'));
 
+app.use('/user/verify/:verifyId', function(req, res, next){
+    db.get().query('select * from school where school_activation_code = "'+req.params.verifyId+'" and school_register_status = "0" ', function(err, rows){
+        if(err){
+            console.log(err);
+            throw err;
+        }else if(rows && rows.length){
+            next();
+        }else{
+            express.static('admin/views/pages/wrongpage.html');
+        }
+        
+    })
+},express.static('admin/views/pages/userverify.html'));
+
 app.use(function(req, res, next){
     var err = new Error('Not Found');
     err.status = 404;
