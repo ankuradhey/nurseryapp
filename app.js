@@ -106,6 +106,13 @@ app.use('/user/verify/:verifyId', function(req, res, next){
             console.log(err);
             throw err;
         }else if(rows && rows.length){
+            db.get().query('update school set school_register_status = "1", school_status = "1" where school_id = ? ', rows[0]['school_id'],function(err, rows){
+                if(err){
+                    console.log(err);
+                    throw err;
+                }
+                
+            });
             next();
         }else{
             express.static('admin/views/pages/wrongpage.html');
