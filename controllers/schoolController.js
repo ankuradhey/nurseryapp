@@ -185,7 +185,7 @@ module.exports = {
                         if (req.body && typeof req.body.school_register_status == 'undefined') {
                             
                             var mailOptions = {
-                                from: '"Ankit Sharma" <ankuradhey@gmail.com>', // sender address 
+                                from: '"Nurseryapp" <ankuradhey@gmail.com>', // sender address 
                                 to: req.body.school_email, // list of receivers 
                                 subject: 'Verify Email Address', // Subject line 
                                 text: 'Your account has been made, <br /> please verify it by clicking here <br /> <a href="'+config.baseUrl+'/user/verify/'+req.body.school_activation_code+'">click here</a>.', // plaintext body 
