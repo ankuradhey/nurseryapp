@@ -32,9 +32,23 @@
                                 <td ng-if="subscription.subscription_thirdparty_name">{{subscription.subscription_thirdparty_name}}</td>
                                 <td>{{subscription.plan_name}}</td>
                                 <td class="center">
+                                    <button type='button' 
+                                            ng-if='subscription.subscription_status!="1"'
+                                            class='btn-default btn-xs' 
+                                            ng-click="updateStatus('1', subscription.subscription_id)"
+                                            >
+                                        Inactive
+                                    </button>
+                                    <button type='button' 
+                                            ng-if='school.subscription_status=="1"'
+                                            class='btn-info btn-xs' 
+                                            ng-click="updateStatus('0', subscription.subscription_id)"
+                                            >
+                                        Active
+                                    </button>
                                     <button type='button' class='btn-primary btn-xs' ng-if="subscription.subscription_school_id" ui-sref="dashboard.updateschooladvertisement({schoolSubscriptionId:subscription.subscription_id})">Edit</button>
                                     <button type='button' class='btn-primary btn-xs' ng-if="subscription.subscription_thirdparty_name" ui-sref="dashboard.updatethirdpartyadvertisement({schoolSubscriptionId:subscription.subscription_id})">Edit</button>
-                                    <!--<button type='button' class='btn-warning btn-xs' ng-click="deleteSchool(subscription.subscription_id)">Delete</button>-->
+                                    <button type='button' class='btn-warning btn-xs' ng-click="deleteSchool(subscription.subscription_id)">Delete</button>
                                 </td>
                             </tr>
                             
