@@ -194,7 +194,9 @@
             <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
         </a>
         <ul class="dropdown-menu dropdown-user">
-            <li><a href="javascript:;" ui-sref="dashboard.profile({parentId:userId})" ><i class="fa fa-user fa-fw"></i> User Profile</a>
+            <li><a href="javascript:;" ng-if="user.role == 4" ui-sref="dashboard.profile({parentId:userId})" ><i class="fa fa-user fa-fw"></i> User Profile</a>
+            </li>
+            <li><a href="javascript:;" ng-if="user.role == 2" ui-sref="dashboard.editschool({schoolId:user.userId})" ><i class="fa fa-user fa-fw"></i> School Profile</a>
             </li>
             <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
             </li>

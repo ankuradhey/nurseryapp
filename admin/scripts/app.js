@@ -286,7 +286,7 @@ var app = angular
             resolve: {
                 auth: function($q, authService) {
                     var userInfo = authService.getUserInfo();
-                    if (userInfo && authService.authorize(access.admin)) {
+                    if (userInfo && authService.authorize(access.school)) {
                         return $q.when(userInfo);
                     } else {
                         return $q.reject({authenticated: false});
