@@ -188,8 +188,8 @@ module.exports = {
                                 from: '"Nurseryapp" <ankuradhey@gmail.com>', // sender address 
                                 to: req.body.school_email, // list of receivers 
                                 subject: 'Verify Email Address', // Subject line 
-                                text: 'Your account has been made, <br /> please verify it by clicking here <br /> <a href="'+config.baseUrl+'/user/verify/'+req.body.school_activation_code+'">click here</a>.', // plaintext body 
-                                html: 'Your account has been made, <br /> please verify it by clicking here <br /> <a href="'+config.baseUrl+'/user/verify/'+req.body.school_activation_code+'">click here</a>. ' // html body
+                                text: 'Your account has been made, <br /> please verify it by clicking here <br /> <a href="'+config.baseUrl+'/user/resetpassword/'+req.body.school_activation_code+'">click here</a>.', // plaintext body 
+                                html: 'Your account has been made, <br /> please verify it by clicking here <br /> <a href="'+config.baseUrl+'/user/resetpassword/'+req.body.school_activation_code+'">click here</a>. ' // html body
                             };
                             
                             // send mail with defined transport object 

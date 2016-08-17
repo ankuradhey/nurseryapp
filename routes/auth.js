@@ -291,6 +291,26 @@ var auth = {
                 done(null, result);
         })
     },
+    forgotPassword: function(userName, done){
+        
+        //TO DO - email validation
+        
+        var mailOptions = {
+                                from: '"Nurseryapp" <ankuradhey@gmail.com>', // sender address 
+                                to: userName, // list of receivers 
+                                subject: 'Forgot Password', // Subject line 
+                                text: 'To reset your password, <br /> here is your link <br /> <a href="'+config.baseUrl+'/user/verify/'+req.body.school_activation_code+'">click here</a>.', // plaintext body 
+                                html: 'To reset your password, <br /> here is your link <br /> <a href="'+config.baseUrl+'/user/verify/'+req.body.school_activation_code+'">click here</a>.' // html body
+                            };
+                            
+                            // send mail with defined transport object 
+                            transporter.sendMail(mailOptions, function(error, info) {
+                                if (error) {
+                                    return console.log(error);
+                                }
+                                console.log('Message sent: ' + info.response);
+                            });
+    },
     socialValidate: function (socialId, socialType, done) {
         userModel.socialLoginCheck(socialId, socialType, function (err, rows) {
             if (err) {

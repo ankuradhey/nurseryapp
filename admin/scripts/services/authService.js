@@ -17,6 +17,32 @@ angular.module('sbAdminApp')
                 $rootScope.userRoles = userRoles;
                 $rootScope.user = {role:1};
                 
+                function forgotPassword(userName){
+                    var deferred = $q.defer();
+                    
+                    $http.post(baseUrl+"/admin/forgotpassword", {user_email: userName})
+                            .then(function(result){
+                                if(result.data.success){
+                                    userInfo = {
+                                        accessToken: result.data.token,
+                                        userName: result.data.user.user_email,
+                                        userId: result.data.user.user_id,
+//                                        role:result.data.user.user_type
+                                        role:userRoles[result.data.user.user_type]
+                                    };
+                                    $rootScope.user = userInfo;
+                                    $window.localStorage["userInfo"] = JSON.stringify(userInfo);
+                                    deferred.resolve(userInfo);
+                                }else{
+                                    deferred.reject(result.message);
+                                }
+                            }, function(error){
+                                deferred.reject(error);
+                            });
+                            
+                    return deferred.promise;
+                }
+                
                 function login(userName, password) {
                     var deferred = $q.defer();
 

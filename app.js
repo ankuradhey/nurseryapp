@@ -121,6 +121,46 @@ app.use('/user/verify/:verifyId', function(req, res, next){
     })
 },express.static('admin/views/pages/userverify.html'));
 
+
+app.use('/user/resetpassword/:verifyId', function(req, res, next){
+    db.get().query('select * from school where school_activation_code = "'+req.params.verifyId+'" and school_register_status = "1" ', function(err, rows){
+        if(err){
+            console.log(err);
+            throw err;
+        }else if(rows && rows.length){
+            db.get().query('update school set school_password = ? where school_id = ? ', [md5('123456'), rows[0]['school_id']],function(err, result){
+                if(err){
+                    console.log(err);
+                    throw err;
+                }else{
+                    var mailOptions = {
+                                from: '"Nurseryapp" <ankuradhey@gmail.com>', // sender address 
+                                to: req.body.school_email, // list of receivers 
+                                subject: 'Password changed successfully', // Subject line 
+                                text: 'Your new password for account '+rows[0]['school_email']+' is - 123456', // plaintext body 
+                                html: 'Your new password for account '+rows[0]['school_email']+' is - 123456'// html body
+                            };
+                            
+                            // send mail with defined transport object 
+                            transporter.sendMail(mailOptions, function(error, info) {
+                                if (error) {
+                                    return console.log(error);
+                                }
+                                console.log('Message sent: ' + info.response);
+                            });
+                }
+                
+            });
+            next();
+        }else{
+            express.static('admin/views/pages/wrongpage.html');
+        }
+        
+    })
+}, express.static('admin/views/pages/resetpassword.html'));
+
+
+
 app.use(function(req, res, next){
     var err = new Error('Not Found');
     err.status = 404;

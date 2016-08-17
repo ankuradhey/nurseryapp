@@ -22,6 +22,7 @@ var facilityController = require('../controllers/facilityController.js');
 router.post('/login', auth.login);
 router.post('/admin/login', auth.adminLogin);
 router.post('/sociallogin', auth.socialLogin);
+router.post('/admin/forgotpassword', auth.forgotPassword);
 router.post('/register', schemaValidate,userController.register);
 //router.post('/sociallogin',auth.);
 /*
