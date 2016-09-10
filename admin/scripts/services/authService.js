@@ -102,6 +102,7 @@ angular.module('sbAdminApp')
                     login: login,
                     logout: logout,
                     getUserInfo: getUserInfo,
+                    forgotPassword:forgotPassword,
                     accessLevels: accessLevels,
                     userRoles: userRoles,
                     user: getUserInfo,
