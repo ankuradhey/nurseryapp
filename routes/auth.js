@@ -296,7 +296,7 @@ var auth = {
     forgotPassword: function(req, res, done) {
 
         //TO DO - email validation
-        userModel.loginCheck(req.body.user_email, '', function(err, data) {
+        userModel.getUser(req.body.user_email, '', function(err, data) {
             if (err) {
                 response = new responseClass;
                 response.errors = err;
