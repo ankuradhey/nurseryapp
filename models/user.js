@@ -132,12 +132,8 @@ exports.loginCheck = function(userEmail, userPassword, done){
     });
 }
 
-exports.getUser = function(userEmail, done){
-    db.get().query('SELECT user_id, user_email, concat(user_first_name, " ", user_last_name) as user_full_name, user_type, user_phone, \n\
-                    user_first_name as first_name, user_last_name as last_name\n\
-                    FROM user where user_email = ? and user_status = "1" \n\
-                     union \n\
-                    SELECT school_id as user_id, school_email as user_email, school_name as user_full_name, "school" as user_type, school_phone as user_phone, \n\
+exports.getSchoolUser = function(userEmail, done){
+    db.get().query('SELECT school_id as user_id, school_email as user_email, school_name as user_full_name, "school" as user_type, school_phone as user_phone, \n\
                     school_name as first_name, school_name as last_name\n\
                     FROM school where school_email = ? and school_status = "1" \n\
 ',[userEmail, userEmail], function(err, rows){
