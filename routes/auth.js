@@ -313,7 +313,6 @@ var auth = {
                                 }else{
                                     
                                     console.log('Message sent: ' + info.response);
-                                    response.status(200);
                                     response.message = 'Invalid Username or password';
                                     response.error = false;
                                     response.success = true;
