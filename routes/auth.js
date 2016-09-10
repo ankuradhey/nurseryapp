@@ -296,14 +296,14 @@ var auth = {
     forgotPassword: function(req, res, done) {
 
         //TO DO - email validation
-
-        userModel.validateUser(req.body.user_email, '', function(err, data) {
+        userModel.loginCheck(req.body.user_email, '', function(err, data) {
             if (err) {
                 response = new responseClass;
                 response.errors = err;
                 console.log(err);
                 return res.json(response);
             } else {
+                console.log(data);
                 var mailOptions = {
                     from: '"Nurseryapp" <ankuradhey@gmail.com>', // sender address 
                     to: req.body.user_email, // list of receivers 
