@@ -148,6 +148,8 @@ app.use('/user/resetpassword/:verifyId', function(req, res, next){
                                 }
                                 console.log('Message sent: ' + info.response);
                             });
+                            
+                            express.static('admin/views/pages/resetpassword.html');
                 }
                 
             });
