@@ -32,7 +32,7 @@ angular.module('sbAdminApp')
                                     };*/
                                     //$rootScope.user = userInfo;
                                     //$window.localStorage["userInfo"] = JSON.stringify(userInfo);
-                                    deferred.resolve({});
+                                    deferred.resolve(result.data);
                                 }else{
                                     deferred.reject(result.message);
                                 }
