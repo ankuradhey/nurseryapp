@@ -12,7 +12,9 @@ responseClass = function () {
 }
 userModel = require("../models/user.js"),
         validate = require('validate.js'),
-        config = require('../config')
+        config = require('../config'),
+        nodemailer = require('nodemailer'),
+        transporter = nodemailer.createTransport('smtps://ankuradhey%40gmail.com:alldayilovesports@smtp.gmail.com')
         ;
 
 var auth = {
@@ -291,24 +293,34 @@ var auth = {
                 done(null, result);
         })
     },
-    forgotPassword: function(userName, done){
+    forgotPassword: function(req, res, done){
         
         //TO DO - email validation
         
         var mailOptions = {
                                 from: '"Nurseryapp" <ankuradhey@gmail.com>', // sender address 
-                                to: userName, // list of receivers 
+                                to: req.body.user_email, // list of receivers 
                                 subject: 'Forgot Password', // Subject line 
                                 text: 'To reset your password, <br /> here is your link <br /> <a href="'+config.baseUrl+'/user/verify/'+req.body.school_activation_code+'">click here</a>.', // plaintext body 
                                 html: 'To reset your password, <br /> here is your link <br /> <a href="'+config.baseUrl+'/user/verify/'+req.body.school_activation_code+'">click here</a>.' // html body
                             };
-                            
+                            response = new responseClass;
                             // send mail with defined transport object 
                             transporter.sendMail(mailOptions, function(error, info) {
                                 if (error) {
+                                    res.json(response);
                                     return console.log(error);
+                                }else{
+                                    
+                                    console.log('Message sent: ' + info.response);
+                                    response.status(200);
+                                    response.message = 'Invalid Username or password';
+                                    response.error = false;
+                                    response.success = true;
+                                    res.json(response);
+                                    //done(null);
                                 }
-                                console.log('Message sent: ' + info.response);
+                                
                             });
     },
     socialValidate: function (socialId, socialType, done) {
