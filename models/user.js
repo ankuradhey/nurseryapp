@@ -134,7 +134,7 @@ exports.loginCheck = function(userEmail, userPassword, done){
 
 exports.getSchoolUser = function(userEmail, done){
     db.get().query('SELECT school_id as user_id, school_email as user_email, school_name as user_full_name, "school" as user_type, school_phone as user_phone, \n\
-                    school_name as first_name, school_name as last_name\n\
+                    school_name as first_name, school_name as last_name, school_activation_code\n\
                     FROM school where school_email = ? and school_status = "1" \n\
 ',[userEmail, userEmail], function(err, rows){
         if(err)
