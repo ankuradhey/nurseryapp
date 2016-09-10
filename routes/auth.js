@@ -1,6 +1,6 @@
 var jwt = require("jsonwebtoken"), // used to create, sign, and verify tokens
         response = {error: true, success: false, message: 'Oops! Some error occurred', code: 400},
-responseClass = function () {
+responseClass = function() {
     return {
         error: true,
         success: false,
@@ -18,7 +18,7 @@ userModel = require("../models/user.js"),
         ;
 
 var auth = {
-    login: function (req, res) {
+    login: function(req, res) {
         var username = req.body.user_email || '';
         var password = req.body.user_password || '';
 
@@ -34,7 +34,7 @@ var auth = {
         }
 
         //use query to validate
-        auth.validate(username, password, function (err, result) {
+        auth.validate(username, password, function(err, result) {
             if (err) {
                 res.status(200);
                 response.message = 'Oops! Some error occurred';
@@ -50,16 +50,16 @@ var auth = {
                     response.message = 'Success';
                     response.success = true;
                     response.error = false;
-                    var userDetails = { 
-                                        user_email: result[0].user_email, 
-                                        user_type: result[0].user_type, 
-                                        user_id:result[0].user_id,
-                                        full_name:result[0].user_full_name,
-                                        first_name:result[0].first_name,
-                                        last_name:result[0].last_name,
-                                        phone:result[0].user_phone,
-                                    };
-                    generateToken(userDetails, function (_token) {
+                    var userDetails = {
+                        user_email: result[0].user_email,
+                        user_type: result[0].user_type,
+                        user_id: result[0].user_id,
+                        full_name: result[0].user_full_name,
+                        first_name: result[0].first_name,
+                        last_name: result[0].last_name,
+                        phone: result[0].user_phone,
+                    };
+                    generateToken(userDetails, function(_token) {
                         response.token = _token.token;
                         response.user = _token.user;
                         res.json(response);
@@ -78,14 +78,14 @@ var auth = {
         });
 
     },
-    adminLogin: function (req, res) {
+    adminLogin: function(req, res) {
         var username = req.body.user_email || '';
         var password = req.body.user_password || '';
 
         console.log('username and password are - ', username, password);
         response = new responseClass;
         //use query to validate
-        auth.validate(username, password, function (err, result) {
+        auth.validate(username, password, function(err, result) {
             if (err) {
                 res.status(200);
                 response.message = 'Oops! Some error occurred';
@@ -102,8 +102,8 @@ var auth = {
                         response.message = 'Success';
                         response.success = true;
                         response.error = false;
-                        var userDetails = {user_email: result[0].user_email, user_type: result[0].user_type, user_id:result[0].user_id};
-                        generateToken(userDetails, function (_token) {
+                        var userDetails = {user_email: result[0].user_email, user_type: result[0].user_type, user_id: result[0].user_id};
+                        generateToken(userDetails, function(_token) {
                             response.token = _token.token;
                             response.user = _token.user;
                             res.json(response);
@@ -129,7 +129,7 @@ var auth = {
         });
 
     },
-    socialLogin: function (req, res) {
+    socialLogin: function(req, res) {
         var socialId = req.body.socialId || '';
         var socialType = req.body.socialType || 'facebook';
         console.log('socialId and socialType are - ', socialId, socialType);
@@ -143,7 +143,7 @@ var auth = {
         }
 
         //check if user already exists
-        auth.socialValidate(socialId, socialType, function (err, result) {
+        auth.socialValidate(socialId, socialType, function(err, result) {
             if (err) {
                 res.status(200);
                 response.message = 'Oops! Some error occurred';
@@ -159,16 +159,16 @@ var auth = {
                     response.message = 'Success';
                     response.success = true;
                     response.error = false;
-                    var userDetails = { 
-                                        user_email: result[0].user_email, 
-                                        user_type: result[0].user_type, 
-                                        user_id:result[0].user_id,
-                                        full_name:result[0].user_full_name,
-                                        first_name:result[0].first_name,
-                                        last_name:result[0].last_name,
-                                        phone:result[0].user_phone,
-                                    };
-                    generateToken(userDetails, function (_token) {
+                    var userDetails = {
+                        user_email: result[0].user_email,
+                        user_type: result[0].user_type,
+                        user_id: result[0].user_id,
+                        full_name: result[0].user_full_name,
+                        first_name: result[0].first_name,
+                        last_name: result[0].last_name,
+                        phone: result[0].user_phone,
+                    };
+                    generateToken(userDetails, function(_token) {
                         response.token = _token.token;
                         response.user = _token.user;
                         res.json(response);
@@ -177,7 +177,7 @@ var auth = {
 
                 } else {
                     //if user not found then register it
-                    userModel.validateUser(req.body.user_email, req.body.user_phone, function (err, rows) {
+                    userModel.validateUser(req.body.user_email, req.body.user_phone, function(err, rows) {
 //                        console.log('checked user exists - ',rows);
                         if (err) {
                             res.status(200);
@@ -191,7 +191,7 @@ var auth = {
                             return;
                         } else {
                             if (rows.length) {
-                                auth.socialUserUpdate(socialId, socialType, req.body, rows[0], function (err, result) {
+                                auth.socialUserUpdate(socialId, socialType, req.body, rows[0], function(err, result) {
                                     if (err) {
                                         response.errors = err;
                                         res.json(response);
@@ -204,7 +204,7 @@ var auth = {
                                             response.error = false;
                                             var userDetails = req.body;
                                             userDetails.user_id = rows[0].user_id;
-                                            generateToken(userDetails, function (_token) {
+                                            generateToken(userDetails, function(_token) {
                                                 response.token = _token.token;
                                                 response.user = _token.user;
                                                 res.json(response);
@@ -219,7 +219,7 @@ var auth = {
                                     }
                                 })
                             } else {
-                                auth.socialSignUp(socialId, socialType, req.body, function (err, result) {
+                                auth.socialSignUp(socialId, socialType, req.body, function(err, result) {
                                     if (err) {
                                         response.errors = err;
                                         res.json(response);
@@ -228,7 +228,7 @@ var auth = {
                                         response.message = 'Success';
                                         response.success = true;
                                         response.error = false;
-                                        generateToken(req.body, function (_token) {
+                                        generateToken(req.body, function(_token) {
                                             response.token = _token.token;
                                             response.user = _token.user;
                                             res.json(response);
@@ -246,7 +246,7 @@ var auth = {
         });
 
     },
-    socialUserUpdate: function (socialId, socialType, reqParams, userData, done) {
+    socialUserUpdate: function(socialId, socialType, reqParams, userData, done) {
         var updateData = {};
         if (reqParams['user_email'] && !userData['user_email']) {
             updateData['user_email'] = reqParams['user_email'];
@@ -270,7 +270,7 @@ var auth = {
 
 
         if (Object.keys(updateData).length) {
-            userModel.updateSocial(updateData, userData, function (err, rows) {
+            userModel.updateSocial(updateData, userData, function(err, rows) {
                 if (err) {
                     return done(err);
                 }
@@ -283,47 +283,57 @@ var auth = {
             return done('no parameters found for user to be updated');
         }
     },
-    socialSignUp: function (socialId, socialType, userParams, done) {
+    socialSignUp: function(socialId, socialType, userParams, done) {
         delete userParams.socialId;
         delete userParams.socialType;
-        userModel.socialSignUp(socialId, socialType, userParams, function (err, result) {
+        userModel.socialSignUp(socialId, socialType, userParams, function(err, result) {
             if (err)
                 done(err);
             else
                 done(null, result);
         })
     },
-    forgotPassword: function(req, res, done){
-        
+    forgotPassword: function(req, res, done) {
+
         //TO DO - email validation
-        
-        var mailOptions = {
-                                from: '"Nurseryapp" <ankuradhey@gmail.com>', // sender address 
-                                to: req.body.user_email, // list of receivers 
-                                subject: 'Forgot Password', // Subject line 
-                                text: 'To reset your password, <br /> here is your link <br /> <a href="'+config.baseUrl+'/user/verify/'+req.body.school_activation_code+'">click here</a>.', // plaintext body 
-                                html: 'To reset your password, <br /> here is your link <br /> <a href="'+config.baseUrl+'/user/verify/'+req.body.school_activation_code+'">click here</a>.' // html body
-                            };
-                            response = new responseClass;
-                            // send mail with defined transport object 
-                            transporter.sendMail(mailOptions, function(error, info) {
-                                if (error) {
-                                    res.json(response);
-                                    return console.log(error);
-                                }else{
-                                    
-                                    console.log('Message sent: ' + info.response);
-                                    response.message = 'Invalid Username or password';
-                                    response.error = false;
-                                    response.success = true;
-                                    res.json(response);
-                                    //done(null);
-                                }
-                                
-                            });
+
+        userModel.validateUser(req.body.user_email, '', function(err, data) {
+            if (err) {
+                response = new responseClass;
+                response.errors = err;
+                console.log(err);
+                return res.json(response);
+            } else {
+                var mailOptions = {
+                    from: '"Nurseryapp" <ankuradhey@gmail.com>', // sender address 
+                    to: req.body.user_email, // list of receivers 
+                    subject: 'Forgot Password', // Subject line 
+                    text: 'To reset your password, <br /> here is your link <br /> <a href="' + config.baseUrl + '/user/verify/' + data[0].school_activation_code + '">click here</a>.', // plaintext body 
+                    html: 'To reset your password, <br /> here is your link <br /> <a href="' + config.baseUrl + '/user/verify/' + data[0].school_activation_code + '">click here</a>.' // html body
+                };
+                // send mail with defined transport object 
+                transporter.sendMail(mailOptions, function(error, info) {
+                    if (error) {
+                        console.log(error);
+                        return res.json(response);
+                    } else {
+                        console.log('Message sent: ' + info.response);
+                        response.message = 'Invalid Username or password';
+                        response.error = false;
+                        response.success = true;
+                        res.json(response);
+                        //done(null);
+                    }
+
+                });
+            }
+        });
+
+
+
     },
-    socialValidate: function (socialId, socialType, done) {
-        userModel.socialLoginCheck(socialId, socialType, function (err, rows) {
+    socialValidate: function(socialId, socialType, done) {
+        userModel.socialLoginCheck(socialId, socialType, function(err, rows) {
             if (err) {
                 done(err, []);
             } else {
@@ -331,11 +341,11 @@ var auth = {
             }
         });
     },
-    validate: function (username, password, done) {
+    validate: function(username, password, done) {
         //username is email here
         var invalid = validate.single(username, {presence: true, email: true});
         if (!invalid) {
-            userModel.loginCheck(username, password, function (err, rows) {
+            userModel.loginCheck(username, password, function(err, rows) {
                 if (err) {
                     done(err, []);
                 } else {
@@ -346,11 +356,11 @@ var auth = {
             done('Invalid Email address');
         }
     },
-    validateUser: function (username, done) {
+    validateUser: function(username, done) {
         //var invalid = validate.single(username, {presence:true, email:true});
         //if(!invalid)
         {
-            userModel.validateUser(username, username, function (err, rows) {
+            userModel.validateUser(username, username, function(err, rows) {
                 if (err) {
                     done(err, []);
                 } else {
