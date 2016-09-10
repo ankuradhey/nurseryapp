@@ -23,16 +23,16 @@ angular.module('sbAdminApp')
                     $http.post(baseUrl+"/admin/forgotpassword", {user_email: userName})
                             .then(function(result){
                                 if(result.data.success){
-                                    userInfo = {
+                                    /*userInfo = {
                                         accessToken: result.data.token,
                                         userName: result.data.user.user_email,
                                         userId: result.data.user.user_id,
 //                                        role:result.data.user.user_type
                                         role:userRoles[result.data.user.user_type]
-                                    };
-                                    $rootScope.user = userInfo;
-                                    $window.localStorage["userInfo"] = JSON.stringify(userInfo);
-                                    deferred.resolve(userInfo);
+                                    };*/
+                                    //$rootScope.user = userInfo;
+                                    //$window.localStorage["userInfo"] = JSON.stringify(userInfo);
+                                    deferred.resolve({});
                                 }else{
                                     deferred.reject(result.message);
                                 }
