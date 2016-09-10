@@ -51,6 +51,7 @@ angular.module('sbAdminApp')
                 $scope.forgotPasswordSbmt = function(){
                     authService.forgotPassword($scope.forgot.email)
                             .then(function (result) {
+                        console.log('--> Debugging response data', result);
                                 if(result.success)
                                     $window.alert("Forgot password request sent successfully");
                                 else
