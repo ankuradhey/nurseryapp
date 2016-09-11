@@ -114,17 +114,18 @@ app.use('/user/verify/:verifyId', function(req, res, next){
                 }
                 
             });
-            next();
+            next(null, req, res, next);
         }else{
             res.sendfile('admin/views/pages/wrongpage.html');
         }
         
     })
-},res.sendfile('admin/views/pages/userverify.html'));
+},function(err, req, res){res.sendfile('admin/views/pages/userverify.html')});
 
 
 app.use('/user/resetpassword/:verifyId', function(req, res, next){
     db.get().query('select * from school where school_activation_code = "'+req.params.verifyId+'" and school_register_status = "1" ', function(err, rows){
+        console.log(rows);
         if(err){
             console.log(err);
             throw err;
@@ -151,19 +152,19 @@ app.use('/user/resetpassword/:verifyId', function(req, res, next){
                                 console.log('Message sent: ' + info.response);
                             });
                             
-                            next();
+                            next(null, req, res);
                 }
                 
             });
             
         }else{
             console.log("no data found");
-            res.sendfile('admin/views/pages/wrongpage.html');
+            res.sendFile('admin/views/pages/wrongpage.html');
 //            express.static();
         }
         
     })
-}, express.static('admin/views/pages/resetpassword.html'));
+}, function(err, req, res){res.sendFile('admin/views/pages/resetpassword.html')});
 
 
 
