@@ -104,6 +104,7 @@ app.use('/user/verify/:verifyId', function(req, res, next){
     db.get().query('select * from school where school_activation_code = "'+req.params.verifyId+'" and school_register_status = "0" ', function(err, rows){
         if(err){
             console.log(err);
+            next(err);
             throw err;
         }else if(rows && rows.length){
             db.get().query('update school set school_register_status = "1", school_status = "1" where school_id = ? ', rows[0]['school_id'],function(err, rows){
@@ -115,11 +116,11 @@ app.use('/user/verify/:verifyId', function(req, res, next){
             });
             next();
         }else{
-            express.static('admin/views/pages/wrongpage.html');
+            res.sendfile('admin/views/pages/wrongpage.html');
         }
         
     })
-},express.static('admin/views/pages/userverify.html'));
+},res.sendfile('admin/views/pages/userverify.html'));
 
 
 app.use('/user/resetpassword/:verifyId', function(req, res, next){
@@ -131,6 +132,7 @@ app.use('/user/resetpassword/:verifyId', function(req, res, next){
             db.get().query('update school set school_password = ? where school_id = ? ', [md5('123456'), rows[0]['school_id']],function(err, result){
                 if(err){
                     console.log(err);
+                    next(err);
                     throw err;
                 }else{
                     var mailOptions = {
@@ -149,13 +151,15 @@ app.use('/user/resetpassword/:verifyId', function(req, res, next){
                                 console.log('Message sent: ' + info.response);
                             });
                             
-                            express.static('admin/views/pages/resetpassword.html');
+                            next();
                 }
                 
             });
-            next();
+            
         }else{
-            express.static('admin/views/pages/wrongpage.html');
+            console.log("no data found");
+            res.sendfile('admin/views/pages/wrongpage.html');
+//            express.static();
         }
         
     })
