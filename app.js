@@ -116,11 +116,11 @@ app.use('/user/verify/:verifyId', function(req, res, next){
             });
             next(null, req, res, next);
         }else{
-            res.sendfile('admin/views/pages/wrongpage.html');
+            res.sendfile(__dirname+'/admin/views/pages/wrongpage.html');
         }
         
     })
-},function(err, req, res){res.sendfile('admin/views/pages/userverify.html')});
+},function(err, req, res){res.sendfile(__dirname+'/admin/views/pages/userverify.html')});
 
 
 app.use('/user/resetpassword/:verifyId', function(req, res, next){
@@ -158,13 +158,14 @@ app.use('/user/resetpassword/:verifyId', function(req, res, next){
             });
             
         }else{
+            console.log(__dirname);
             console.log("no data found");
-            res.sendFile('admin/views/pages/wrongpage.html');
+            res.sendFile(__dirname+'/admin/views/pages/wrongpage.html');
 //            express.static();
         }
         
     })
-}, function(err, req, res){res.sendFile('admin/views/pages/resetpassword.html')});
+}, function(err, req, res){console.log(__dirname); res.sendFile(__dirname+'/admin/views/pages/resetpassword.html')});
 
 
 
