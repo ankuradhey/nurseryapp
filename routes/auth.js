@@ -309,7 +309,7 @@ var auth = {
                     to: req.body.user_email, // list of receivers 
                     subject: 'Forgot Password', // Subject line 
                     text: 'To reset your password, <br /> here is your link <br /> <a href="' + config.baseUrl + '/user/resetpassword/' + data[0].school_activation_code + '">click here</a>.', // plaintext body 
-                    html: 'To reset your password, <br /> here is your link <br /> <a href="' + config.baseUrl + '/user/resetpassword' + data[0].school_activation_code + '">click here</a>.' // html body
+                    html: 'To reset your password, <br /> here is your link <br /> <a href="' + config.baseUrl + '/user/resetpassword/' + data[0].school_activation_code + '">click here</a>.' // html body
                 };
                 // send mail with defined transport object 
                 transporter.sendMail(mailOptions, function(error, info) {
