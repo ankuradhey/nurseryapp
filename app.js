@@ -151,8 +151,8 @@ app.use('/user/resetpassword/:verifyId', function(req, res, next){
                                 }
                                 console.log('Message sent: ' + info.response);
                             });
-                            
-                            next(null, req, res);
+                            //res.sendFile(__dirname+'/admin/views/pages/resetpassword.html');
+                            next();
                 }
                 
             });
@@ -165,7 +165,7 @@ app.use('/user/resetpassword/:verifyId', function(req, res, next){
         }
         
     })
-}, function(err, req, res){console.log(__dirname); res.sendFile(__dirname+'/admin/views/pages/resetpassword.html')});
+}, function(req, res){ res.sendFile(__dirname+'/admin/views/pages/resetpassword.html')});
 
 
 
