@@ -147,11 +147,11 @@ module.exports = {
 
         //update school_img path
         if (req.body.school_logo) {
-            req.body.school_logo = config.baseUrl + '/uploads/' + req.body.school_logo;
+            req.body.school_logo = config.imageUrl + '/' + req.body.school_logo;
         }
 
         if (req.body.school_img)
-            req.body.school_img = config.baseUrl + '/uploads/' + req.body.school_img;
+            req.body.school_img = config.imageUrl + '/' + req.body.school_img;
 
         response = new responseClass;
         school.getSchoolAvailability(req.body, 0, function(err, rows) {
@@ -215,11 +215,11 @@ module.exports = {
 
         //update school_img path
         if (req.body.school_logo) {
-            req.body.school_logo = config.baseUrl + '/uploads/' + req.body.school_logo;
+            req.body.school_logo = config.imageUrl + '/' + req.body.school_logo;
         }
 
         if (req.body.school_img)
-            req.body.school_img = config.baseUrl + '/uploads/' + req.body.school_img;
+            req.body.school_img = config.imageUrl + '/' + req.body.school_img;
 
         var schoolId = req.params.schoolId
 
