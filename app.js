@@ -16,6 +16,8 @@ app.use(bodyParser.urlencoded({
     extended:true
 }));
 
+//static files for html files
+app.use(express.static('admin'));
 
  var storage = multer.diskStorage({ //multers disk storage settings
         destination: function (req, file, cb) {
